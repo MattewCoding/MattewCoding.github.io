@@ -6,8 +6,9 @@
 
 /* TL Tags */
 html {
-    background: linear-gradient(90deg, #fbfbfb 0%, #ffffff 17%);
+    background: linear-gradient(90deg, #362146 0%, #231B33 17%);
     font-size: 100%;
+    color: white;
 }
 
 html,
@@ -17,10 +18,9 @@ body {
 }
 
 .main-part {
-    background-color: #ffffff;
-    border: 1px solid #a7d7f9;
+    background-color: #231B33;
+    border: 1px solid #315b79;
     border-right-width: 0;
-    color: #202122;
     direction: ltr;
     font-size: calc(1em * 0.875);
     line-height: 1.6;
@@ -47,7 +47,7 @@ h3,
 h4,
 h5,
 h6 {
-    color: #000;
+    color: inherit;
     margin: 0;
 }
 
@@ -93,10 +93,10 @@ h2 {
 }
 
 .header-nav-li {
-    background-image: linear-gradient(to top, #a7d7f9 0, #e8f2f8 1px, #ffffff 100%);
+    background-image: linear-gradient(to top, #315b79 0%, #493c63 1px, #231B33 100%);
     float: left;
     font-size: calc(1em * 0.875);
-    border: solid #a7d7f9;
+    border: solid #315b79;
     border-width: 0px 1px;
 
     /* Fomerly part of .header-nav-li a */
@@ -110,8 +110,16 @@ h2 {
     text-decoration: underline;
 }
 
+a:link {
+    color: #93EDF4;
+}
+
+a:visited {
+    color: #de1ec7 !important;
+}
+
 /* Options navigation */
-#header-options{
+#header-options {
     display: inline;
     font-family: sans-serif;
     font-size: 90%;
@@ -122,7 +130,8 @@ h2 {
 }
 
 /* Side navigation */
-#side-nav{
+#side-nav {
+    color: inherit;
     display: inline;
     font-family: sans-serif;
     font-size: 90%;
@@ -131,7 +140,7 @@ h2 {
     position: absolute;
 }
 
-.sticky{
+.sticky {
     position: fixed !important;
     top: -7em;
 }
@@ -157,6 +166,7 @@ h2 {
 }
 
 .side-li a {
+    color: #93EDF4;
     text-decoration: none;
 }
 
@@ -184,16 +194,15 @@ p {
 
 table {
     border-collapse: collapse;
-    margin: 1em 0 0 0;
 }
 
 th {
-    background-color: #a4d8fd;
+    background-color: #315670;
 }
 
 th,
 td {
-    border: 1.5px solid black;
+    border: 1.5px solid white;
     padding: .5em;
     text-align: center;
 }
@@ -206,7 +215,7 @@ td {
 }
 
 #current-page {
-    background: white !important;
+    background: #231B33 !important;
 }
 
 #nav-image {
@@ -215,21 +224,4 @@ td {
     display: block;
     width: 9em;
     text-decoration: none;
-}
-
-/* Spaceship stuff */
-#spaceship
-{
-    display: flex;
-    /*margin-left: 50%; 50% of the box it's in */
-}
-
-#spaceshipBlock
-{
-    background-color: #000;
-    display: block;
-    position: relative;
-    min-height: 3em;
-    height: 100px;
-    overflow: hidden;
 }
