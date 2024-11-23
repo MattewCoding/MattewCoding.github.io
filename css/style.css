@@ -161,8 +161,12 @@ header>a>img {
     top: 1em;
 }
 
-img{
-    max-width: 95%; /* Account for margin */
+img, figcaption {
+    max-width: 50%; /* Account for margin */
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+
 }
 
 p {
