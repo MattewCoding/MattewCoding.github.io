@@ -3,13 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="refresh" content="0;index.html">
     <link rel="icon" type="image/x-icon" href="./media/favicon.png" />
     <title>Week 1: VR Dizzyness and CAVE</title>
     <script type="text/javascript" src="js/main.js"></script>
-    
+
     <link id="lightStylesheet" rel="stylesheet" href="css/style.css" />
-    <link id="darkStylesheet" rel="stylesheet" href="css/styleNight.css" disabled/>
+    <link id="darkStylesheet" rel="stylesheet" href="css/styleNight.css" disabled />
 </head>
 
 <body onload="addDarkModeListener()">
@@ -32,71 +31,74 @@
     </header>
     <main>
         <div class="main-part">
-            <h1>Week 1 Lecture: VR Dizzyness and CAVE</h1>
+            <h1>Week 1 Lecture: VR Dizziness and CAVE</h1>
             <h2>Introduction</h2>
             <p>Virtual reality can immerse users to the point where they perceive their virtual environment as real,
-                potentially leading to accidents as they forget their actual surroundings. Various solutions have been
+                potentially leading to accidents when they forget their actual surroundings. Various solutions have been
                 proposed to mitigate these risks, including auditory warnings, proximity detectors, and removing
-                real-world obstacles beforehand. However, care must be taken to distinguish these immersion-breaking
-                measures from virtual reality's goal of providing a fully immersive experience. The CAVE System is one
-                such solution. Unlike head-mounted displays, it projects visuals onto the walls of a room, allowing
-                multiple people to view the environment simultaneously. While it offers a higher level of immersion
+                obstacles in the real world beforehand. However, care must be taken to distinguish these
+                immersion-breaking measures from virtual reality's goal of providing a fully immersive experience.</p>
+            <p>The CAVE system, unlike head-mounted displays, projects visuals onto the walls of a room, allowing
+                multiple people to view the environment simultaneously. Although it offers a higher level of immersion
                 compared to head-mounted displays, the CAVE System is significantly more expensive and requires a
                 dedicated space for projection.</p>
 
             <h2>Safeguards Against Ourselves</h2>
-            <p>There are no shortage of videos and stories of VR users forgetting that what they're seeing and
+            <p>There is no shortage of videos and stories of VR users forgetting that what they are seeing and
                 experiencing is not, in fact, real. This is because VR attempts to fool the senses into believing its
                 simulated reality, and because most of the brain is devoted to sight, tricking those parts of the brain
-                is usually enough to make us buy in into the simulated reality.</p>
+                is usually enough to make us buy into the simulated reality.</p>
             <p>This can cause problems when there are real-world obstacles, such as tables, walls, or wires, that are
-                not replicated in the simulated reality. Since the user believes there to not be an obstacle, they will
-                run into these obstacles and potentially break them. For example, if a user is playing a VR boxing game,
-                they will be simulating punches and kicks by physically doing so. However, they may accidentally punch
-                or kick real-world objects, such as a TV or a table. Not only would this injure the user, but it may
+                not replicated in simulated reality. Since the user believes that there is no obstacle, they will run
+                into these obstacles and potentially break them. For example, if a user is playing a VR boxing game,
+                they will simulate punches and kicks by physically doing so. However, they may accidentally punch or
+                kick real-world objects, such as a TV or a table. Not only would this injure the user, but it may also
                 break the objects. To fix this, there are different types of solutions that can be implemented. On the
-                dev side, we can program into the VR game a warning system to alert the user they may crash into some
-                real-world object. This may involve installing proximity detectors to measure the distance of the hands
-                and legs to nearby objects. The user can also avoid these situations by removing nearby obstacles,
-                ensuring they are able to freely move about without harm.</p>
+                development side, we can program into the VR game a warning system to alert the user that they may crash
+                into some real-world object. This may involve installing proximity detectors to measure the distance
+                between hands and legs to nearby objects. The user can also avoid these situations by removing nearby
+                obstacles, ensuring that they can freely move around without harm.</p>
             <figure>
                 <img src="./media/kick.png" alt="An unaware user kicking a table" title="My mug!" />
-                <figcaption>An unaware user kicking a table</figcaption>
+                <figcaption>Left side: A user playing a VR game. Right side: An unaware user kicking a table
+                </figcaption>
             </figure>
 
             <p>There's also the issue of dizziness. For the same reasons people get carsick-- namely, the incongruence
-                of seeing motion but not feeling motion-- people get VR dizziness. There's also the fact that while VR
+                of seeing motion but not feeling motion-- people get VR dizziness. There is also the fact that while VR
                 attempts to simulate reality, it is not perfect, which can cause the brain to get confused. Examples
                 include a VR headset's FoV being variable and different from a human FoV or a VR headset experiencing
                 latency, causing a mismatch in what should be happening (a shift in perspective) and what is happening
-                (nothing, because the VR headset hasn't updated). This causes the user to be disoriented, and possibly
+                (nothing, because the VR headset hasn't updated). This causes the user to be disoriented and possibly
                 lose balance and fall, leading to injury. To fix this, we can remove some visual effects, like motion
                 blur, or discretize movement; instead of smoothly walking from one place to another, a user can teleport
-                from one location to another. Thus, the user never moves continuously, going from being stationary from
+                from one location to another. Thus, the user never moves continuously, going from being stationary in
                 one place to being stationary at another place. The user can also take breaks, get comfortable, and stay
                 hydrated to reduce dizziness.</p>
-            <p>These solutions fall into two categories: either make the simulated reality less realistic, or let the
-                user self-regulate. The first category is antithetical to the goal of simulated reality, and the second
-                should never be relied on, yet these stopgap solutions are compromises that both the dev and the user
-                accept in order to be able to have fun with VR.</p>
             <figure>
                 <img src="./media/dizzy.png" alt="User losing balance and falling due to dizziness caused by racing"
                     title="Bro fell off" />
-                <figcaption>User losing balance and falling due to dizziness caused by racing</figcaption>
+                <figcaption>Left side: A user loses balance and falls due to dizziness. Right side: The reason why they
+                    are dizzy, that is, because of racing</figcaption>
             </figure>
 
+            <p>These solutions fall into two categories: either make the simulated reality less realistic or let the
+                user self-regulate. The first category is antithetical to the goal of simulated reality, and the second
+                should never be relied upon, yet these stopgap solutions are compromises that both the developer and the
+                user accept in order to be able to have fun with VR.</p>
+
             <h2>The CAVE System and HMDs</h2>
-            <p>The CAVE System is a room in which a simulated reality is projected upon, differing from HMDs in that the
-                simulated reality is not projected onto a worn helmet or goggles. A user will usually be wearing glasses
-                in the CAVE to enhance the viewing experience. Some advantages are that it allows for a large scale
+            <p>The CAVE system is a room in which a simulated reality is projected, differing from HMDs in that the
+                simulated reality is not projected onto a helmet or goggles. The user will usually be wearing glasses in
+                the CAVE to enhance the viewing experience. Some advantages are that it allows for a large-scale
                 immersion, allowing for a lower latency in updating the environment when the user wants to look around.
                 It is also less intrusive, in that the user can freely move around in the room, instead of being stuck
                 to an HMD. However, the CAVE requires there to be a room for it to be effective, and there is a large
                 upfront cost in implementing one such system; it is more than an order of magnitude above buying a
                 normal headset.</p>
-            <p>Within the Reality-Virtuality Continuum of Milgram, it is very much in the Monolithic
-                Computing and Virtual Environment quadrant; more than one person can be in the room to experience the
-                simulation, and the environment is entirely projected onto the walls of the room.</p>
+            <p>Within the Reality-Virtuality Continuum of Milgram, it is very much in the Monolithic Computing and
+                Virtual Environment quadrant; more than one person can be in the room to experience the simulation, and
+                the environment is entirely projected onto the walls of the room.</p>
         </div>
     </main>
     <footer>
