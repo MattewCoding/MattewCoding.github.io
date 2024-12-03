@@ -6,9 +6,9 @@ function loadHeader(selected) {
             <nav id='header-nav'>
                 <ul class='header-nav-ul'>
                     <li class='header-nav-li'${selected === 1 ? " id='current-page'" : ""}> <a href='./week-one-labs.html'>Week 1 Labs</a></li>
-                    <li class='header-nav-li'${selected === 2 ? " id='current-page'" : ""}> <a href='./week-one-report.html'>Week 1 Lecture</a></li>
+                    <li class='header-nav-li'${selected === 2 ? " id='current-page'" : ""}> <a href='./week-one-report.html'>Week 1 Report</a></li>
                     <li class='header-nav-li'${selected === 3 ? " id='current-page'" : ""}> <a href='./week-two-labs.html'>Week 2 Labs</a></li>
-                    <li class='header-nav-li'${selected === 4 ? " id='current-page'" : ""}> <a href='./week-two-report.html'>Week 2 Lecture</a></li>
+                    <li class='header-nav-li'${selected === 4 ? " id='current-page'" : ""}> <a href='./week-two-report.html'>Week 2 Report</a></li>
                 </ul>
             </nav>
             <nav id='header-options'>

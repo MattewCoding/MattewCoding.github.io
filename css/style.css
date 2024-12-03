@@ -103,6 +103,9 @@ h2 {
     display: block;
     text-align: center;
     padding: .5em .75em;
+}
+
+.header-nav-li a {
     text-decoration: none;
 }
 
