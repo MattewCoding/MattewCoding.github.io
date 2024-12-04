@@ -4,86 +4,67 @@
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon" href="./media/favicon.png" />
-    <title>Week 1: VR Dizzyness and CAVE</title>
+    <title>Week 2: Selection Techniques</title>
     <script type="text/javascript" src="js/main.js"></script>
 
     <link id="lightStylesheet" rel="stylesheet" href="css/style.css" />
     <link id="darkStylesheet" rel="stylesheet" href="css/styleNight.css" disabled />
 </head>
 
-<body onload="loadPage(0)">
+<body onload="loadPage(4)">
     <header>
     </header>
     <main>
         <div class="main-part">
-            <h1>Week 1 Lecture: VR Dizziness and CAVE</h1>
-            <h2>Introduction</h2>
-            <p>Virtual reality can immerse users to the point where they perceive their virtual environment as real,
-                potentially leading to accidents when they forget their actual surroundings. Various solutions have been
-                proposed to mitigate these risks, including auditory warnings, proximity detectors, and removing
-                obstacles in the real world beforehand. However, care must be taken to distinguish these
-                immersion-breaking measures from virtual reality's goal of providing a fully immersive experience.</p>
-            <p>The CAVE system, unlike head-mounted displays, projects visuals onto the walls of a room, allowing
-                multiple people to view the environment simultaneously. Although it offers a higher level of immersion
-                compared to head-mounted displays, the CAVE System is significantly more expensive and requires a
-                dedicated space for projection.</p>
+            <h1>Week 2: Selection Method Types</h1>
+            <h2>Overview</h2>
+            <p>People have invented many different types of methods to allow VR users to correctly select objects in VR.
+                Here, we discuss three selection methods on how they work. They are then classified based on the three
+                different selection properties; reach, cardinality, and progressive refinement technique. The three
+                selection methods are as follows: GazePuffer, which combines eye movement with cheek puffing to select,
+                Look\&MidAir, which combines eye selection and finger selection, and Whirling Interface, which combines
+                hand selection with wrist movement.</p>
 
-            <h2>Safeguards Against Ourselves</h2>
-            <p>There is no shortage of videos and stories of VR users forgetting that what they are seeing and
-                experiencing is not, in fact, real. This is because VR attempts to fool the senses into believing its
-                simulated reality, and because most of the brain is devoted to sight, tricking those parts of the brain
-                is usually enough to make us buy into the simulated reality.</p>
-            <p>This can cause problems when there are real-world obstacles, such as tables, walls, or wires, that are
-                not replicated in simulated reality. Since the user believes that there is no obstacle, they will run
-                into these obstacles and potentially break them. For example, if a user is playing a VR boxing game,
-                they will simulate punches and kicks by physically doing so. However, they may accidentally punch or
-                kick real-world objects, such as a TV or a table. Not only would this injure the user, but it may also
-                break the objects. To fix this, there are different types of solutions that can be implemented. On the
-                development side, we can program into the VR game a warning system to alert the user that they may crash
-                into some real-world object. This may involve installing proximity detectors to measure the distance
-                between hands and legs to nearby objects. The user can also avoid these situations by removing nearby
-                obstacles, ensuring that they can freely move around without harm.</p>
+            <h2>GazePuffer: Hands-Free Input Method Leveraging Puff Cheeks for VR</h2>
+            <p>GazePuffer is a method that incorporates the traditional gaze input with cheek puffing, from which it
+                gets its compound name. Using their eyes, the user can focus and look at what they want to select.
+                Traditionally, this has the problem of the "Midas Touch". This is the problem whereby the VR program is
+                unsure if the user wishes to select an object, or is merely observing.</p>
+            <p>GazePuffer solves this problem by using the user's mouth gestures. By detecting different ways the user
+                puffs their cheeks, different selection methods can be applied. These mappings can be different from
+                person to person, or game to game, much like how key-binds for games can differ. Nine different gestures
+                were ultimately selected and mapped to different functions. For example, puffing one's cheek out left
+                corresponded to imitating a left mouse click.</p>
             <figure>
-                <img src="./media/kick.png" alt="An unaware user kicking a table" title="My mug!" />
-                <figcaption>Left side: A user playing a VR game. Right side: An unaware user kicking a table
-                </figcaption>
+                <img src="./media/w2/gp1.png" alt="User hangs up phone" title="Hmpf! Goodbye!" />
+                <figcaption>In the image, the user shifts his gaze to the phone pop-up window, and then puffs his left
+                    cheek to complete the action of ending the call.</figcaption>
+            </figure>
+            <p>This selection technique uses the eyes to focus on the objects the user wants to select. Thus, it
+                inherits its infinite reach and multiple selection properties. Infinite reach, because we are not
+                constrained by the physical reach of our arms or legs, and multiple selection, because we can look at
+                multiple things at once. Per the figure below, nine different gestures were mapped to different
+                functions, making this a discrete, single step way to select objects.</p>
+            <figure>
+                <img src="./media/w2/gp2.png" alt="Methods to puff cheeks" title="AI training data be like" />
+                <figcaption>Drafts illustrating each gesture in the gesture set. Scores of gestures in the final gesture set are highlighted in orange.</figcaption>
             </figure>
 
-            <p>There's also the issue of dizziness. For the same reasons people get carsick-- namely, the incongruence
-                of seeing motion but not feeling motion-- people get VR dizziness. There is also the fact that while VR
-                attempts to simulate reality, it is not perfect, which can cause the brain to get confused. Examples
-                include a VR headset's FoV being variable and different from a human FoV or a VR headset experiencing
-                latency, causing a mismatch in what should be happening (a shift in perspective) and what is happening
-                (nothing, because the VR headset hasn't updated). This causes the user to be disoriented and possibly
-                lose balance and fall, leading to injury. To fix this, we can remove some visual effects, like motion
-                blur, or discretize movement; instead of smoothly walking from one place to another, a user can teleport
-                from one location to another. Thus, the user never moves continuously, going from being stationary in
-                one place to being stationary at another place. The user can also take breaks, get comfortable, and stay
-                hydrated to reduce dizziness.</p>
+            <h2>3D Selection in Mixed Reality: Designing a Two-Phase Technique To Reduce Fatigue</h2>
+            <p>Look&MidAir is a concepts developed by Chaffangeon Caillet et al. that seeks to combine using the eyes to select and the movement of the fingers and arms to help with the selection. The user first focuses on the object they want to select, bending their finger by certain amounts to aid with precision. Then, they disambiguate the object selected by touching the object among the list of objects that the program selected during the previous step.</p>
             <figure>
-                <img src="./media/dizzy.png" alt="User losing balance and falling due to dizziness caused by racing"
-                    title="Bro fell off" />
-                <figcaption>Left side: A user loses balance and falls due to dizziness. Right side: The reason why they
-                    are dizzy, that is, because of racing</figcaption>
+                <img src="./media/w2/gp3.png" alt="Selecting chart guide" title="Like taking the box of toys before picking the favicon" />
+                <figcaption>First phase (Look) consists of pre-selecting objects using a cone directed along the gaze of the eye and controlled by micro-gestures. The second phase (Micro) consists of selecting the target by navigating the list of preselected objects in the context of the 3D scene, or if needed outside of its context.</figcaption>
             </figure>
+            <p>This selection technique has infinite reach in the first step, using the eyes to select the region where the object is located. It then switches to a screen-space reach in order to allow the user to select the specific object from the list. Only one object can be selected at a time from the list. This is also logically a discrete iterative refinement; we first select a region and then iterate on that region to find the specific object we want to select.</p>
 
-            <p>These solutions fall into two categories: either make the simulated reality less realistic or let the
-                user self-regulate. The first category is antithetical to the goal of simulated reality, and the second
-                should never be relied upon, yet these stopgap solutions are compromises that both the developer and the
-                user accept in order to be able to have fun with VR.</p>
-
-            <h2>The CAVE System and HMDs</h2>
-            <p>The CAVE system is a room in which a simulated reality is projected, differing from HMDs in that the
-                simulated reality is not projected onto a helmet or goggles. The user will usually be wearing glasses in
-                the CAVE to enhance the viewing experience. Some advantages are that it allows for a large-scale
-                immersion, allowing for a lower latency in updating the environment when the user wants to look around.
-                It is also less intrusive, in that the user can freely move around in the room, instead of being stuck
-                to an HMD. However, the CAVE requires there to be a room for it to be effective, and there is a large
-                upfront cost in implementing one such system; it is more than an order of magnitude above buying a
-                normal headset.</p>
-            <p>Within the Reality-Virtuality Continuum of Milgram, it is very much in the Monolithic Computing and
-                Virtual Environment quadrant; more than one person can be in the room to experience the simulation, and
-                the environment is entirely projected onto the walls of the room.</p>
+            <h2>Whirling Interface: Hand-based Motion Matching Selection for Small Target on XR Displays</h2>
+            <p>The Whirling Interface is a selection technique that combines hand selection with wrist movement, to help select moving objects. The user focuses uses their right hand to point to an object they want to select, with a laser pointer helping them to show what their fingers are pointing to. Then, they move their wrist and arm to mimic the motion of the moving object to select it.</p>
+            <figure>
+                <img src="./media/w2/gp4.png" alt="Selection by movement" title="To the left! Take it back now y'allow!" />
+                <figcaption>The Whirling Interface enables users to make selections by synchronizing their hand motion with the orbiting movement of targets</figcaption>
+            </figure>
+            <p>Using a laser pointer allows for an infinite range, but only one object can be selected at a time. By mimicking the motion of the object, this indicates a discrete iterative way to refine the selection.</p>
         </div>
     </main>
     <footer>
