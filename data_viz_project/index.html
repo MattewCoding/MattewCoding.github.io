@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>LGBTI Survey Data Viz</title>
+    <script type="text/javascript" src="js/d3.v7.min.js"></script>
+    <script type="text/javascript" src="js/constantFile.js"></script>
+
+    <script type="text/javascript" src="js/pageLoader.js"></script>
+
+    <script type="text/javascript" src="js/mapLoader.js"></script>
+
+    <script type="text/javascript" src="js/createViz.js"></script>
+    <script type="text/javascript" src="js/interpretData.js"></script>
+    <script type="text/javascript" src="js/violinPlot.js"></script>
+
+    <link rel="stylesheet" href="css/light.css" />
+    <link rel="icon" type="image/x-icon" href="./media/img/favicon.png" />
+</head>
+
+<body onload="load_page_info();">
+    <header>
+        <!--<a href="../../s01/CSC_51052-2024-PC-code-s01/CSC_51052-2024-PC-code-s01/ex01.html">s01</a>
+        <a href="../../s02/ex02.html">s02</a>
+        <a href="../../s03/ex03.html">s03</a>
+        <a href="../../s04/ex04.html">s04</a>
+        <a href="../../s05/ex05.html">s05</a>
+        <a href="../../s06/ex06-1.html">s06_1</a>
+        <a href="../../s06/ex06-2.html">s06_2</a>
+        <a href="../../s07/ex07.html">s07</a>
+        <a href="../../s08/ex08a.html">s08_1</a>
+        <a href="../../s08/ex08b.html">s08_2</a>
+        <a href="../../s09/ex09.html">s09</a>-->
+    </header>
+    <main>
+        <div id="title">
+            <h1>LGBTI Survey Data Visualized</h1>
+            <h2>Plotting respondant data and finding relations</h2>
+        </div>
+        <p>Note: Unless otherwise noted, an value of 0 in a bar chart or scatter plot does NOT represent 0%. Instead, it
+            represents "no
+            data".</p>
+        <div id="lgbtSelector">
+            <p style="margin: 12px 0px">Subset of LGBT Chosen:</p>
+            <select class="blendSelector" id="dropdownLGBT" onchange="updateWhoBelongs()" <!--multiple-->>
+            </select>
+        </div>
+        <div class="container">
+            <div class="map-dropdown-container">
+                <div id="mapScaleRef">
+                    <svg id="mapScaleRefSvg"></svg>
+                </div>
+                <div id="mapTitle">
+                    <svg id="mapTitleSvg"></svg>
+                </div>
+                <svg id="map-box">
+                </svg>
+                <div class="dropdown-container">
+                    <select id="dropdownCountry" onchange="switchSelectorEmpty()">
+                    </select>
+                </div>
+            </div>
+
+            <div id="countryAndButtonSetup">
+                <div id="countrySpecificInformation">
+                    <div id="information">
+                        <h3 id="infoBoxTitle"></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        
+        <div id="other"></div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>Website created by Y. Mattew</p>
+            <ul class="footer-links">
+                <li>Dataset obtained from the <a
+                        href="https://www.kaggle.com/datasets/maddalenamariano/eu-lgbti-survey-2020">EU LGBTI Survey
+                        2020</a></li>
+                <li><a href="/about">About Me</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+
+</html>

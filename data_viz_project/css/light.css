@@ -1,0 +1,294 @@
+body {
+    background-color: #e4f8fc;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: x-large;
+    margin: 0;
+    text-align: center;
+}
+
+/* Header stuff */
+#title {
+    background-color: #c5dadf;
+    padding: 0.3em 0em;
+}
+
+#title * {
+    margin: 0;
+    padding-block: 0.25em;
+}
+
+h3 {
+    margin: 0.25em;
+    padding-block: 0.25em;
+    font-size: xx-large !important;
+}
+
+/* Main body stuff */
+.container,
+#other {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding: 1em 0em;
+}
+
+#other {
+    flex-direction: column;
+}
+
+#countryAndButtonSetup {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+#countryAndButtonSetup>* {
+    background-color: #B9DAE1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#countrySpecificInformation {
+    border: 6px solid #000;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 200px;
+    padding-bottom: 1em;
+}
+
+.map-dropdown-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-container {
+    display: flex;
+    justify-content: center;
+    justify-items: end;
+    padding: 0.5em 0em;
+}
+
+#map-box {
+    background-color: #CFF1F9;
+    border: 8px solid #000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-right: -6px;
+}
+
+#map-box,
+#dropdownCountry {
+    width: 14em;
+}
+
+#mapScaleRef {
+    position: absolute;
+    transform: translate(12px, 70px);
+    /* Move inside the border */
+}
+
+#mapScaleRefSvg {
+    border: 4px solid black;
+    height: 250px;
+    width: 45px;
+}
+
+#mapTitle {
+    position: absolute;
+    transform: translate(12px, 12px);
+    /* Move inside the border */
+}
+
+#mapTitleSvg {
+    border: 4px solid black;
+    height: 41px;
+    width: 320px;
+}
+
+.blendSelector {
+    background-color: inherit;
+    border: solid #000;
+}
+
+#dropdownLGBT {
+    border-width: 4px 0px;
+    padding: 5px 0px 2px 0px;
+    margin-bottom: 5px;
+}
+
+#lgbtSelector {
+    background-color: #B9DAE1;
+    border: 4px solid black;
+    flex-grow: 0;
+    width: 109px;
+
+    position: fixed;
+    top: 0.5em;
+    left: 20px;
+    z-index: 1000;
+}
+
+#information {
+    flex-grow: 1;
+}
+
+/*#showMore {
+    border: solid black;
+    border-width: 2px 6px 8px 6px;
+    height: 37px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* I really should be doing this with p, not div 
+    font-size: medium;
+    font-style: italic;
+}
+
+#showMore:hover {
+    background-color: #9ac0c9;
+}*/
+
+option {
+    padding-bottom: 3px;
+}
+
+option:checked {
+    background-color: #486767;
+    color: white;
+}
+
+svg {
+    background-color: #B9DAE1;
+}
+
+p {
+    font-size: medium;
+}
+
+/* Map stuff */
+.countryAreaSel {
+    fill: white
+}
+
+.nutsArea {
+    fill: darkgray;
+}
+
+.countryBorder {
+    fill: none;
+    stroke-width: 1px;
+    stroke: rgb(70, 70, 70);
+}
+
+.nutsBorder {
+    fill: none;
+    stroke-width: 1px;
+    stroke: rgb(140, 140, 140);
+}
+
+/* Info stuff */
+[id$="Container"] {
+    display: inline-block;
+}
+
+#discrVsatisgovContainer {
+    position: relative;
+}
+
+#discrVsatisgovSelector {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-30%);
+}
+
+#realToldLGBSelector {
+    background-color: #B9DAE1;
+    position: absolute;
+    transform: translate(-265px, 5px);
+}
+
+#lgbtFriendsFamilySelectorX {
+    background-color: #B9DAE1;
+    position: absolute;
+    transform: translate(-320px, 5px);
+}
+
+
+#lgbtFriendsFamilySelectorY {
+    background-color: #B9DAE1;
+    position: absolute;
+    transform: translate(-145px, 5px);
+}
+
+#discrFelt,
+#discrFeltSubset,
+#divergingBarChart,
+#discrVsatisgov,
+#lgbtSchoolWork,
+#lgbtFriendsFamily,
+#realToldLGB,
+#avgSatisfaction {
+    border: black 3px solid;
+    padding: 5px;
+}
+
+[class$="Tick"] {
+    stroke: #333;
+    stroke-width: 2;
+}
+
+[class$="XLabel"],
+[class*="MainLabel"] {
+    font-size: 12px;
+    text-anchor: middle;
+}
+
+[class$="YLabel"] {
+    font-size: 12px;
+    text-anchor: end;
+}
+
+[id$="Title"],
+#mapTitle1,
+#mapTitle2 {
+    text-anchor: middle;
+}
+
+#divergingBarChartFootnote {
+    text-anchor: end;
+}
+
+#other > *, #scatterplots > * {
+    margin: 10px;
+}
+
+/* Footer stuff */
+footer {
+    background-color: #486767;
+    color: #ffffff;
+    font-size: small;
+    padding: 0.25em;
+    text-align: center;
+}
+
+.footer-links {
+    list-style-type: none;
+    padding: 0;
+}
+
+.footer-links li {
+    display: inline;
+    margin: 0 15px;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
