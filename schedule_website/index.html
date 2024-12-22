@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="./media/favicon.png" />
+    <title>Schedule Maker</title>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/d3.v7.min.js"></script>
+    <script type="text/javascript" src="js/table_sort.js"></script>
+    <script type="text/javascript" src="js/schedule_updater.js"></script>
+
+    <!-- Import docx library -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.1.2/docx.min.js"></script>
+    <!-- Import FileSaver.js -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+
+    <link id="lightStylesheet" rel="stylesheet" href="css/style.css" />
+    <link id="darkStylesheet" rel="stylesheet" href="css/styleNight.css" disabled />
+</head>
+
+<body onload="loadPage()">
+    <header>
+        <a href='./index.html'>
+            <img id='nav-image' src='./media/logo.png' alt='Site logo' title='Reload page' />
+        </a>
+        <nav id='header-options'>
+            <ul class='header-nav-ul'>
+                <li class='header-nav-li' id='translator' onclick="translateToFrench()">Voir la version française</li>
+                <li class='header-nav-li' id='darkModeButton'>Dark Mode</li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="main-part">
+            <h1>Schedule Maker</h1>
+            <p>Hello, welcome to the schedule maker! This is a tool to simplify your schedule creation. Click the
+                checkboxes to add a course to your schedule. The page will tell you if there are any overlaps, by
+                highlighting the conflicting coursees in red. As a reminder, you need at least 65 ECTs/credits to pass
+                the school year. You must also pass all of the courses that you will take.</p>
+            <p>Once you're done picking your courses, press the button at the bottom of the page to get your filled out
+                sign-up sheet.</p>
+            <p>For full transparency, this page's source code is publically available at <a
+                    href="https://github.com/MattewCoding/MattewCoding.github.io/scheduleMaker">this link</a>.
+                Additionally, this page does not use cookies to store any data.</p>
+
+            <h3 id="ectCount" style="color: red;">Current ECT amount: 0</h3>
+            <table id="scheduleTable">
+                <thead>
+                    <tr>
+                        <th class="deactivateSort"></th>
+                        <th class="deactivateSort">Overlaps with</th>
+                        <th onclick="sortTable(2)">ECTs</th>
+                        <th onclick="sortTable(3)">Old course ID</th>
+                        <th onclick="sortTable(4)">New course ID</th>
+                        <th onclick="sortTable(5)">Name of Course</th>
+                        <th onclick="sortTable(6)">Day</th>
+                        <th onclick="sortTable(7)">Hour</th>
+                    </tr>
+                </thead>
+                <tbody id="scheduleBody">
+                </tbody>
+            </table>
+
+            <button>Save to local storage</button>
+        </div>
+    </main>
+    <footer>
+    </footer>
+</body>
+
+</html>
