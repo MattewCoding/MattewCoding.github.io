@@ -44,9 +44,41 @@ function sortTable(n) {
             let xContent = x.innerHTML.toLowerCase();
             let yContent = y.innerHTML.toLowerCase();
 
+            let sameWeek = false;
+            if (n == (colNameToIndex["weeks"] + 2)) {
+                const xWeeks = xContent.split(" - ");
+                const yWeeks = yContent.split(" - ");
+                let xStart = xWeeks[0].split("/").map(Number);
+                let yStart = yWeeks[0].split("/").map(Number);
+
+                xContent = xStart[1]; // format is dd/mm
+                yContent = yStart[1];
+                if (xContent == yContent) {
+                    xContent = xStart[0];
+                    yContent = yStart[0];
+
+                    if (xContent == yContent) {
+                        let xEnd = xWeeks[1].split("/").map(Number);
+                        let yEnd = yWeeks[1].split("/").map(Number);
+                        xContent = xEnd[1];
+                        yContent = yEnd[1];
+
+                        if (xContent == yContent) {
+                            xContent = xEnd[0];
+                            yContent = yEnd[0];
+                        }
+                    }
+                }
+                sameWeek = xContent == yContent;
+            }
+
             // Comparing days not alphabetically but choronologically
             let sameDay = false;
-            if (n == 5) {
+            if (sameWeek || n == (colNameToIndex["day"] + 2)) {
+                if (sameWeek) {
+                    xContent = rows[i].cells[n + 1].innerHTML.toLowerCase();
+                    yContent = rows[i + 1].cells[n + 1].innerHTML.toLowerCase();
+                }
                 xContent = sortByDay[xContent];
                 yContent = sortByDay[yContent];
 
@@ -54,22 +86,28 @@ function sortTable(n) {
             }
 
             // Compare if same hour
-            if (sameDay || n == 6) {
-                if (sameDay) {
-                    xContent = rows[i].cells[n + 1].innerHTML;
-                    yContent = rows[i + 1].cells[n + 1].innerHTML;
+            if (sameDay || n == (colNameToIndex["hours"] + 2)) {
+                if (sameWeek) {
+                    xContent = rows[i].cells[n + 2].innerHTML;
+                    yContent = rows[i + 1].cells[n + 2].innerHTML;
+                } else {
+                    if (sameDay) {
+                        xContent = rows[i].cells[n + 1].innerHTML;
+                        yContent = rows[i + 1].cells[n + 1].innerHTML;
+                    }
                 }
                 const xHours = xContent.split(" - ");
                 const yHours = yContent.split(" - ");
                 let xStart = xHours[0].split(":");
                 let yStart = yHours[0].split(":");
-                
+
                 // Comparing hours and minutes together
                 xContent = 60 * Number(xStart[0]) + Number(xStart[1]);
                 yContent = 60 * Number(yStart[0]) + Number(yStart[1]);
 
                 // Same start, check end
-                if(xContent == yContent){
+                if (xContent == yContent) {
+                    // Variables are named wrong they should be xEnd and yEnd
                     xStart = xHours[1].split(":");
                     yStart = yHours[1].split(":");
                     xContent = 60 * Number(xStart[0]) + Number(xStart[1]);

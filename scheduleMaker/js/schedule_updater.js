@@ -9,8 +9,13 @@ let addedCourses = {
 };
 
 function convStrToMinutes(timeString) {
-    const timeStringSplit = timeString.split(":").map(Number);;
+    const timeStringSplit = timeString.split(":").map(Number);
     return 60 * timeStringSplit[0] + timeStringSplit[1];
+}
+
+function rangesOverlap(rangeA, rangeB) {
+    //console.log(`${rangeA[1]} > ${rangeB[0]} && ${rangeA[0]} < ${rangeB[1]}`);
+    return rangeA[1] >= rangeB[0] && rangeA[0] <= rangeB[1];
 }
 
 function findOverlaps(data) {
@@ -25,10 +30,19 @@ function findOverlaps(data) {
             const entryA = data[i];
             const entryB = data[j];
 
-            //console.log(entryA);
+            const currentYear = new Date().getFullYear();
+            const startDateA = new Date(`${currentYear}-${entryA.startWeek[1]}-${entryA.startWeek[0]}`);
+            const endDateA = new Date(`${currentYear}-${entryA.endWeek[1]}-${entryA.endWeek[0]}`);
+            const startDateB = new Date(`${currentYear}-${entryB.startWeek[1]}-${entryB.startWeek[0]}`);
+            const endDateB = new Date(`${currentYear}-${entryB.endWeek[1]}-${entryB.endWeek[0]}`);
 
+            //console.log(entryA);
             // Check if entryA and entryB overlap
-            if (entryA.endTime > entryB.startTime && entryA.startTime < entryB.endTime) {
+            //console.log(`${entryA.endTime} > ${entryB.startTime} && ${entryA.startTime} < ${entryB.endTime}`);
+            if (
+                rangesOverlap([startDateA, endDateA], [startDateB, endDateB])
+                && rangesOverlap([entryA.startTime, entryA.endTime], [entryB.startTime, entryB.endTime])
+            ) {
                 // Ensure entryA's overlaps are stored
                 if (!overlaps[entryA.id]) {
                     overlaps[entryA.id] = [];//[entryA.id];
@@ -75,12 +89,20 @@ function updateTT(index) {
             .style("color", color)
             .text(`Current ECT amount: ${previousEct}`);
 
+        const courseWeeks = content[colNameToIndex["weeks"]].toLowerCase().split(" - ");
+        const startWeek = courseWeeks[0].split("/").map(Number);
+        const endWeek = courseWeeks[1].split("/").map(Number);
+
         const courseHours = content[colNameToIndex["hours"]].toLowerCase().split(" - ");
         const startTime = convStrToMinutes(courseHours[0]);
         const endTime = convStrToMinutes(courseHours[1]);
 
+
+
         addedCourses[courseDay][courseName] = {
             "id": index,
+            "startWeek": startWeek,
+            "endWeek": endWeek,
             "startTime": startTime,
             "endTime": endTime,
         };

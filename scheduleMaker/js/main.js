@@ -5,18 +5,21 @@ const colNameToIndex = {
     "oldCourse": 1,
     "newCourse": 2,
     "courseName": 3,
-    "day": 4,
-    "hours": 5,
+    "weeks": 4,
+    "day": 5,
+    "hours": 6,
+    "moreinfo": 7,
 }
 const courses = [
-    ["5", "Item 1", "Data 1", "Data 3", "Monday", "8:00 - 11:45"],
-    ["5", "Item 2", "Data 2", "Data 6", "Monday", "10:30 - 12:45"],
-    ["5", "Item 3", "Data 3", "Data 2", "Tuesday", "9:00 - 13:00"],
-    ["5", "Item 4", "Data 4", "Data 20", "Thursday", "9:00 - 13:00"],
-    ["50", "Item 5", "Data 5", "Data 1", "Thursday", "10:00 - 14:00"],
-    ["5", "Item 7", "Data 7", "Data 42", "Thursday", "11:30 - 12:00"],
-    ["5", "Item 6", "Data 6", "Data 23", "Thursday", "13:30 - 15:00"],
+    ["2.5", "TP-IGR201", "placeholder", "Interactive 2D/Mobile/Web Application Development", "16/09 - 14/11", "Monday", "8:30 - 11:45"],
+    ["5", "TP-IGR203", "placeholder", "Human-Computer Interaction", "17/02 - 14/04", "Monday", "13:30 - 16:45"],
 ];
+
+const urls = [
+    "https://perso.telecom-paristech.fr/elc/igr201/",
+    "https://perso.telecom-paristech.fr/elc/igr203/index.html",
+];
+
 const dayToId = {
     "monday": [],
     "tuesday": [],
@@ -86,6 +89,10 @@ function createTable() {
         course.forEach(info => {
             courseLine.append("td").text(info);
         });
+
+        courseLine.append("td").append("a")
+            .attr("href", urls[i])
+            .text("Website")
     });
 
     //console.log(dayToId);
