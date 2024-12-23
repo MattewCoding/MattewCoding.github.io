@@ -71,7 +71,7 @@ function updateTT(index) {
     if (courseName in accd) {
         previousEct -= Number(content[[colNameToIndex["ect"]]]);
         let color = "red";
-        if (previousEct >= 65) {
+        if (previousEct >= 60) {
             color = "green";
         }
         d3.select("#ectCount")
@@ -82,7 +82,7 @@ function updateTT(index) {
     } else {
         previousEct += Number(content[[colNameToIndex["ect"]]]);
         let color = "red";
-        if (previousEct >= 65) {
+        if (previousEct >= 60) {
             color = "green";
         }
         d3.select("#ectCount")
