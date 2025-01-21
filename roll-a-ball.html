@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="./media/favicon.png" />
+    <title>Unity Roll-a-Ball: Unity Basics</title>
+    <script type="text/javascript" src="js/main.js"></script>
+    
+    <link id="lightStylesheet" rel="stylesheet" href="css/styleCommon.css" />
+    <link id="lightStylesheet" rel="stylesheet" href="css/style.css" />
+    <link id="darkStylesheet" rel="stylesheet" href="css/styleNight.css" disabled/>
+</head>
+
+<body onload="loadPage(3)">
+    <header>
+    </header>
+    <main>
+        <div class="main-part">
+            <h1>Week 2: Unity Basics</h1>
+            <h2>First Week of Development: Getting Used to Unity</h2>
+            <p>This is my first time doing any kind of work with Unity. To learn the basics, I followed the classic <a href="https://learn.unity.com/project/roll-a-ball?uv=60">Roll-a-Ball</a> tutorial. The first step was to actually create the project. I created a new Universal 3D Project and got to creating the basics. Then, I have to create the objects and the material for the scene. We need a aqua sphere to interact with and a gray plane for it to move about on, so we have to create that. In the hierarchy screen on the left, we can add a sphere object, and set its positional properties on the right in the Inspector tab. At the bottom, we create a new material to apply to the sphere. I set the material's color and reflectivity to simulate an aqua, plastic-like material.</p>
+            <figure>
+                <img src="./media/w2/step1.png" alt="An aqua ball on a gray plane in Unity" title="They don't see me rollin'" />
+                <figcaption>First Step in the Unity tutorial</figcaption>
+            </figure>
+            <p>Once the game was set up, the next step is to add player movement. To do so, I have to transform the player object (the ball) into a rigid body, so that the object can interact with its surroundings. Then, I create a Player Input component that links the keyboard commands with the object. A C++ script is created to translate the keyboard button presses into visual movement on the screen. To be able to modify its speed, we create a public variable, which we can modify from the Unity editor itself.</p>
+            <pre><code>using UnityEngine;
+using UnityEngine.InputSystem;
+using TMPro;
+
+public class PlayerController : MonoBehaviour
+{
+    private Rigidbody rb; // The player object
+    private float movementX; // The X coordinate of the vector
+    private float movementY; // The Y coordinate of the vector
+    public float speed = 0; 
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        rb = GetComponent&lt;Rigidbody&gt;();
+    }
+
+    // When a keyboard command is recieved
+    void OnMove(InputValue movementValue)
+    {
+        Vector2 movementVector = movementValue.Get&lt;Vector2&gt;();
+        movementX = movementVector.x;
+        movementY = movementVector.y;
+    }
+
+    // Continous update on every frame
+    private void FixedUpdate()
+    {
+        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+        rb.AddForce(movement * speed);
+    }
+}</code></pre>
+            <p>
+                Next, the camera has to follow the player. Right now, it's fixed in one spot, looking at the center, but the solution is not as easy as dragging the camera to be a child node of the player.
+            </p>
+            <figure>
+                <img src="./media/rab/0cameraposition.png" alt="Camera position properties" title="And... action!" />
+                <figcaption>Setting up the camera</figcaption>
+            </figure>
+            <p>
+                This is because doing so makes the camera follow the player's position and <i>rotation</i>.
+            </p>
+            <figure>
+                <img src="./media/rab/1camerachild.png" alt="The camera rolling" title="Woah... i'm so dizzy..." />
+                <figcaption>The camera follows the player's position and rotation</figcaption>
+            </figure>
+            <p>
+                To have the camera only follow the player's position, we have to create a new C++ file, where we can explicitly write that we only want the position to be tracked. We should also take into account the relative position of the camera to the player, otherwise, the camera would snap to the same position as the player! By having this offset, we keep the camera in the sky, but still centered on the player.
+            </p>
+            <pre><code>using UnityEngine;
+
+public class CameraController : MonoBehaviour
+{
+    public GameObject player;
+    private Vector3 offset;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        offset = transform.position - player.transform.position;
+    }
+
+    // Update is called once per frame
+    void LateUpdate()
+    {
+        transform.position = player.transform.position + offset;
+    }
+}</code></pre>
+            <p>
+                The player can move around with a camera following, but it's a rather boring 'game' where they can fall off and infinitely fall. We should add cubes that function as walls to block off the playzone, then add collectables scattered around the playzone. This will be the basis of the game; to collect all of the collectables. We stretch out the cubes along the X or Z axis to create the four walls, and the Y axis to be high enough so that our player object doesn't fall off.
+            </p>
+            <figure>
+                <img src="./media/rab/3walls.png" alt="The four walls of the play zone" title="fence high walls really gonna stop this ball from falling off" />
+                <figcaption>The walls of the playzone, ensuring the ball can't easily fall off the platform</figcaption>
+            </figure>
+            <p>As usual, we provide the walls with a material. The same is done for the collectables, rotating them to be 45 degrees tilted for stylistic effect. They will be colored yellow to set them apart from other objects. Additional rotation can be used to enhance this distinction, achieved using a C++ script. We make this collectable a template, which Unity calls 'prefabs'. This allows us to easily reuse the object and place it all over the board.
+            </p>
+            <div class="img-row">
+                <figure>
+                    <img src="./media/rab/3wallsmaterial.png" alt="Wall material properties" title="Gray walls for the gray playzone" />
+                    <figcaption>The material used for the walls</figcaption>
+                </figure>
+                <figure>
+                    <img src="./media/rab/4pickupmaterial.png" alt="Pickup material properties" title="Yellow standout" />
+                    <figcaption>The material used for the collectables</figcaption>
+                </figure>
+            </div>
+            <div class="img-row">
+                <figure>
+                    <img src="./media/rab/4pickupproperty.png" alt="Pickup properties" title="yellow ramiel yellow ramiel" />
+                    <figcaption>The properties of the collectables</figcaption>
+                </figure>
+                <figure>
+                    <img src="./media/rab/5pickuppositions.png" alt="Pickup positions" title="This layout is an octagon!" />
+                    <figcaption>The locations of the collectables</figcaption>
+                </figure>
+            </div>
+
+            <p>
+                However, right now, the collectables aren't collectable. They simply rotate in place and act as obstacles. For the player to be able to interact with them, we need to simulate a pick up. To do so, we'll hide the collectable once the player interacts with it. This is done by checking if the player has collided with an object, then checking if that object is a collectable. The easiest way to check is to assign each collectable a tag, giving this tag a memorable and indicative name ('PickuUp'), then check if the object the player collided with has this tag. 
+            </p>
+            <figure>
+                <img src="./media/rab/5pickuptag.png" alt="Pickup tags" title="tagging" />
+                <figcaption>The tags of the pick up</figcaption>
+            </figure>
+
+            <p>
+                An interesting observation to be made is that the collectable doesn't really need to physically interact with the player. It only needs to detect when it intersects with the player, then disappear. It only acts as a trigger. Thus, we should tell the collectable to act as a trigger, by ticking the isTrigger checkbox. As a final optimization, we add the RigidBody component to the collectables and disable their physics calculation; they're rotating in the air, they're not affected by gravity. Telling Unity that information helps optimize the game. It's a bit silly to do for this game specifically, since it's not a big game, but for larger games, this can be a very useful optimization.
+            </p>
+            <figure>
+                <img src="./media/rab/5pickuptrigger.png" alt="Pickup trigger" title="isTrigger" />
+                <figcaption>The isTrigger option.</figcaption>
+            </figure>
+            
+            <p>
+                We can collect the collectables, but how can we possibly remember how many we've collected? A helpful solution is to add a TextMeshPro object, which is text that always appears on the screen. It's not linked to the 3D scene. Now, we're going to use modify the Player script to modify the content of the text, but as placeholder text I wrote 'Count Text'. Then, I positioned the text such that it appears in the top-left of the screen, by using the anchroing tool that Unity offers.
+            </p>
+            <figure>
+                <img src="./media/rab/5text.png" alt="The text object" title="Allan please add details" />
+                <figcaption>The text object</figcaption>
+            </figure>
+            <figure>
+                <img src="./media/rab/5textanchor.png" alt="Pickup positions" title="Top left" />
+                <figcaption>Positioning the text by clicking the buttons</figcaption>
+            </figure>
+            <figure>
+                <img src="./media/rab/5pickuppositions.png" alt="Positioning the collectables" title="Star board" />
+                <figcaption>Positioning the collectables</figcaption>
+            </figure>
+            
+            <p>
+                To dyanmically update the text, we modify the Player script, as previously mentioned, to update the text. There's not much to do, it's basic code. What is important, though, is for the Player script to know which textbox to modify. Additionally, once all of the collectables are gone, we display new text that displays 'You Win!'
+            </p>
+            <figure>
+                <img src="./media/rab/5youwiningame.png" alt="You win screen" title="you are winner!" />
+                <figcaption>The 'you win' screen, after collecting all of the objects</figcaption>
+            </figure>
+
+            <p>
+                This is still a bit boring. There's no sense of verticality, no sense of challenge. We can fix that by adding interior walls and obstacles, and an enemy. First, we create a cube that will chase us and we color it enemy red.
+            </p>
+            <figure>
+                <img src="./media/rab/6enemy.png" alt="Image of the enemy" title="Enemy makeup" />
+                <figcaption>The enemy and its materials</figcaption>
+            </figure>
+                
+            <p>
+                We then need to make sure that the ground can interact with the enemy by creating a NavMesh and creating its mesh. We exclude the collectables, since they shouldn't impact the floor. The enemy can now stand on the ground without falling through, but it's not moving. We need to set its destination to be us. This is done by creating a C++ script and using the .setDestination() function to tell it to chase us. We set its speed to be slightly slower than ours.
+            </p>
+            <p>
+                Next are the obstacles. There are two types; static and dynamic. Static obstacles don't move. I placed some as walls, and some as abstract art, and one rejected Need For Speed ramp. Dynamic can be moved by the Player, and to differentiate them from static obstacles I've painted them green. I've also made them light, so that they are easy to push. Once all that is done, we need the ground to recalculate its mesh, so that the enemy can properly calculate their most optimal paths. 
+            </p>
+            <figure>
+                <img src="./media/rab/7remesh.png" alt="Remeshing" title="Remeshing" />
+                <figcaption>Remeshing</figcaption>
+            </figure>
+
+            <p>
+                When the enemy catches us... nothing happens, because we haven't told Unity what to do. So let's do so. Let's modify the code to tell Unity to display 'You Lose!' text on the screen when the enemy hits the Player. Specifically, we need to override the OnCollisionEnter() function, check if the collider was the enemy, and display the 'You Lose!' text. Much like the collectable, we create an 'Enemy' tag, then check in OnCollisionEnter() if the collider is tagged as such to indicate a loss.
+            </p>
+            <figure>
+                <img src="./media/rab/8enemytag.png" alt="Pickup positions" title="This layout is an octagon!" />
+                <figcaption>Setting the enemy to have the enemy tag</figcaption>
+            </figure>
+
+            <p>
+                When we win, we dispawn the enemy to avoid losing after winning.
+            </p>
+            <p>
+                The game is finished. All that's left is to export it as an executable. Pressing ctrl-shift-b opens up the build tab. I need to configure for a Windows executable, and for ease I'll make it windowed, and not full screen. Additionally, I need to indicate which scene to include. Not the sample scene, but the minigame I developed. Once all of that is completed, I am finally done with developing the game, and I can finally play it.
+            </p>
+            <div class="img-row">
+                <figure>
+                    <img src="./media/rab/9build.png" alt="Build window" title="Build 'Windows 11'" />
+                    <figcaption>Build window</figcaption>
+                </figure>
+                <figure>
+                    <img src="./media/rab/9openscenes.png" alt="Scenes included" title="Minigame!" />
+                    <figcaption>Included scenes</figcaption>
+                </figure>
+                <figure>
+                    <img src="./media/rab/9player.png" alt="Player settings" title="Player settings" />
+                    <figcaption>Player settings</figcaption>
+                </figure>
+            </div>
+
+        </div>
+    </main>
+    <footer>
+    </footer>
+</body>
+
+</html>
