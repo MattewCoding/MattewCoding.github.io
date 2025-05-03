@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <link rel="stylesheet" href="./css/style.css">
+
+    <title>SVG Zoom and Pan Page</title>
+</head>
+
+<body>
+    <div id="container">
+        <svg id="graphMap" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5100 3100" style="transform: scale(1);">
+            <image href="./media/world_svg_v4.svg" x="50" y="50" width="5000" height="3000" />
+        </svg>
+        <div id="controls">
+            <button id="zoom-in" class="zoom-button">Zoom In</button>
+            <button id="zoom-out" class="zoom-button">Zoom Out</button>
+            <button id="center" class="zoom-button">Center</button>
+        </div>
+        <div id="submitDiv">
+            <button id="submitButton" class="zoom-button">Check Answers</button>
+        </div>
+    </div>
+
+    <div id="notification" class="hidden">
+        <span id="amountWrong"></span>
+        <div id="progress-bar"></div>
+    </div>
+
+
+    <script type="text/javascript" src="js/d3.v7.min.js"></script>
+    <script type="text/javascript" src="./js/zoomIn.js"></script>
+    <script type="text/javascript" src="./js/placingTextboxes.js"></script>
+</body>
+
+</html>
