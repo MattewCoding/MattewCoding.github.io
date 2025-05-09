@@ -1,0 +1,45 @@
+.svg-textbox, .svg-plaintext, .svg-plaintextshadow {
+    font-family: Arial, sans-serif;
+    font-size: 22px;
+    text-align: center;
+}
+
+.svg-textbox {
+    padding: 5px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+
+    -webkit-text-fill-color: white;
+    -webkit-text-stroke: 5px rgb(15, 15, 15);
+    text-indent: 0px;
+    /* Offset so that -webkit-text-stroke doesn't get cut off */
+    paint-order: stroke fill;
+
+    margin: 4px;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    box-sizing: border-box;
+
+    /*background-color: rgb(230, 230, 230);
+    outline: 4px solid red;*/
+
+}
+
+.svg-textbox:focus {
+    background-color: rgb(230, 230, 230);
+    outline: 4px solid red;
+}
+
+.svg-textbox::selection {
+    background-color: rgb(85, 137, 214);
+}
+
+.svg-plaintext {
+    fill: white;
+}
+
+.svg-plaintextshadow {
+    stroke: black;
+    stroke-width: 4;
+}

@@ -27,18 +27,29 @@ function main() {
 
 function configureSubmitButton() {
     const submitButton = document.getElementById('submitButton');
-    const notification = document.getElementById('notification');
+    const amtWrongNotif = document.getElementById('amountWrongNotification');
     const progressBar = document.getElementById('progress-bar');
     const amountWrong = document.getElementById('amountWrong');
     let hideTimeout;
 
     submitButton.addEventListener('click', (e) => {
+        if (amountCorrect == 0) {// ctx.MAX_PROVINCES) {
+            const uWinNotif = document.getElementById('youWinNotification');
+            uWinNotif.classList.add('show');
+            uWinNotif.addEventListener('click', (event) => {
+                if (event.target === uWinNotif) {
+                    uWinNotif.classList.remove('show');
+                }
+            });
+            return;
+        }
+
         amountWrong.innerHTML = amountCorrect + " / " + ctx.MAX_PROVINCES + " Correct";
         clearTimeout(hideTimeout);
 
         // Reset state
-        notification.classList.remove('exiting');
-        void notification.offsetWidth; // force reflow to restart animation
+        amtWrongNotif.classList.remove('exiting');
+        void amtWrongNotif.offsetWidth; // force reflow to restart animation
 
         // Start progress bar animation
         progressBar.style.animation = 'none';
@@ -46,7 +57,7 @@ function configureSubmitButton() {
         progressBar.style.animation = null;
 
         // Animate in
-        notification.classList.add('entering');
+        amtWrongNotif.classList.add('entering');
 
         svgElementForTextboxes.selectAll("circle")
             .each(function (d) {
@@ -61,8 +72,8 @@ function configureSubmitButton() {
             });
 
         hideTimeout = setTimeout(() => {
-            notification.classList.remove('entering');
-            notification.classList.add('exiting');
+            amtWrongNotif.classList.remove('entering');
+            amtWrongNotif.classList.add('exiting');
         }, 5000);
     });
 }
@@ -79,77 +90,86 @@ function setUpWorldGraph() {
                 "answer": d.attributes.label,
                 "userCorrect": false,
             };
-            //userAns[[trueX, trueY]] = "";
-            /*svgElementForTextboxes.append("circle")
-                .datum(d)
-                .attr("cx", trueX + 19)
-                .attr("cy", trueY + 19)
-                .attr("r", ctx.CIRCLE_RAD)
-                .attr("fill", "grey")
-                .attr("stroke", "black")
-                .attr("stroke-width", 4);*/
 
-            const foreignObject = svgElementForTextboxes.append("foreignObject")
-                .datum(d)
-                .attr("x", trueX)
-                .attr("y", trueY)
-                .attr("width", ctx.WIDTH)
-                .attr("height", ctx.HEIGHT);
+            let initialX = trueX + 15; //35 - measureTextWidth(d.attributes.label) / 2;
+            let initialY = trueY + 27;
+            let newTextWidth = ctx.WIDTH;
+            let newTrueX = trueX;
 
-            foreignObject.append("xhtml:input")
-                .attr("class", "svg-textbox")
-                .attr("type", "text")
+            const textElementShadow = svgElementForTextboxes.append("text")
+                .attr("x", initialX)
+                .attr("y", initialY)
+                .attr("class", "svg-plaintextshadow")
+                .text("?");
+
+            const textElement = svgElementForTextboxes.append("text")
+                .attr("x", initialX)
+                .attr("y", initialY)
+                .attr("class", "svg-plaintext")
                 .attr("placeholder", "?")
-                //.attr("label", d.attributes.label)
-                .on("blur", function () {
-                    //console.log("Coordinates: x = " + this.getAttribute("data-x") + ", y = " + this.getAttribute("data-y"));
-                    //console.log("Text entered (on blur):", this.value);
-                    const beforeCorrectnessCheck = answerKey[[trueX, trueY]].userCorrect;
-                    const correctnessCheck = answerKey[[trueX, trueY]].answer == this.value;
+                .text("?")
+                .style("cursor", "pointer")
+                .on("click", function (event, d) {
+                    const existing = d3.select("foreignObject.editing");
+                    if (!existing.empty()) existing.remove();
 
-                    // User correctly answered
-                    if (!beforeCorrectnessCheck && correctnessCheck) {
-                        amountCorrect++;
-                    }
+                    const fo = svgElementForTextboxes.append("foreignObject")
+                        .attr("x", newTrueX)
+                        .attr("y", trueY)
+                        .attr("width", newTextWidth)
+                        .attr("height", ctx.HEIGHT)
+                        .classed("editing", true);
 
-                    // User had correct answer but switched to wrong
-                    if (beforeCorrectnessCheck && !correctnessCheck) {
-                        amountCorrect--;
-                    }
+                    const input = fo.append("xhtml:input")
+                        .attr("type", "text")
+                        .attr("class", "svg-textbox")
+                        .attr("placeholder", "?")
+                        //.attr("label", d.attributes.label)
+                        .property("value", () => {
+                            if (textElement.text() == "?") {
+                                return "";
+                            } else {
+                                return textElement.text();
+                            }
+                        })
+                        .on("blur", function () {
+                            const val = this.value.trim();
+                            const xForNoninteractableElement = newTrueX + 13;
 
-                    answerKey[[trueX, trueY]].userCorrect = correctnessCheck;
-                    console.log(answerKey[[trueX, trueY]]);
-                    console.log(amountCorrect);
-                })
-                .on("keydown", function (event) {
-                    if (event.key === "Enter") {
-                        this.blur();
-                    }
-                })
-                .on("input", function () {
-                    const inputText = this.value || this.placeholder;
-                    const newTextWidth = measureTextWidth(inputText);
-                    foreignObject // Updating
-                        .attr("x", Math.max(0, trueX - newTextWidth / 2 + 18))
-                        .attr("width", newTextWidth);
+                            textElement.text(val || "?").style("display", null);
+                            textElementShadow.text(val || "?").style("display", null);
+                            textElement.attr("x", xForNoninteractableElement);
+                            textElementShadow.attr("x", xForNoninteractableElement);
+
+                            fo.remove();
+
+                            const beforeCorrectnessCheck = answerKey[[trueX, trueY]].userCorrect;
+                            const correctnessCheck = answerKey[[trueX, trueY]].answer === val;
+
+                            if (!beforeCorrectnessCheck && correctnessCheck) amountCorrect++;
+                            if (beforeCorrectnessCheck && !correctnessCheck) amountCorrect--;
+                            answerKey[[trueX, trueY]].userCorrect = correctnessCheck;
+                            //console.log(answerKey[[trueX, trueY]]);
+                            //console.log(amountCorrect);
+                        })
+                        .on("keydown", function (event) {
+                            if (event.key === "Enter") this.blur();
+                        })
+                        .on("input", function () {
+                            const inputText = this.value || this.placeholder;
+                            newTextWidth = measureTextWidth(inputText);
+                            newTrueX = Math.min(Math.max(trueX - newTextWidth / 2 + 19.5, 0), 5100 - newTextWidth);
+                            //console.log(`${Math.max(trueX - newTextWidth / 2 + 19.5, 0)} vs. ${5100 - newTextWidth}`)
+                            //console.log(newTextWidth);
+                            fo.attr("x", Math.max(0, newTrueX))
+                                .attr("width", newTextWidth);
+                        });
+
+                    textElement.style("display", "none");
+                    input.node().focus();
                 });
+
         });
-
-        /*data.edges.forEach(function (d) {
-            const sourceCoords = label2Coord[d.source];
-            const targetCoords = label2Coord[d.target];
-
-            svgElementForTextboxes.append("line")
-                .datum(d)
-                .attr("x1", sourceCoords[0] + 19)
-                .attr("y1", sourceCoords[1] + 19)
-                .attr("x2", targetCoords[0] + 19)
-                .attr("y2", targetCoords[1] + 19)
-                .attr("stroke", "black")
-                .attr("stroke-width", 2)
-                .lower();
-        });*/
-        //console.log(Object.keys(answerKey).length);
     }).catch(function (error) {
         console.error("Error loading the file:", error);
     });
@@ -203,8 +223,6 @@ function measureTextWidth(text) {
 
     // Create a temporary text element to measure the width of the placeholder
     const tempText = svgElementForTextboxes.append("text")
-        .attr("x", 0)
-        .attr("y", -9999) // Move it out of view
         .style("visibility", "hidden") // Hide the text
         .style("font-family", "Arial, sans-serif")
         .style("font-size", ctx.FONT_SIZE)
