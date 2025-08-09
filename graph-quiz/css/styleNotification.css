@@ -1,48 +1,50 @@
 #amountWrongNotification {
-    position: fixed;
-    top: -50%;
-    left: 50%;
-    /* Off-screen to left */
-    transform: translateX(-50%);
-    background-color: #333;
-    color: white;
-    padding: 16px 24px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    text-align: center;
-    min-width: 300px;
-    transition: top 0.5s ease;
-    pointer-events: none;
+  font-family: Arial, sans-serif;
+  position: fixed;
+  top: -50%;
+  left: 50%;
+  /* Off-screen to left */
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  text-align: center;
+  min-width: 300px;
+  transition: top 0.5s ease;
+  pointer-events: none;
 }
 
 #amountWrongNotification.entering {
-    top: 5%;
+  top: 5%;
 }
 
 #amountWrongNotification.exiting {
-    top: -50%;
+  top: -50%;
 }
 
 #progress-bar {
-    margin-top: 10px;
-    height: 5px;
-    background-color: #4caf50;
-    width: 100%;
-    animation: shrink-bar 5s linear forwards;
+  margin-top: 10px;
+  height: 5px;
+  background-color: #4caf50;
+  width: 100%;
+  animation: shrink-bar 5s linear forwards;
 }
 
 @keyframes shrink-bar {
-    from {
-        width: 100%;
-    }
+  from {
+    width: 100%;
+  }
 
-    to {
-        width: 0%;
-    }
+  to {
+    width: 0%;
+  }
 }
 
-#youWinNotification {
+.endNotif {
+  font-family: Arial, sans-serif;
   position: fixed;
   top: 0;
   left: 0;
@@ -58,12 +60,12 @@
   z-index: 1000;
 }
 
-#youWinNotification.show {
+.endNotif.show {
   opacity: 1;
   visibility: visible;
 }
 
-#youWin {
+.endNotifText {
   background: white;
   padding: 20px;
   border-radius: 8px;
@@ -71,6 +73,6 @@
   transition: transform 0.5s ease;
 }
 
-#youWinNotification.show #youWin {
+.endNotifText.show {
   transform: none;
 }

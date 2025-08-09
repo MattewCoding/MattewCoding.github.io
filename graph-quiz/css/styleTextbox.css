@@ -1,4 +1,4 @@
-.svg-textbox, .svg-plaintext, .svg-plaintextshadow {
+.svg-textbox, .svg-plaintext {
     font-family: Arial, sans-serif;
     font-size: 22px;
     text-align: center;
@@ -37,9 +37,10 @@
 
 .svg-plaintext {
     fill: white;
-}
 
-.svg-plaintextshadow {
     stroke: black;
-    stroke-width: 4;
+    stroke-width: 5;
+    fill: white;
+    paint-order: stroke;
+    stroke-linecap: round;
 }

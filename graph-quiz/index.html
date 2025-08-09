@@ -9,36 +9,114 @@
     <link rel="stylesheet" href="./css/styleMain.css">
     <link rel="stylesheet" href="./css/styleNotification.css">
     <link rel="stylesheet" href="./css/styleTextbox.css">
+    <link rel="stylesheet" href="./css/styleOptions.css">
 
     <title>ImpDip Graph Quiz</title>
 </head>
 
 <body>
-    <div id="container">
-        <svg id="graphMap" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5100 3100" style="transform: scale(1);">
-            <image href="./media/world_svg_v4.svg" x="50" y="50" width="5000" height="3000" />
-        </svg>
-        <div id="controls">
-            <button id="zoom-in" class="zoom-button">Zoom In</button>
-            <button id="zoom-out" class="zoom-button">Zoom Out</button>
-            <button id="center" class="zoom-button">Center</button>
+    <div id="game">
+        <div id="container">
+            <svg id="graphMap" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5100 3100" style="transform: scale(1);">
+                <image id="graphImage" href="./media/world-normal.svg" x="50" y="50" width="5000" height="3000" />
+            </svg>
+            <!--<svg id="graphMap" xmlns="http://www.w3.org/2000/svg" viewBox="-104 0 5595 3100" style="transform: scale(1);">
+                <image href="./media/world-pacific-two.png" x="-104" y="64" width="5495" height="3000" />
+            </svg>
+            <svg id="graphMap" xmlns="http://www.w3.org/2000/svg" viewBox="-63 -145 5685 3614" style="transform: scale(1);">
+                <image href="./media/world-pacific-one.png" x="-63" y="-145" width="5585" height="3514" />
+            </svg>-->
+
+            <div id="controls">
+                <button id="zoom-in" class="zoom-button">Zoom In</button>
+                <button id="zoom-out" class="zoom-button">Zoom Out</button>
+                <button id="center" class="zoom-button">Center</button>
+                <button id="option-button" class="zoom-button">Options</button>
+            </div>
+            <div id="submitDiv">
+                <button id="counter" class="counter">00:00:00</button>
+                <button id="submitButton" class="zoom-button">Check Answers</button>
+            </div>
         </div>
-        <div id="submitDiv">
-            <button id="submitButton" class="zoom-button">Check Answers</button>
+
+        <div id="amountWrongNotification" class="hidden">
+            <span id="amountWrong"></span>
+            <div id="progress-bar"></div>
+        </div>
+
+        <div id="youWinNotification" class="endNotif">
+            <span id="youWin" class="endNotifText">You Win!</span>
+        </div>
+
+        <div id="youLoseNotification" class="endNotif">
+            <span id="youLose" class="endNotifText">You ran out of time!</span>
         </div>
     </div>
 
-    <div id="amountWrongNotification" class="hidden">
-        <span id="amountWrong"></span>
-        <div id="progress-bar"></div>
-    </div>
+    <div id="backgroundOptions">
+        <div id="bodyOptions">
+            <h1>ImpDip Graph Game</h1>
+            <div id="intro">
+                <p>Hello! Welcome the the node graph game. A few things to know before starting:</p>
+                <ul>
+                    <li>The Pacific nodes and the Chukchi Sea node have been removed so that the graph doesn't cross
+                        over itself. This can be reenabled in the options</li>
+                    <li>This game predates the May updates (e.g. the Maldives are still connected to the Indian Ocean)
+                    </li>
+                    <li>Each node represents either a sea province, a land province, OR A COAST</li>
+                    <li>Coasts are connected to their land province (e.g. Rome EC is connected to Rome)</li>
+                    <li>There are 777 nodes</li>
+                </ul>
+                <p>This game is inspired by <a href="https://www.sporcle.com/games/ottus/diplomacy-graph-puzzle">Ottus's
+                        Diplomacy Graph Puzzle</a>, which is in turn inspired by <a
+                        href="https://www.sporcle.com/games/Alcas/hint--find-the-mediterranean">Alcas' World Graph
+                        Puzzle</a>.</p>
+            </div>
 
-    <div id="youWinNotification">
-        <span id="youWin">You Win!</span>
-    </div>
+            <div class="start-button">
+                <button id="play-game" onclick="startGame()">Play Game</button>
+            </div>
 
+            <div class="section">
+                <h2>Options (Can be modified before and during gameplay)</h2>
+                <h3>Game Mode</h3>
+                <form>
+                    <label><input type="radio" name="mode" value="stopwatch" checked> Stopwatch</label>
+                    <label><input type="radio" name="mode" value="timer80"> Timer: 80 minutes (~ 6 seconds per
+                        node)</label>
+                    <label><input type="radio" name="mode" value="timer130"> Timer: 130 minutes (~ 10 seconds per
+                        node)</label>
+                    <label>
+                        <input type="radio" name="mode" value="custom"> Input:
+                        <input type="text" id="hour-timer" placeholder="hrs" style="width: 20px;">
+                        <span>:</span>
+                        <input type="text" id="minute-timer" placeholder="mins" style="width: 30px;">
+                        <span id="approx-custom-timer">(~ seconds per node)</span>
+                    </label>
+                </form>
+            </div>
+
+            <div class="section">
+                <h3>Display Pacific nodes (image may take a while to load)</h3>
+                <form>
+                    <label><input type="radio" name="pacific" value="no" checked> No</label>
+                    <label><input type="radio" name="pacific" value="yes-two"> Yes, by having them on both
+                        sides</label>
+                    <label><input type="radio" name="pacific" value="yes-one"> Yes, on one side only</label>
+                </form>
+            </div>
+
+            <div class="section">
+                <h3>Hints</h3>
+                <label><input type="checkbox" name="hints" value="first-letter"> First letter of words</label>
+                <label><input type="checkbox" name="hints" value="region-colors"> Colors by continents</label>
+                <label><input type="checkbox" name="hints" value="starting-colors"> Color by starting countries</label>
+            </div>
+        </div>
+    </div>
 
     <script type="text/javascript" src="js/d3.v7.min.js"></script>
+    <script type="text/javascript" src="./js/options.js"></script>
     <script type="text/javascript" src="./js/zoomIn.js"></script>
     <script type="text/javascript" src="./js/placingTextboxes.js"></script>
 </body>

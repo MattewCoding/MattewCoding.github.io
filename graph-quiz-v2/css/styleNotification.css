@@ -1,0 +1,78 @@
+#amountWrongNotification {
+  font-family: Arial, sans-serif;
+  position: fixed;
+  top: -50%;
+  left: 50%;
+  /* Off-screen to left */
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  text-align: center;
+  min-width: 300px;
+  transition: top 0.5s ease;
+  pointer-events: none;
+}
+
+#amountWrongNotification.entering {
+  top: 5%;
+}
+
+#amountWrongNotification.exiting {
+  top: -50%;
+}
+
+#progress-bar {
+  margin-top: 10px;
+  height: 5px;
+  background-color: #4caf50;
+  width: 100%;
+  animation: shrink-bar 5s linear forwards;
+}
+
+@keyframes shrink-bar {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
+}
+
+.endNotif {
+  font-family: Arial, sans-serif;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.endNotif.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.endNotifText {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  transform: translateY(-50%);
+  transition: transform 0.5s ease;
+}
+
+.endNotifText.show {
+  transform: none;
+}

@@ -1,8 +1,9 @@
-const container = document.getElementById('container');
+const gameContainer = document.getElementById('game');
 const svgElement = document.getElementById('graphMap');
 const zoomInButton = document.getElementById('zoom-in');
 const zoomOutButton = document.getElementById('zoom-out');
 const centerButton = document.getElementById('center');
+const optionButton = document.getElementById('option-button');
 
 let scale = 1;
 let isDragging = false;
@@ -20,7 +21,7 @@ image.addEventListener('dragstart', (e) => e.preventDefault());
 function zoom(factor, centerX, centerY) {
     const prevScale = scale;
     scale *= factor;
-    if(scale <= 1) scale = 1;
+    if (scale <= 1) scale = 1;
 
     const scaleChange = scale / prevScale;
 
@@ -64,10 +65,26 @@ centerButton.addEventListener('click', (e) => {
     updateTransform();
 });
 
+optionButton.addEventListener('click', (e) => {
+    d3.select("#backgroundOptions").style("display", "");
+    d3.select("#bodyOptions").style("display", "");
+    d3.select("#backgroundOptions")
+        .transition()
+        .duration(750)
+        .ease(d3.easeCubicOut)
+        .style("opacity", 1);
+    d3.select("#bodyOptions")
+        .style("margin-top", "-4%")
+        .transition()
+        .duration(750)
+        .ease(d3.easeCubicOut)
+        .style("margin-top", "3%");
+});
+
 // Scroll wheel
-container.addEventListener('wheel', (event) => {
+gameContainer.addEventListener('wheel', (event) => {
     const { x, y } = getCenter();
-    
+
     if (event.deltaY < 0) {
         zoom(1.25, x, y);
     } else {
@@ -76,29 +93,29 @@ container.addEventListener('wheel', (event) => {
 })
 
 // Pan handlers
-container.addEventListener('mousedown', (e) => {
+gameContainer.addEventListener('mousedown', (e) => {
     // Don't allow dragging if clicking inside the input
     if (e.target.closest('#svg-textbox')) return;
 
     isDragging = true;
     startX = e.clientX - translateX;
     startY = e.clientY - translateY;
-    container.style.cursor = 'grabbing';
+    gameContainer.style.cursor = 'grabbing';
 });
 
-container.addEventListener('mousemove', (e) => {
+gameContainer.addEventListener('mousemove', (e) => {
     if (!isDragging) return;
     translateX = e.clientX - startX;
     translateY = e.clientY - startY;
     updateTransform();
 });
 
-container.addEventListener('mouseup', () => {
+gameContainer.addEventListener('mouseup', () => {
     isDragging = false;
-    container.style.cursor = 'grab';
+    gameContainer.style.cursor = 'grab';
 });
 
-container.addEventListener('mouseleave', () => {
+gameContainer.addEventListener('mouseleave', () => {
     isDragging = false;
-    container.style.cursor = 'grab';
+    gameContainer.style.cursor = 'grab';
 });
