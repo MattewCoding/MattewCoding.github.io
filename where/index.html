@@ -4,22 +4,62 @@
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon" href="./media/favicon.png" />
-    <title>Week 2: Selection Techniques</title>
+    <title>Schedule Maker INCOMPLETE</title>
     <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/d3.v7.min.js"></script>
+    <script type="text/javascript" src="js/table_sort.js"></script>
+    <script type="text/javascript" src="js/schedule_updater.js"></script>
 
-    <link id="lightStylesheet" rel="stylesheet" href="css/styleCommon.css" />
+
     <link id="lightStylesheet" rel="stylesheet" href="css/style.css" />
-    <link id="darkStylesheet" rel="stylesheet" href="css/styleNight.css" disabled/>
+    <link id="darkStylesheet" rel="stylesheet" href="css/styleNight.css" disabled />
 </head>
 
-<body onload="loadPage(4)">
+<body onload="loadPage()">
     <header>
+        <a href='./index.html'>
+            <img id='nav-image' src='./media/logo.png' alt='Site logo' title='Reload page' />
+        </a>
+        <nav id='header-options'>
+            <ul class='header-nav-ul'>
+                <li class='header-nav-li' id='translator' onclick="translateToFrench()">Voir la version française</li>
+                <li class='header-nav-li' id='darkModeButton'>Dark Mode</li>
+            </ul>
+        </nav>
     </header>
     <main>
         <div class="main-part">
-            <h1>Week 2: Selection Method Types</h1>
-            <h2>Overview</h2>
-            <p>Sample text to fill the space.</p>
+            <h1>Schedule Maker INCOMPLETE</h1>
+            <p>Hello, welcome to the schedule maker! This is a tool to simplify your schedule creation. Click the
+                checkboxes to add a course to your schedule. The page will tell you if there are any overlaps, by
+                highlighting the conflicting coursees in red. As a reminder, you need at least 60 ECTs/credits to pass
+                the school year. You must also pass all of the courses that you will take.</p>
+            <p>Note that this is just to check that no courses overlap. This is not a replacement for filling out the
+                contract. You still need to fill out the contract.</p>
+            <p>For full transparency, this page's source code is publically available at <a
+                    href="https://github.com/MattewCoding/MattewCoding.github.io/scheduleMaker">this link</a>.
+                Additionally, this page does not use cookies to store any data.</p>
+
+            <h3 id="ectCount" style="color: red;">Current ECT amount: 0</h3>
+            <table id="scheduleTable">
+                <thead>
+                    <tr>
+                        <th class="deactivateSort"></th>
+                        <th class="deactivateSort">Overlaps with</th>
+                        <th onclick="sortTable(2)">ECTs</th>
+                        <th onclick="sortTable(3)">Old course ID</th>
+                        <th onclick="sortTable(4)">New course ID</th>
+                        <th onclick="sortTable(5)">Name of Course</th>
+                        <th onclick="sortTable(6)">Weeks</th>
+                        <th onclick="sortTable(7)">Day</th>
+                        <th onclick="sortTable(8)">Hour</th>
+                        <th class="deactivateSort">More information</th>
+                    </tr>
+                </thead>
+                <tbody id="scheduleBody">
+                </tbody>
+            </table>
+        </div>
     </main>
     <footer>
     </footer>
