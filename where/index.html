@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon" href="./media/favicon.png" />
-    <title>Schedule Maker INCOMPLETE</title>
+    <title>Room Finder</title>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/d3.v7.min.js"></script>
     <script type="text/javascript" src="js/table_sort.js"></script>
@@ -29,31 +29,29 @@
     </header>
     <main>
         <div class="main-part">
-            <h1>Schedule Maker INCOMPLETE</h1>
-            <p>Hello, welcome to the schedule maker! This is a tool to simplify your schedule creation. Click the
-                checkboxes to add a course to your schedule. The page will tell you if there are any overlaps, by
-                highlighting the conflicting coursees in red. As a reminder, you need at least 60 ECTs/credits to pass
-                the school year. You must also pass all of the courses that you will take.</p>
-            <p>Note that this is just to check that no courses overlap. This is not a replacement for filling out the
-                contract. You still need to fill out the contract.</p>
-            <p>For full transparency, this page's source code is publically available at <a
-                    href="https://github.com/MattewCoding/MattewCoding.github.io/scheduleMaker">this link</a>.
-                Additionally, this page does not use cookies to store any data.</p>
+            <h1>Where the hell is my class?</h1>
+            <p>A page to help you know where and when your classes are while your Synapses accouont is being created. Please remember that looking at the official
+                website's time table requiers logging in.</p>
+            <p>This page's source code is publically available at <a
+                    href="https://github.com/MattewCoding/MattewCoding.github.io/where">this link</a>. Additionally,
+                this page does not use cookies to store any data.</p>
 
-            <h3 id="ectCount" style="color: red;">Current ECT amount: 0</h3>
+            <p>Helpful key:</p>
+            <ul>
+                <li>(L): Lectures take place here</li>
+                <li>(C): Course work takes place here</li>
+                <li>(dd/mm): For that day, the room is changed to this one</li>
+                <li>(T): Takes place at the Telecom-Paris building</li>
+                <li>(P): Takes place at the Polytechnique building</li>
+            </ul>
             <table id="scheduleTable">
                 <thead>
                     <tr>
-                        <th class="deactivateSort"></th>
-                        <th class="deactivateSort">Overlaps with</th>
-                        <th onclick="sortTable(2)">ECTs</th>
-                        <th onclick="sortTable(3)">Old course ID</th>
-                        <th onclick="sortTable(4)">New course ID</th>
-                        <th onclick="sortTable(5)">Name of Course</th>
-                        <th onclick="sortTable(6)">Weeks</th>
-                        <th onclick="sortTable(7)">Day</th>
-                        <th onclick="sortTable(8)">Hour</th>
-                        <th class="deactivateSort">More information</th>
+                        <th onclick="sortTable(0)">Course ID</th>
+                        <th onclick="sortTable(1)">Course name</th>
+                        <th onclick="sortTable(2)">Where</th>
+                        <th onclick="sortTable(3)">When</th>
+                        <th class="deactivateSort">Time table</th>
                     </tr>
                 </thead>
                 <tbody id="scheduleBody">
