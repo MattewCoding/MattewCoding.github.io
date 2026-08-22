@@ -1,125 +1,119 @@
-let addedCourses = {
-    "monday": {},
-    "tuesday": {},
-    "wednesday": {},
-    "thursday": {},
-    "friday": {},
-    "saturday": {},
-    "sunday": {},
+const DAY_TO_NUMBER = {
+    sunday: 0,
+    monday: 1,
+    tuesday: 2,
+    wednesday: 3,
+    thursday: 4,
+    friday: 5,
+    saturday: 6,
 };
 
 function convStrToMinutes(timeString) {
-    const timeStringSplit = timeString.split(":").map(Number);
-    return 60 * timeStringSplit[0] + timeStringSplit[1];
+    const [hours, minutes] = timeString.split(":").map(Number);
+    return (hours * 60) + minutes;
 }
 
-function rangesOverlap(rangeA, rangeB) {
-    //console.log(`${rangeA[1]} > ${rangeB[0]} && ${rangeA[0]} < ${rangeB[1]}`);
-    return rangeA[1] >= rangeB[0] && rangeA[0] <= rangeB[1];
+function timesOverlap(slotA, slotB) {
+    return convStrToMinutes(slotA.startTime) < convStrToMinutes(slotB.endTime)
+        && convStrToMinutes(slotB.startTime) < convStrToMinutes(slotA.endTime);
 }
 
-function findOverlaps(data) {
-    // Initialize a dictionary to store the overlaps for each id
-    const overlaps = {};
+function parseDate(dateString) {
+    const [year, month, day] = dateString.split("-").map(Number);
+    return new Date(Date.UTC(year, month - 1, day));
+}
 
-    // Loop over each pair of entries in the data to find overlaps
-    for (let i = 0; i < data.length; i++) {
-        for (let j = 0; j < data.length; j++) {
-            if (j == i) continue;
+function dateIsWithin(date, startDate, endDate) {
+    const timestamp = parseDate(date).getTime();
+    return timestamp >= parseDate(startDate).getTime()
+        && timestamp <= parseDate(endDate).getTime();
+}
 
-            const entryA = data[i];
-            const entryB = data[j];
+function recurringSlotsOverlap(slotA, slotB) {
+    if (slotA.day.toLowerCase() !== slotB.day.toLowerCase() || !timesOverlap(slotA, slotB)) {
+        return false;
+    }
 
-            const currentYear = new Date().getFullYear();
-            const startDateA = new Date(`${currentYear}-${entryA.startWeek[1]}-${entryA.startWeek[0]}`);
-            const endDateA = new Date(`${currentYear}-${entryA.endWeek[1]}-${entryA.endWeek[0]}`);
-            const startDateB = new Date(`${currentYear}-${entryB.startWeek[1]}-${entryB.startWeek[0]}`);
-            const endDateB = new Date(`${currentYear}-${entryB.endWeek[1]}-${entryB.endWeek[0]}`);
+    const overlapStart = new Date(Math.max(
+        parseDate(slotA.startDate).getTime(),
+        parseDate(slotB.startDate).getTime()
+    ));
+    const overlapEnd = new Date(Math.min(
+        parseDate(slotA.endDate).getTime(),
+        parseDate(slotB.endDate).getTime()
+    ));
 
-            //console.log(entryA);
-            // Check if entryA and entryB overlap
-            //console.log(`${entryA.endTime} > ${entryB.startTime} && ${entryA.startTime} < ${entryB.endTime}`);
-            if (
-                rangesOverlap([startDateA, endDateA], [startDateB, endDateB])
-                && rangesOverlap([entryA.startTime, entryA.endTime], [entryB.startTime, entryB.endTime])
-            ) {
-                // Ensure entryA's overlaps are stored
-                if (!overlaps[entryA.id]) {
-                    overlaps[entryA.id] = [];//[entryA.id];
-                }
-                overlaps[entryA.id].push(entryB.id);
+    if (overlapStart > overlapEnd) return false;
 
-                // Ensure entryB's overlaps are stored
-                if (!overlaps[entryB.id]) {
-                    overlaps[entryB.id] = [];
-                }
+    const targetDay = DAY_TO_NUMBER[slotA.day.toLowerCase()];
+    const daysUntilOccurrence = (targetDay - overlapStart.getUTCDay() + 7) % 7;
+    const firstOccurrence = new Date(overlapStart);
+    firstOccurrence.setUTCDate(firstOccurrence.getUTCDate() + daysUntilOccurrence);
+    return firstOccurrence <= overlapEnd;
+}
+
+function recurringAndOneOffOverlap(recurring, oneOff) {
+    return dateIsWithin(oneOff.date, recurring.startDate, recurring.endDate)
+        && parseDate(oneOff.date).getUTCDay() === DAY_TO_NUMBER[recurring.day.toLowerCase()]
+        && timesOverlap(recurring, oneOff);
+}
+
+function oneOffSlotsOverlap(slotA, slotB) {
+    return slotA.date === slotB.date && timesOverlap(slotA, slotB);
+}
+
+function coursesOverlap(courseA, courseB) {
+    const recurringA = courseA.schedule.recurring;
+    const recurringB = courseB.schedule.recurring;
+    const oneOffA = courseA.schedule.oneOff;
+    const oneOffB = courseB.schedule.oneOff;
+
+    return recurringA.some(slotA => recurringB.some(slotB => recurringSlotsOverlap(slotA, slotB)))
+        || recurringA.some(slotA => oneOffB.some(slotB => recurringAndOneOffOverlap(slotA, slotB)))
+        || recurringB.some(slotB => oneOffA.some(slotA => recurringAndOneOffOverlap(slotB, slotA)))
+        || oneOffA.some(slotA => oneOffB.some(slotB => oneOffSlotsOverlap(slotA, slotB)));
+}
+
+function findOverlaps(selectedIndexes) {
+    const overlaps = Object.fromEntries(selectedIndexes.map(index => [index, []]));
+
+    for (let i = 0; i < selectedIndexes.length; i++) {
+        for (let j = i + 1; j < selectedIndexes.length; j++) {
+            const indexA = selectedIndexes[i];
+            const indexB = selectedIndexes[j];
+            if (coursesOverlap(courses[indexA], courses[indexB])) {
+                overlaps[indexA].push(indexB);
+                overlaps[indexB].push(indexA);
             }
         }
     }
     return overlaps;
 }
 
-function updateTT(index) {
-    //const checkboxId = "checkbox" + index;
-    const content = courses[index];
-    const courseDay = content[colNameToIndex["day"]].toLowerCase();
-    const courseName = content[colNameToIndex["newCourse"]].toLowerCase();
+function getSelectedCourseIndexes() {
+    return courses
+        .map((course, index) => index)
+        .filter(index => document.getElementById(`checkbox${index}`).checked);
+}
 
-    var previousEct = Number(d3.select("#ectCount").text().split(": ")[1]);
+function calculateTotalEcts(selectedIndexes) {
+    return selectedIndexes.reduce((total, index) => total + Number(courses[index].ects), 0);
+}
 
-    let accd = addedCourses[courseDay];
-    if (courseName in accd) {
-        previousEct -= Number(content[[colNameToIndex["ect"]]]);
-        let color = "red";
-        if (previousEct >= 60) {
-            color = "green";
-        }
-        d3.select("#ectCount")
-            .style("color", color)
-            .text(`Current ECT amount: ${previousEct}`);
+function updateTT() {
+    const selectedIndexes = getSelectedCourseIndexes();
+    const totalEcts = calculateTotalEcts(selectedIndexes);
+    const ectCount = document.getElementById("ectCount");
+    const overlaps = findOverlaps(selectedIndexes);
 
-        delete accd[courseName];
-    } else {
-        previousEct += Number(content[[colNameToIndex["ect"]]]);
-        let color = "red";
-        if (previousEct >= 60) {
-            color = "green";
-        }
-        d3.select("#ectCount")
-            .style("color", color)
-            .text(`Current ECT amount: ${previousEct}`);
+    ectCount.textContent = `Current ECTS amount: ${totalEcts}`;
+    ectCount.classList.toggle("requirement-met", totalEcts >= 60);
 
-        const courseWeeks = content[colNameToIndex["weeks"]].toLowerCase().split(" - ");
-        const startWeek = courseWeeks[0].split("/").map(Number);
-        const endWeek = courseWeeks[1].split("/").map(Number);
-
-        const courseHours = content[colNameToIndex["hours"]].toLowerCase().split(" - ");
-        const startTime = convStrToMinutes(courseHours[0]);
-        const endTime = convStrToMinutes(courseHours[1]);
-
-
-
-        addedCourses[courseDay][courseName] = {
-            "id": index,
-            "startWeek": startWeek,
-            "endWeek": endWeek,
-            "startTime": startTime,
-            "endTime": endTime,
-        };
-    }
-
-    //console.log(findOverlaps(Object.values(addedCourses[courseDay])));
-    const newOverlaps = findOverlaps(Object.values(addedCourses[courseDay]));
-
-    //console.log(dayToId[courseDay]);
-    dayToId[courseDay].forEach(id => {
-        //console.log(id);
-        d3.select("#course" + id).attr("class", "");
-        d3.select("#overlap" + id).text("");
+    courses.forEach((course, index) => {
+        const overlappingIndexes = overlaps[index] || [];
+        document.getElementById(`course${index}`).classList.toggle("conflict", overlappingIndexes.length > 0);
+        document.getElementById(`overlap${index}`).textContent = overlappingIndexes.length
+            ? overlappingIndexes.map(otherIndex => courses[otherIndex].name).join(", ")
+            : "—";
     });
-
-    for (id in newOverlaps) {
-        d3.select("#course" + id).attr("class", "conflict");
-        d3.select("#overlap" + id).text(newOverlaps[id]);
-    }
 }
