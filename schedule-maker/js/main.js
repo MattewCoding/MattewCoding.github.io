@@ -2,6 +2,58 @@ let frenchVersion = false;
 
 let courses = [];
 
+const STORAGE_KEYS = {
+    theme: "scheduleMaker.theme",
+    selectedCourses: "scheduleMaker.selectedCourses",
+};
+
+function readStoredValue(key) {
+    try {
+        return localStorage.getItem(key);
+    } catch (error) {
+        console.warn("Local storage is unavailable.", error);
+        return null;
+    }
+}
+
+function writeStoredValue(key, value) {
+    try {
+        localStorage.setItem(key, value);
+    } catch (error) {
+        console.warn("Local storage is unavailable.", error);
+    }
+}
+
+function getCourseStorageId(course) {
+    return course.oldCourseId || course.newCourseId || course.name;
+}
+
+function getStoredCourseSelections() {
+    const storedSelections = readStoredValue(STORAGE_KEYS.selectedCourses);
+    if (!storedSelections) return [];
+
+    try {
+        const parsedSelections = JSON.parse(storedSelections);
+        return Array.isArray(parsedSelections) ? parsedSelections : [];
+    } catch (error) {
+        console.warn("Stored course selections could not be read.", error);
+        return [];
+    }
+}
+
+function saveCourseSelections() {
+    const selectedCourseIds = courses
+        .filter((course, index) => document.getElementById(`checkbox${index}`).checked)
+        .map(getCourseStorageId);
+
+    writeStoredValue(STORAGE_KEYS.selectedCourses, JSON.stringify(selectedCourseIds));
+}
+
+function handleCourseSelectionChange() {
+    saveCourseSelections();
+    updateTT();
+}
+
 async function loadCourses() {
     const response = await fetch("./data/courses.json");
     if (!response.ok) {
@@ -39,6 +91,7 @@ function toggleCourseDetails(index) {
 
 function createTable() {
     const tableBody = document.getElementById("scheduleBody");
+    const storedSelections = new Set(getStoredCourseSelections());
 
     courses.forEach((course, index) => {
         const courseRow = document.createElement("tr");
@@ -49,7 +102,7 @@ function createTable() {
         courseRow.dataset.name = course.name.toLowerCase();
         courseRow.dataset.schedule = getCourseSortTimestamp(course);
         courseRow.innerHTML = `
-            <td><input type="checkbox" id="checkbox${index}" onchange="updateTT()"
+            <td><input type="checkbox" id="checkbox${index}" onchange="handleCourseSelectionChange()"
                 aria-label="Select ${course.name}"></td>
             <td id="overlap${index}" class="overlap-cell">—</td>
             <td>${course.ects}</td>
@@ -71,6 +124,7 @@ function createTable() {
                 <a href="${course.url}" target="_blank" rel="noopener noreferrer">Course website</a>
             </div></td>`;
 
+        courseRow.querySelector("input").checked = storedSelections.has(getCourseStorageId(course));
         tableBody.append(courseRow, detailsRow);
     });
 }
@@ -92,13 +146,20 @@ function addDarkModeListener() {
     const toggleBtn = document.getElementById("darkModeButton");
     const lightStylesheet = document.getElementById("lightStylesheet");
     const darkStylesheet = document.getElementById("darkStylesheet");
-    let darkModeEnabled = false;
+    let darkModeEnabled = readStoredValue(STORAGE_KEYS.theme) !== "light";
 
-    toggleBtn.addEventListener("click", () => {
-        darkModeEnabled = !darkModeEnabled;
+    function applyTheme() {
         darkStylesheet.disabled = !darkModeEnabled;
         lightStylesheet.disabled = darkModeEnabled;
         toggleBtn.textContent = darkModeEnabled ? "Light Mode" : "Dark Mode";
+    }
+
+    applyTheme();
+
+    toggleBtn.addEventListener("click", () => {
+        darkModeEnabled = !darkModeEnabled;
+        applyTheme();
+        writeStoredValue(STORAGE_KEYS.theme, darkModeEnabled ? "dark" : "light");
     });
 }
 

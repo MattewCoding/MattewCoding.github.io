@@ -10,8 +10,21 @@
     <script type="text/javascript" src="js/schedule_updater.js"></script>
 
 
-    <link id="lightStylesheet" rel="stylesheet" href="css/style.css" />
-    <link id="darkStylesheet" rel="stylesheet" href="css/styleNight.css" disabled />
+    <link id="lightStylesheet" rel="stylesheet" href="css/style.css" disabled />
+    <link id="darkStylesheet" rel="stylesheet" href="css/styleNight.css" />
+    <script>
+        (() => {
+            let darkModeEnabled = true;
+            try {
+                darkModeEnabled = localStorage.getItem("scheduleMaker.theme") !== "light";
+            } catch (error) {
+                console.warn("Local storage is unavailable.", error);
+            }
+
+            document.getElementById("lightStylesheet").disabled = darkModeEnabled;
+            document.getElementById("darkStylesheet").disabled = !darkModeEnabled;
+        })();
+    </script>
 </head>
 
 <body onload="loadPage()">
