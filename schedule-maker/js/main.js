@@ -1,76 +1,14 @@
 let frenchVersion = false;
 
-const courses = [
-    {
-        ects: 2.5,
-        oldCourseId: "TP-IGR201",
-        newCourseId: "placeholder",
-        name: "Interactive 2D/Mobile/Web Application Development",
-        description: "Placeholder description for this course.",
-        url: "https://perso.telecom-paristech.fr/elc/igr201/",
-        schedule: {
-            recurring: [{
-                startDate: "2026-09-16",
-                endDate: "2026-11-14",
-                day: "Monday",
-                startTime: "08:30",
-                endTime: "11:45",
-            }],
-            oneOff: [],
-        },
-    },
-    {
-        ects: 5,
-        oldCourseId: "TP-IGR203",
-        newCourseId: "placeholder",
-        name: "Human-Computer Interaction",
-        description: "Placeholder description for this course.",
-        url: "https://perso.telecom-paristech.fr/elc/igr203/index.html",
-        schedule: {
-            recurring: [{
-                startDate: "2027-02-17",
-                endDate: "2027-04-14",
-                day: "Monday",
-                startTime: "13:30",
-                endTime: "16:45",
-            }],
-            oneOff: [],
-        },
-    },
-    {
-        ects: 5,
-        oldCourseId: "DEMO-OLD-101",
-        newCourseId: "DEMO-101",
-        name: "Example Course with Multiple Meeting Types",
-        description: "A fake course demonstrating two recurring weekly slots and one irregular, one-off class.",
-        url: "https://example.com/",
-        schedule: {
-            recurring: [
-                {
-                    startDate: "2026-09-21",
-                    endDate: "2026-10-30",
-                    day: "Monday",
-                    startTime: "10:00",
-                    endTime: "12:00",
-                },
-                {
-                    startDate: "2026-09-21",
-                    endDate: "2026-10-30",
-                    day: "Thursday",
-                    startTime: "14:00",
-                    endTime: "15:30",
-                },
-            ],
-            oneOff: [
-                {
-                    date: "2026-10-02",
-                    startTime: "09:00",
-                    endTime: "11:00",
-                },
-            ],
-        },
-    },
-];
+let courses = [];
+
+async function loadCourses() {
+    const response = await fetch("./data/courses.json");
+    if (!response.ok) {
+        throw new Error(`Unable to load courses (${response.status})`);
+    }
+    courses = await response.json();
+}
 
 function formatDate(dateString) {
     const [year, month, day] = dateString.split("-");
@@ -164,8 +102,14 @@ function addDarkModeListener() {
     });
 }
 
-function loadPage() {
+async function loadPage() {
     addDarkModeListener();
-    createTable();
-    updateTT();
+    try {
+        await loadCourses();
+        createTable();
+        updateTT();
+    } catch (error) {
+        document.getElementById("ectCount").textContent = "Unable to load course data.";
+        console.error(error);
+    }
 }
