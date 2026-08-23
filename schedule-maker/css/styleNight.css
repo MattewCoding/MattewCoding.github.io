@@ -226,8 +226,219 @@ tr.conflict {
     background-color: #b80000;
 }
 
+.select-cell {
+    padding: 0;
+    position: relative;
+}
+
+.select-cell label {
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    position: absolute;
+}
+
+.select-cell input {
+    cursor: pointer;
+}
+
+.side-panel {
+    background: #302640;
+    border: 1px solid #315b79;
+    box-sizing: border-box;
+    left: .6em;
+    padding: .65em;
+    position: fixed;
+    text-align: center;
+    width: 9.65em;
+    z-index: 2;
+}
+
+.ects-summary {
+    top: 14em;
+}
+
+.schedule-actions {
+    display: grid;
+    gap: .4em;
+    margin-top: .65em;
+}
+
+.side-panel button {
+    background: #493c63;
+    border: 1px solid #746a83;
+    color: #eee;
+    cursor: pointer;
+    font: inherit;
+    margin: 0;
+    padding: .4em .55em;
+}
+
+.side-panel button:hover {
+    background: #594a72;
+    border-color: #9a8eaa;
+}
+
+.side-panel button:focus-visible,
+.site-dialog button:focus-visible,
+.site-dialog input:focus-visible {
+    outline: 2px solid #93edf4;
+    outline-offset: 2px;
+}
+
+.side-panel .primary-action,
+.site-dialog .primary-action {
+    background: #315b79;
+    border-color: #66a9d8;
+    color: #fff;
+    font-weight: bold;
+}
+
+.side-panel .primary-action:hover,
+.site-dialog .primary-action:hover {
+    background: #3f7398;
+    border-color: #93edf4;
+}
+
+.side-panel .danger-action {
+    color: #ff9a9a;
+}
+
+.saved-selections {
+    bottom: 1em;
+    max-height: 15em;
+    overflow-y: auto;
+}
+
+.saved-selections h3 {
+    font-size: 1em;
+    line-height: 1.3;
+}
+
+#savedSelectionsList {
+    display: grid;
+    gap: .35em;
+    list-style: none;
+    margin: .65em 0 0;
+    padding: 0;
+}
+
+#savedSelectionsList li:not(.empty-saves) {
+    display: grid;
+    gap: .25em;
+    grid-template-columns: minmax(0, 1fr) 1.8em;
+}
+
+.load-save {
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.delete-save {
+    color: #ff8080;
+    font-size: 1.15em;
+}
+
+.empty-saves {
+    color: #b5adbf;
+    font-size: .85em;
+}
+
+.site-dialog {
+    background: #302640;
+    border: 1px solid #746a83;
+    box-shadow: 0 .5em 2em rgb(0 0 0 / 65%);
+    color: #ddd;
+    max-width: min(28em, calc(100vw - 2em));
+    padding: 0;
+    width: 100%;
+}
+
+.site-dialog::backdrop {
+    background: rgb(0 0 0 / 65%);
+}
+
+.site-dialog form {
+    padding: 1.25em;
+}
+
+.site-dialog h2 {
+    border-bottom: 1px solid #746a83;
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 1.5em;
+    margin: 0 0 .6em;
+    padding-bottom: .25em;
+}
+
+.site-dialog p {
+    line-height: 1.5;
+    margin: 0;
+}
+
+.dialog-input-group {
+    display: grid;
+    font-weight: bold;
+    gap: .3em;
+    margin-top: 1em;
+}
+
+.dialog-input-group[hidden] {
+    display: none;
+}
+
+.dialog-input-group input {
+    background: #231b33;
+    border: 1px solid #746a83;
+    box-sizing: border-box;
+    color: #eee;
+    font: inherit;
+    padding: .5em;
+    width: 100%;
+}
+
+.dialog-actions {
+    display: flex;
+    gap: .5em;
+    justify-content: flex-end;
+    margin-top: 1.25em;
+}
+
+.site-dialog button {
+    background: #493c63;
+    border: 1px solid #746a83;
+    color: #eee;
+    cursor: pointer;
+    font: inherit;
+    margin: 0;
+    padding: .5em .8em;
+}
+
+.site-dialog button:hover {
+    background: #594a72;
+    border-color: #9a8eaa;
+}
+
+.site-dialog .danger-action {
+    background: #9f2626;
+    border-color: #e05a5a;
+    color: #fff;
+    font-weight: bold;
+}
+
+.site-dialog .danger-action:hover {
+    background: #bd3030;
+    border-color: #ff8080;
+}
+
 #ectCount {
     color: #ff8080;
+    font-size: 1.05em;
+    line-height: 1.3;
 }
 
 #ectCount.requirement-met {
@@ -309,6 +520,24 @@ tr.conflict {
 
     #nav-image {
         display: none;
+    }
+
+    .side-panel {
+        box-shadow: 0 .15em .6em rgb(0 0 0 / 50%);
+        bottom: .75em;
+        max-width: calc(50vw - 1.125em);
+        width: 10.5em;
+    }
+
+    .ects-summary {
+        left: .75em;
+        top: auto;
+    }
+
+    .saved-selections {
+        left: auto;
+        max-height: 12em;
+        right: .75em;
     }
 
     .details-panel {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="icon" type="image/x-icon" href="./media/favicon.png" />
-    <title>Schedule Maker INCOMPLETE</title>
+    <title>Schedule Maker 2025</title>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/table_sort.js"></script>
     <script type="text/javascript" src="js/schedule_updater.js"></script>
@@ -40,13 +40,25 @@
         </nav>
     </header>
     <main>
+        <aside class="ects-summary side-panel" aria-label="Schedule controls">
+            <h3 id="ectCount" aria-live="polite">ECTS: 0 / 60</h3>
+            <div class="schedule-actions">
+                <button type="button" onclick="resetTableSort()">Reset sort</button>
+                <button class="danger-action" type="button" onclick="clearCourseSelections()">Clear selection</button>
+                <button class="primary-action" type="button" onclick="saveNamedSelection()">Save selection</button>
+            </div>
+        </aside>
+        <aside class="saved-selections side-panel" aria-labelledby="savedSelectionsHeading">
+            <h3 id="savedSelectionsHeading">Saved selections</h3>
+            <ul id="savedSelectionsList"></ul>
+        </aside>
         <div class="main-part">
-            <h1>Schedule Maker INCOMPLETE</h1>
+            <h1>Schedule Maker 2025</h1>
+            <p>The dates haven't been updated yet!</p>
             <p>Hello, welcome to the schedule maker! This is a tool to simplify your schedule creation. Click the checkboxes to add a course to your schedule. The page will tell you if there are any overlaps, by highlighting the conflicting coursees in red. As a reminder, you need at least 60 ECTs/credits to pass the school year. You must also pass all of the courses that you will take.</p>
             <p>Note that this is just to check that no courses overlap. This is not a replacement for officially requesting your classes on whatever website they use.</p>
             <p>For full transparency, this page's source code is publically available at <a href="https://github.com/MattewCoding/MattewCoding.github.io/scheduleMaker">this link</a>. Additionally, this page does not use cookies to store any data.</p>
 
-            <h3 id="ectCount">Current ECTS amount: 0</h3>
             <div class="table-scroll">
             <table id="scheduleTable">
                 <thead>
@@ -67,6 +79,20 @@
     </main>
     <footer>
     </footer>
+    <dialog id="siteDialog" class="site-dialog" aria-labelledby="siteDialogTitle">
+        <form id="siteDialogForm" method="dialog">
+            <h2 id="siteDialogTitle"></h2>
+            <p id="siteDialogMessage"></p>
+            <label id="siteDialogInputGroup" class="dialog-input-group">
+                <span id="siteDialogInputLabel">Selection name</span>
+                <input id="siteDialogInput" type="text" maxlength="80" autocomplete="off">
+            </label>
+            <div class="dialog-actions">
+                <button id="siteDialogCancel" type="submit" value="cancel" formnovalidate>Cancel</button>
+                <button id="siteDialogConfirm" class="primary-action" type="submit" value="confirm">Confirm</button>
+            </div>
+        </form>
+    </dialog>
 </body>
 
 </html>

@@ -29,6 +29,21 @@ function sortTable(columnIndex) {
     addArrow(columnIndex, direction);
 }
 
+function resetTableSort() {
+    const body = document.getElementById("scheduleBody");
+    const rows = [...body.querySelectorAll("tr.course-row")];
+
+    rows.sort((rowA, rowB) => Number(rowA.dataset.courseIndex) - Number(rowB.dataset.courseIndex));
+    rows.forEach(row => {
+        const detailsRow = document.querySelector(`[data-details-for="${row.dataset.courseIndex}"]`);
+        body.append(row, detailsRow);
+    });
+
+    currentSortColumn = -1;
+    currentSortDirection = "asc";
+    removeArrows();
+}
+
 function removeArrows() {
     document.querySelectorAll(".sort-arrow").forEach(arrow => arrow.remove());
 }

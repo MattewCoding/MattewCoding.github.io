@@ -218,8 +218,217 @@ tr.conflict {
     background-color: #ff7979;
 }
 
+.select-cell {
+    padding: 0;
+    position: relative;
+}
+
+.select-cell label {
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    position: absolute;
+}
+
+.select-cell input {
+    cursor: pointer;
+}
+
+.side-panel {
+    background: #ffffff;
+    border: 1px solid #a7d7f9;
+    box-sizing: border-box;
+    left: .6em;
+    padding: .65em;
+    position: fixed;
+    text-align: center;
+    width: 9.65em;
+    z-index: 2;
+}
+
+.ects-summary {
+    top: 14em;
+}
+
+.schedule-actions {
+    display: grid;
+    gap: .4em;
+    margin-top: .65em;
+}
+
+.side-panel button {
+    background: #f8f9fa;
+    border: 1px solid #a2a9b1;
+    color: #202122;
+    cursor: pointer;
+    font: inherit;
+    margin: 0;
+    padding: .4em .55em;
+}
+
+.side-panel button:hover {
+    background: #ffffff;
+    border-color: #72777d;
+}
+
+.side-panel button:focus-visible,
+.site-dialog button:focus-visible,
+.site-dialog input:focus-visible {
+    outline: 2px solid #36c;
+    outline-offset: 2px;
+}
+
+.side-panel .primary-action,
+.site-dialog .primary-action {
+    background: #36c;
+    border-color: #36c;
+    color: #fff;
+    font-weight: bold;
+}
+
+.side-panel .primary-action:hover,
+.site-dialog .primary-action:hover {
+    background: #447ff5;
+    border-color: #447ff5;
+}
+
+.side-panel .danger-action {
+    color: #b32424;
+}
+
+.saved-selections {
+    bottom: 1em;
+    max-height: 15em;
+    overflow-y: auto;
+}
+
+.saved-selections h3 {
+    font-size: 1em;
+    line-height: 1.3;
+}
+
+#savedSelectionsList {
+    display: grid;
+    gap: .35em;
+    list-style: none;
+    margin: .65em 0 0;
+    padding: 0;
+}
+
+#savedSelectionsList li:not(.empty-saves) {
+    display: grid;
+    gap: .25em;
+    grid-template-columns: minmax(0, 1fr) 1.8em;
+}
+
+.load-save {
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.delete-save {
+    color: #b00020;
+    font-size: 1.15em;
+}
+
+.empty-saves {
+    color: #54595d;
+    font-size: .85em;
+}
+
+.site-dialog {
+    background: #fff;
+    border: 1px solid #a2a9b1;
+    box-shadow: 0 .5em 2em rgb(0 0 0 / 30%);
+    color: #202122;
+    max-width: min(28em, calc(100vw - 2em));
+    padding: 0;
+    width: 100%;
+}
+
+.site-dialog::backdrop {
+    background: rgb(0 0 0 / 45%);
+}
+
+.site-dialog form {
+    padding: 1.25em;
+}
+
+.site-dialog h2 {
+    border-bottom: 1px solid #a2a9b1;
+    font-family: 'Linux Libertine', 'Georgia', 'Times', serif;
+    font-size: 1.5em;
+    margin: 0 0 .6em;
+    padding-bottom: .25em;
+}
+
+.site-dialog p {
+    line-height: 1.5;
+    margin: 0;
+}
+
+.dialog-input-group {
+    display: grid;
+    font-weight: bold;
+    gap: .3em;
+    margin-top: 1em;
+}
+
+.dialog-input-group[hidden] {
+    display: none;
+}
+
+.dialog-input-group input {
+    border: 1px solid #72777d;
+    box-sizing: border-box;
+    font: inherit;
+    padding: .5em;
+    width: 100%;
+}
+
+.dialog-actions {
+    display: flex;
+    gap: .5em;
+    justify-content: flex-end;
+    margin-top: 1.25em;
+}
+
+.site-dialog button {
+    background: #f8f9fa;
+    border: 1px solid #a2a9b1;
+    color: #202122;
+    cursor: pointer;
+    font: inherit;
+    margin: 0;
+    padding: .5em .8em;
+}
+
+.site-dialog button:hover {
+    background: #fff;
+    border-color: #72777d;
+}
+
+.site-dialog .danger-action {
+    background: #b32424;
+    border-color: #b32424;
+    color: #fff;
+    font-weight: bold;
+}
+
+.site-dialog .danger-action:hover {
+    background: #d73333;
+    border-color: #d73333;
+}
+
 #ectCount {
     color: #b00020;
+    font-size: 1.05em;
+    line-height: 1.3;
 }
 
 #ectCount.requirement-met {
@@ -301,6 +510,24 @@ tr.conflict {
 
     #nav-image {
         display: none;
+    }
+
+    .side-panel {
+        box-shadow: 0 .15em .6em rgb(0 0 0 / 25%);
+        bottom: .75em;
+        max-width: calc(50vw - 1.125em);
+        width: 10.5em;
+    }
+
+    .ects-summary {
+        left: .75em;
+        top: auto;
+    }
+
+    .saved-selections {
+        left: auto;
+        max-height: 12em;
+        right: .75em;
     }
 
     .details-panel {

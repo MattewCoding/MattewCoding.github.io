@@ -5,6 +5,7 @@ let courses = [];
 const STORAGE_KEYS = {
     theme: "scheduleMaker.theme",
     selectedCourses: "scheduleMaker.selectedCourses",
+    savedSelections: "scheduleMaker.savedSelections",
 };
 
 function readStoredValue(key) {
@@ -41,17 +42,192 @@ function getStoredCourseSelections() {
     }
 }
 
-function saveCourseSelections() {
-    const selectedCourseIds = courses
+function getSavedSelections() {
+    const storedSaves = readStoredValue(STORAGE_KEYS.savedSelections);
+    if (!storedSaves) return {};
+
+    try {
+        const parsedSaves = JSON.parse(storedSaves);
+        return parsedSaves && typeof parsedSaves === "object" && !Array.isArray(parsedSaves)
+            ? parsedSaves
+            : {};
+    } catch (error) {
+        console.warn("Saved selections could not be read.", error);
+        return {};
+    }
+}
+
+function getSelectedCourseIds() {
+    return courses
         .filter((course, index) => document.getElementById(`checkbox${index}`).checked)
         .map(getCourseStorageId);
+}
 
-    writeStoredValue(STORAGE_KEYS.selectedCourses, JSON.stringify(selectedCourseIds));
+function saveCourseSelections() {
+    writeStoredValue(STORAGE_KEYS.selectedCourses, JSON.stringify(getSelectedCourseIds()));
 }
 
 function handleCourseSelectionChange() {
     saveCourseSelections();
     updateTT();
+}
+
+function showSiteDialog({
+    title,
+    message,
+    confirmLabel = "Confirm",
+    cancelLabel = "Cancel",
+    danger = false,
+    inputLabel = null,
+}) {
+    const dialog = document.getElementById("siteDialog");
+    const form = document.getElementById("siteDialogForm");
+    const inputGroup = document.getElementById("siteDialogInputGroup");
+    const input = document.getElementById("siteDialogInput");
+    const cancelButton = document.getElementById("siteDialogCancel");
+    const confirmButton = document.getElementById("siteDialogConfirm");
+
+    form.reset();
+    document.getElementById("siteDialogTitle").textContent = title;
+    document.getElementById("siteDialogMessage").textContent = message;
+    document.getElementById("siteDialogInputLabel").textContent = inputLabel || "";
+    inputGroup.hidden = !inputLabel;
+    input.required = Boolean(inputLabel);
+    cancelButton.hidden = !cancelLabel;
+    cancelButton.textContent = cancelLabel || "";
+    confirmButton.textContent = confirmLabel;
+    confirmButton.classList.toggle("danger-action", danger);
+    confirmButton.classList.toggle("primary-action", !danger);
+    dialog.returnValue = "";
+
+    return new Promise(resolve => {
+        dialog.addEventListener("close", () => {
+            if (dialog.returnValue !== "confirm") {
+                resolve(null);
+                return;
+            }
+            resolve(inputLabel ? input.value.trim() : true);
+        }, { once: true });
+
+        dialog.showModal();
+        requestAnimationFrame(() => (inputLabel ? input : confirmButton).focus());
+    });
+}
+
+function applyCourseSelection(courseIds) {
+    const selectedIds = new Set(courseIds);
+    courses.forEach((course, index) => {
+        document.getElementById(`checkbox${index}`).checked = selectedIds.has(getCourseStorageId(course));
+    });
+    saveCourseSelections();
+    updateTT();
+}
+
+async function clearCourseSelections() {
+    const confirmed = await showSiteDialog({
+        title: "Clear selection?",
+        message: "This will deselect every course. Your named saves will not be affected.",
+        confirmLabel: "Clear selection",
+        danger: true,
+    });
+    if (!confirmed) return;
+    applyCourseSelection([]);
+}
+
+async function saveNamedSelection() {
+    const selectedCourseIds = getSelectedCourseIds();
+    if (!selectedCourseIds.length) {
+        await showSiteDialog({
+            title: "Nothing to save bro",
+            message: "You gotta select at least one course before saving a selection.",
+            confirmLabel: "oh right lol",
+            cancelLabel: null,
+        });
+        return;
+    }
+
+    const saveName = await showSiteDialog({
+        title: "Save selection",
+        message: "Give this group of courses a name so you can restore it later.",
+        confirmLabel: "Save",
+        inputLabel: "Selection name",
+    });
+    if (!saveName) return;
+
+    const saves = getSavedSelections();
+    if (Object.hasOwn(saves, saveName)) {
+        const replaceConfirmed = await showSiteDialog({
+            title: "Replace saved selection?",
+            message: `A selection named "${saveName}" already exists. Its courses will be replaced.`,
+            confirmLabel: "Replace",
+            danger: true,
+        });
+        if (!replaceConfirmed) return;
+    }
+
+    saves[saveName] = selectedCourseIds;
+    writeStoredValue(STORAGE_KEYS.savedSelections, JSON.stringify(saves));
+    renderSavedSelections();
+}
+
+function loadNamedSelection(saveName) {
+    const savedCourseIds = getSavedSelections()[saveName];
+    if (Array.isArray(savedCourseIds)) applyCourseSelection(savedCourseIds);
+}
+
+async function deleteNamedSelection(saveName) {
+    const confirmed = await showSiteDialog({
+        title: "Delete saved selection?",
+        message: `"${saveName}" will be permanently removed from this browser.`,
+        confirmLabel: "Delete",
+        danger: true,
+    });
+    if (!confirmed) return;
+    const saves = getSavedSelections();
+    delete saves[saveName];
+    writeStoredValue(STORAGE_KEYS.savedSelections, JSON.stringify(saves));
+    renderSavedSelections();
+}
+
+function renderSavedSelections() {
+    const list = document.getElementById("savedSelectionsList");
+    const saves = getSavedSelections();
+    const saveNames = Object.keys(saves);
+    list.replaceChildren();
+
+    if (!saveNames.length) {
+        const emptyItem = document.createElement("li");
+        emptyItem.className = "empty-saves";
+        emptyItem.textContent = "No saves yet";
+        list.appendChild(emptyItem);
+        return;
+    }
+
+    const courseNameById = new Map(courses.map(course => [getCourseStorageId(course), course.name]));
+    saveNames.forEach(saveName => {
+        const item = document.createElement("li");
+        const loadButton = document.createElement("button");
+        const deleteButton = document.createElement("button");
+        const savedCourseIds = Array.isArray(saves[saveName]) ? saves[saveName] : [];
+        const savedNames = savedCourseIds
+            .map(courseId => courseNameById.get(courseId))
+            .filter(Boolean);
+
+        loadButton.type = "button";
+        loadButton.className = "load-save";
+        loadButton.textContent = saveName;
+        loadButton.title = savedNames.join(", ") || "No matching courses remain";
+        loadButton.addEventListener("click", () => loadNamedSelection(saveName));
+
+        deleteButton.type = "button";
+        deleteButton.className = "delete-save";
+        deleteButton.textContent = "×";
+        deleteButton.setAttribute("aria-label", `Delete ${saveName}`);
+        deleteButton.addEventListener("click", () => deleteNamedSelection(saveName));
+
+        item.append(loadButton, deleteButton);
+        list.appendChild(item);
+    });
 }
 
 async function loadCourses() {
@@ -94,6 +270,9 @@ function createTable() {
     const storedSelections = new Set(getStoredCourseSelections());
 
     courses.forEach((course, index) => {
+        const courseWebsite = course.url === "no url lol"
+            ? "<span>no url lol</span>"
+            : `<a href="${course.url}" target="_blank" rel="noopener noreferrer">Course website</a>`;
         const courseRow = document.createElement("tr");
         courseRow.id = `course${index}`;
         courseRow.className = "course-row";
@@ -102,8 +281,10 @@ function createTable() {
         courseRow.dataset.name = course.name.toLowerCase();
         courseRow.dataset.schedule = getCourseSortTimestamp(course);
         courseRow.innerHTML = `
-            <td><input type="checkbox" id="checkbox${index}" onchange="handleCourseSelectionChange()"
-                aria-label="Select ${course.name}"></td>
+            <td class="select-cell"><label for="checkbox${index}" title="Select ${course.name}">
+                <input type="checkbox" id="checkbox${index}" onchange="handleCourseSelectionChange()"
+                    aria-label="Select ${course.name}">
+            </label></td>
             <td id="overlap${index}" class="overlap-cell">—</td>
             <td>${course.ects}</td>
             <td class="course-name">${course.name}</td>
@@ -121,7 +302,7 @@ function createTable() {
             <td colspan="6"><div class="details-panel">
                 <div><strong>Course ID</strong><span>${course.newCourseId}</span></div>
                 <div><strong>Description</strong><span>${course.description}</span></div>
-                <a href="${course.url}" target="_blank" rel="noopener noreferrer">Course website</a>
+                ${courseWebsite}
             </div></td>`;
 
         courseRow.querySelector("input").checked = storedSelections.has(getCourseStorageId(course));
@@ -168,6 +349,7 @@ async function loadPage() {
     try {
         await loadCourses();
         createTable();
+        renderSavedSelections();
         updateTT();
     } catch (error) {
         document.getElementById("ectCount").textContent = "Unable to load course data.";

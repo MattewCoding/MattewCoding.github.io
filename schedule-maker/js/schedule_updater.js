@@ -106,7 +106,7 @@ function updateTT() {
     const ectCount = document.getElementById("ectCount");
     const overlaps = findOverlaps(selectedIndexes);
 
-    ectCount.textContent = `Current ECTS amount: ${totalEcts}`;
+    ectCount.textContent = `ECTS: ${totalEcts} / 60`;
     ectCount.classList.toggle("requirement-met", totalEcts >= 60);
 
     courses.forEach((course, index) => {

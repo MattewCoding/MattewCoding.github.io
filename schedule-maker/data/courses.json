@@ -1,16 +1,48 @@
 [
     {
         "ects": 2.5,
-        "newCourseId": "placeholder",
-        "name": "Interactive 2D/Mobile/Web Application Development",
-        "description": "Placeholder description for this course.",
-        "url": "https://perso.telecom-paristech.fr/elc/igr201/",
+        "newCourseId": "CSC_4IG02_TP",
+        "name": "Interactive Application Development: Desktop, Mobile, and Web",
+        "description": "This course presents tools for developing 2D interactive applications: Qt GUI toolkit (in C++), Android user interfaces on mobile devices, Web interface basics. See also: CSC_0EL10_TP (Web development), CSC_0EL11_TP (Programming), CSC_4IG05 (Human-Computer Interaction).",
+        "url": "https://web.archive.org/web/20260116042313/https://perso.telecom-paristech.fr/elc/igr201/",
         "schedule": {
             "recurring": [
                 {
-                    "startDate": "2026-09-16",
-                    "endDate": "2026-11-14",
+                    "startDate": "2025-09-17",
+                    "endDate": "2025-11-12",
+                    "day": "Wednesday",
+                    "startTime": "13:30",
+                    "endTime": "16:45"
+                }
+            ],
+            "oneOff": [
+                {
+                    "date": "2025-09-11",
+                    "startTime": "13:30",
+                    "endTime": "16:45"
+                }
+            ]
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "CSC_4IG05_TP",
+        "name": "Human-Computer Interaction",
+        "description": "This course presents methods and techniques for designing efficient, user-friendly user interfaces. Focuses on software development (GUI toolkits, Web interfaces, Statecharts, MVC, multi-threading) and on human factors (user-centered design, evaluation, ergonomics, empirical laws and models). Also presents novel emerging techniques",
+        "url": "https://web.archive.org/web/20260116042313/https://perso.telecom-paristech.fr/elc/igr203/index.html",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2026-02-09",
+                    "endDate": "2026-04-13",
                     "day": "Monday",
+                    "startTime": "13:30",
+                    "endTime": "16:45"
+                },
+                {
+                    "startDate": "2026-02-13",
+                    "endDate": "2026-04-10",
+                    "day": "Friday",
                     "startTime": "08:30",
                     "endTime": "11:45"
                 }
@@ -19,16 +51,172 @@
         }
     },
     {
-        "ects": 5,
-        "newCourseId": "placeholder",
-        "name": "Human-Computer Interaction",
-        "description": "Placeholder description for this course.",
-        "url": "https://perso.telecom-paristech.fr/elc/igr203/index.html",
+        "ects": 2.5,
+        "newCourseId": "CSC_4IG07_TP",
+        "name": "Visualization",
+        "description": "The goals of this course are: To introduce the fundamental principles of visualization; To give an overview of existing visualization techniques and systems; To understand how to critique visualization techniques for a particular kind of data for a particular task; To learn how to evaluate visualization systems; To provide the foundation necessary to create new visualization tools.",
+        "url": "https://web.archive.org/web/20260116042313/https://perso.telecom-paristech.fr/eagan/class/igr204/",
         "schedule": {
             "recurring": [
                 {
-                    "startDate": "2027-02-17",
-                    "endDate": "2027-04-14",
+                    "startDate": "2026-04-17",
+                    "endDate": "2026-06-26",
+                    "day": "Friday",
+                    "startTime": "08:30",
+                    "endTime": "11:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "TSP-CSC5061",
+        "name": "Multiplayer Online Games Development",
+        "description": "Online versus services. Peer-to-peer versus Client-Server. Communications. Generalization of Game-Loop. Middlewares for online. Server-side architecture. Message-Oriented Middlewares for services. Notes: 1) The courses and labs will take place in a room in Palaiseau; 2) Students will have to bring their own laptop for the different labs of the course.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [],
+            "unknown": [
+                "UNKNOWN"
+            ]
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "CSC_52085_EP",
+        "name": "Real-time AI in video games: decisive & collaborative actions",
+        "description": "This class will propose an in-depth presentation of the main approaches used in current video games to handle decision making of autonomous, and possibly, collaborating agents . The course will cover the “classical” algorithmic-based AI approaches with a general focus on interactive and real-time constraints , ranging from decision and behavior tree, rules based methods and inference system, as well as hierarchical system for distributed communication and cooperative behaviors. Note: This course is heavily oriented toward application and programming, much more than its theory. Lab classes are used for a collaborative project developed in C++ with the Starcarft API. Good skills in C++ are required. Warning: Strict numerus clausus to be respected depending on the number of place left. Please contact the professors and your tutor before confirming your enrolment.",
+        "url": "https://web.archive.org/web/20260116042313/https://moodle.polytechnique.fr/course/view.php?id=11958",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2026-01-09",
+                    "endDate": "2026-03-20",
+                    "day": "Friday",
+                    "startTime": "14:00",
+                    "endTime": "18:15"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "HCI-922",
+        "name": "Gestural and Mobile Interaction",
+        "description": "The goal of this course is to learn how to use gestures as an effective input modality in interfaces including small-screens, touch screens, mobile devices and interactive systems based on expressive nonverbal whole-body communication. This course presents some techniques for capture, recognition and interpretation of gestures.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [],
+            "unknown": [
+                "UNKNOWN"
+            ]
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "CSC_5ID08_TP",
+        "name": "Advanced Programming of Interactive Systems",
+        "description": "Advanced user interface programming techniques.architecture and algorithmic underpinnings of UI toolkits. how to create user interfaces, including how to extend standard widgets and move beyond WIMP to off-the-desktop contexts.",
+        "url": "https://web.archive.org/web/20260116042313/https://perso.telecom-paristech.fr/eagan/class/advUI/",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-09-02",
+                    "endDate": "2025-10-21",
+                    "day": "Tuesday",
+                    "startTime": "09:00",
+                    "endTime": "12:30"
+                },
+                {
+                    "startDate": "2025-09-03",
+                    "endDate": "2025-10-22",
+                    "day": "Wednesday",
+                    "startTime": "09:00",
+                    "endTime": "12:30"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "CSC_5ID02_PS",
+        "name": "Fundamentals of HCI",
+        "description": "Interaction styles, basic elements of psychology and software engineering for HCI, in-depth analysis of graphical interaction, post-WIMP interaction techniques, conceptual modeling, theories and models for HCI.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-09-02",
+                    "endDate": "2025-10-21",
+                    "day": "Tuesday",
+                    "startTime": "14:00",
+                    "endTime": "17:00"
+                },
+                {
+                    "startDate": "2025-09-05",
+                    "endDate": "2025-10-24",
+                    "day": "Friday",
+                    "startTime": "14:00",
+                    "endTime": "17:00"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_5ID07_PS",
+        "name": "Evaluation of Interactive Systems",
+        "description": "Introduction to the different methods for evaluating interactive systems. By the end of this class, students should be able to identify the right evaluation method to consider depending on the type of users, the type of the system and design stage of the system",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-11-07",
+                    "endDate": "2025-12-19",
+                    "day": "Friday",
+                    "startTime": "09:00",
+                    "endTime": "12:30"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_5ID13_PS",
+        "name": "Groupware and Collaborative Interaction",
+        "description": "Groupware and mediated interaction, including a state-of-the-art of interactive systems for coordination, communication and collaboration with groups of users across time and space. Also covers Collaborative Virtual Environments, social networks and crowdsourcing.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-11-05",
+                    "endDate": "2025-12-17",
+                    "day": "Wednesday",
+                    "startTime": "14:00",
+                    "endTime": "17:30"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_4IG01_TP",
+        "name": "Interactive 3D Application Development",
+        "description": "Introduction to computer graphics for 3D application development: basics of rendering pipeline, transformations, camera models, shading models, and graphics programming using OpenGL and C/C++",
+        "url": "https://web.archive.org/web/20260116042313/https://perso.telecom-paristech.fr/kum/lecture/current/igr200/",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-09-15",
+                    "endDate": "2025-11-10",
                     "day": "Monday",
                     "startTime": "13:30",
                     "endTime": "16:45"
@@ -38,34 +226,656 @@
         }
     },
     {
-        "ects": 5,
-        "newCourseId": "DEMO-101",
-        "name": "Example Course with Multiple Meeting Types",
-        "description": "A fake course demonstrating two recurring weekly slots and one irregular, one-off class.",
-        "url": "https://example.com/",
+        "ects": 5.0,
+        "newCourseId": "CSC_4IG03_TP",
+        "name": "Fundamentals of Computer Graphics",
+        "description": "Theoretical and practical concepts of 3D computer graphics and its applications in virtual reality: shape modeling, image synthesis, geometric processing and analysis, computational geometry, computer animation and simulation, interactive 3D applications",
+        "url": "https://web.archive.org/web/20260116042313/https://perso.telecom-paristech.fr/parakkat/",
         "schedule": {
             "recurring": [
                 {
-                    "startDate": "2026-09-21",
-                    "endDate": "2026-10-30",
+                    "startDate": "2025-11-24",
+                    "endDate": "2026-01-26",
                     "day": "Monday",
-                    "startTime": "10:00",
-                    "endTime": "12:00"
+                    "startTime": "08:30",
+                    "endTime": "11:45"
                 },
                 {
-                    "startDate": "2026-09-21",
-                    "endDate": "2026-10-30",
-                    "day": "Thursday",
-                    "startTime": "14:00",
-                    "endTime": "15:30"
+                    "startDate": "2025-11-26",
+                    "endDate": "2026-02-04",
+                    "day": "Wednesday",
+                    "startTime": "13:30",
+                    "endTime": "16:45"
                 }
             ],
             "oneOff": [
                 {
-                    "date": "2026-10-02",
+                    "date": "2026-02-05",
+                    "startTime": "08:30",
+                    "endTime": "11:45"
+                }
+            ]
+        }
+    },
+    {
+        "ects": 6.0,
+        "newCourseId": "CSC_5IM23_SU",
+        "name": "Advanced Computer Graphics",
+        "description": "Advanced areas of 3D computer graphics with particular emphasis on geometric modeling with 3D surface meshes, realistic image synthesis, real-time rendering for video games, and simulations for special effects (e.g., deformable objects and fluids).",
+        "url": "https://web.archive.org/web/20260116042313/https://perso.telecom-paristech.fr/kum/lecture/current/ima904/",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-09-19",
+                    "endDate": "2026-02-06",
+                    "day": "Friday",
+                    "startTime": "08:30",
+                    "endTime": "12:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "CSC_51085_EP",
+        "name": "Computer Animation",
+        "description": "Course presenting 3D computer Animation and Simulation methods for real-time and interactive Graphics applications. Topics: Virtual character animation, Physically-based simulation to interact with solid and deformable objects: Collision and interaction between elastic and plastic shapes, cloth simulation, fluid simulation.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-09-24",
+                    "endDate": "2025-12-17",
+                    "day": "Wednesday",
+                    "startTime": "14:15",
+                    "endTime": "18:30"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "CSC_51073_EP",
+        "name": "Image Analysis & Computer Vision",
+        "description": "Introduction to image processing and computer vision: image representation, edge detection, segmentation, retargeting, filtering, etc. This course presents classical approaches of computer vision and object detection: feature extractions, classification; as well as an introduction to recent classification methods based on deep convolutional networks. Programming language: Python.",
+        "url": "https://web.archive.org/web/20260116042313/https://moodle.polytechnique.fr/course/view.php?id=11948",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-09-24",
+                    "endDate": "2025-12-17",
+                    "day": "Wednesday",
+                    "startTime": "08:30",
+                    "endTime": "12:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "CSC_51074_EP",
+        "name": "Digital representation and analysis of shapes",
+        "description": "This course will introduce the fundamental concepts for creating and analyzing shapes on the computer. We will start with generating and representing smooth curves in 2d using splines and Bézier curves. We will then move to various techniques for shape representation in 3d with special emphasis on triangle meshes and associated methods. At the same time, we will introduce methods for shape *analysis* and in particular defining and computing similarity between shapes, and shape matching (establishing correspondences between points on shapes). Programming language: C++.",
+        "url": "https://web.archive.org/web/20260116042313/https://www.enseignement.polytechnique.fr/informatique/INF574/index.html",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-09-23",
+                    "endDate": "2025-12-16",
+                    "day": "Tuesday",
+                    "startTime": "13:30",
+                    "endTime": "17:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "CSC_52084_EP",
+        "name": "Image Synthesis",
+        "description": "This course presents the principles, algorithms and techniques of image synthesis. It deals in particular with digital models of shape, appearance, lighting and sensors present in a 3D scene. The rendering equation, as well as standard illumination, shading and reflectance models are presented. Various rendering algorithms based on these models are detailed, including rasterization (projective rendering) and ray tracing. Real-time rendering, GPU programming and hierarchical spatial data structures are also covered. Finally, an opening towards global illumination concludes the course. Programming language: C++.",
+        "url": "https://web.archive.org/web/20260116042313/http://www.enseignement.polytechnique.fr/informatique/INF584/",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2026-01-09",
+                    "endDate": "2026-03-20",
+                    "day": "Wednesday",
+                    "startTime": "08:30",
+                    "endTime": "12:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "CSC_52062_EP",
+        "name": "Computational Geometry",
+        "description": "This course is a walk through computational geometry problems: a young discipline of computer science that studies from a combinatorial and algorithmic point of view the properties of geometric objects such as point clouds, arrangements, geometric graphs, or even triangulation. Examples of such problems are convex envelopes, Delaunay triangulation, point cloud reconstruction, approximation of NP-complete geometric, or the efficient location of points in large dimensions. Programming language: C++.",
+        "url": "https://web.archive.org/web/20260116042313/https://moodle.polytechnique.fr/course/view.php?id=11938",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2026-01-05",
+                    "endDate": "2026-03-16",
+                    "day": "Monday",
+                    "startTime": "08:30",
+                    "endTime": "12:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_53433_EP",
+        "name": "Smart models for 3D creation and animation",
+        "description": "This course presents recent advances in 3D computer graphics, and more particularly in the subfields on modeling and animation, which rely on artificial intelligence. We'll cover first user-centered creative AI (also called \"Expressive modeling and animation\"), i.e. intelligent 3D models helping users in their creative tasks ; and second, the use of AI for training characters able to navigate and locomote autonomously in 3D environments. Lab programming language: C# with Unity. Labs based on project mixing machine learning with graphics in Unity.",
+        "url": "https://web.archive.org/web/20260116042313/https://moodle.polytechnique.fr/course/info.php?id=19354&lang=fr",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-11-05",
+                    "endDate": "2025-11-19",
+                    "day": "Wednesday",
+                    "startTime": "09:30",
+                    "endTime": "16:30"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": "UNKNOWN",
+        "newCourseId": "IGD Master Welcome Session",
+        "name": "September 8, 2025",
+        "description": "",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [
+                {
+                    "date": "2025-09-08",
+                    "startTime": "14:00",
+                    "endTime": "16:00"
+                }
+            ]
+        }
+    },
+    {
+        "ects": "UNKNOWN",
+        "newCourseId": "Télécom Masters Welcome Session",
+        "name": "September 11, 2025",
+        "description": "",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [
+                {
+                    "date": "2025-09-11",
+                    "startTime": "08:00",
+                    "endTime": "12:30"
+                }
+            ]
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "HSS_0EL41_TP",
+        "name": "Making Physical Representation of Data",
+        "description": "Physical representations of data pre-exist with the invention of the written language. While our contemporary notion of data did not yet exist, early humans externalized their memory by encoding quantitative or qualitative values into physical objects. Over the following millennia, physical data representations allowed people to record, reflect, reason, and decide about the world in new and profound ways. Creating data objects is far from a lost art, and an explosion of new fabrication technologies also introduced an ever-wider array of physical tools to support thinking and communication. We are now in an era where data is an increasingly visible part of our everyday existence, a growing number of artists, designers, makers, and everyday people are actively exploring the possibilities of making data physical. This class will provide the student the occasion to reflect on how data could be encoded and manipulated in physical objects. This class will cover first a short historical introduction, second some snapshots of the practices used by contemporary designers, and some design considerations. The main focus of the class will be to create a physical object to either encode data during a collective action or to represent an existing dataset. This class will be based on the recently published book “Making with Data” (https://makingwithdata.org/).",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-09-16",
+                    "endDate": "2025-11-04",
+                    "day": "Tuesday",
+                    "startTime": "13:30",
+                    "endTime": "16:45"
+                }
+            ],
+            "oneOff": [
+                {
+                    "date": "2025-09-12",
+                    "startTime": "13:30",
+                    "endTime": "16:45"
+                }
+            ]
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "HSS_0EL42_TP",
+        "name": "Quantitative analysis of User Experience Data",
+        "description": "Quant UX, or Quantitative User Experience (research) is an emerging field with strong industry applications, that applies quantitative methodologies (statistics, data-science) to understand how users interact with digital systems, to find bottlenecks and make better decisions. The increasing integration of a digital layer in all facets of everyday life, from professional to personal, makes it essential to consider how diverse groups of end-users are interacting with digital systems. The majority of digital systems from websites to apps, are registering data on user-interactions which can be analyzed systematically to understand how users interact with an interface, where they encounter bottlenecks, and where there are opportunities for improvement. These include surveys, A/B testing, analysis of data logs, as well as psychophysiological methods like eye-tracking and others. Importantly, the aim of these methods is not stop at analysis, but needs to be linked with actionable insights and innovations. This course will provide an introduction to key theoretical concepts and methodological approaches of Quant UX. The course will be hands-on. Students will work in small groups to analyse a proposed dataset or one they collect themselves. Different stages of the workflow will be explored each week (UX dimensions, problem definition, data analysis, iteration, testing, insights).",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-11-25",
+                    "endDate": "2026-02-03",
+                    "day": "Tuesday",
+                    "startTime": "13:30",
+                    "endTime": "16:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "IME_6IE02_TP",
+        "name": "UX Design Sprint",
+        "description": "In this course, through a practice-based approach, lectures, step-by-step instructions and exercises, students will learn multiples design and sketching methods. These methods are useful to design, express, refine, present and discuss your (and others’) design ideas about user experiences, service design and application design. This course will help you to build (1) a culture of experience-based design (2) skills to better express your design of a service, a system and application graphically.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [],
+            "unknown": [
+                "UNKNOWN"
+            ]
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "HSS_5DE13_TP",
+        "name": "Workshop Research Design + Cognition",
+        "description": "In this workshop, students will collectively and intensively explore a research question around the appropriation, uses, symbolics of a real space.. Based on a collaboration with a field of study, they will structure a research question, design the appropriate research methods, apply empirical methods, analyze and present their results. The goal of the course is to experience a short research process from the beginning to the end, to experiment with empirical methods related to human behavior, and to collaborate with (institutional) actors on original fields.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [],
+            "unknown": [
+                "UNKNOWN"
+            ]
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "HSS_???_TP",
+        "name": "Workshop Visualization of the futures",
+        "description": "Contemporary projections on possible futures are paradoxical, on one side transhumanism, on the other side collapsology, between the two climate changes. On the one hand, there is an injunction to the energy transition, on the other hand, an injunction to the ecological transition, and between the two, a questioning of their compatibility. How can we study and graphically represent all the scenarios that make up our future projections? This workshop is dedicated to this question and will take place in three parts: 1) theory of visual mapping, 2) conferences on futures, 3) design of a map of possible futures. The theoretical part will be composed of lectures on the principles of graphical data analysis, on temporal data visualization, and a quick overview of data visualization tools. This is followed by a series of lectures by researchers interested in prospecting, speculative design, and analysis of futuristic scenarios. Following these theoretical content, you will be supervised to collectively create a map of possible futures, based on your own cultural or scientific references. This workshop will allow participants to acquire a basic knowledge of graphic data representation methods, and will also provide a space to discuss and debate different prospective scenarios and to design new graphic representations dedicated to this issue.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [],
+            "unknown": [
+                "UNKNOWN"
+            ]
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "HSS_5DE15_TP",
+        "name": "Research Seminar",
+        "description": "In this research seminar, scholars and practitioners in Design, Human Factors and HCI are invited to present their late-breaking works, and to discuss with students and labs’ researchers.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [],
+            "unknown": [
+                "UNKNOWN"
+            ]
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "HSS_5ID30_TP",
+        "name": "Design User Experience",
+        "description": "The integration of a user-centred reflection at the heart of the approach is a key element for the success of design projects. To improve the relevance and effectiveness of new products and services, it is necessary to take into account the contexts of use, social acceptability and appropriation of new technologies that are at the heart of innovation. This course will aim to familiarize you with different concepts related to the user experience, with design criteria, as well as with different user integration approaches, developed in design ergonomics.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [],
+            "unknown": [
+                "UNKNOWN"
+            ]
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "TP-MIN302",
+        "name": "Data Storytelling for non coders",
+        "description": "In addition, the course will focus on Design Thinking methods, which distinguish between the \"empathize-define-ideate-prototype-test\" phases. Different techniques and methods will be presented to you for each phase, which you can experiment on design cases. Particular emphasis will be placed on the role of low-tech sketching and prototyping in the ideation and evaluation of design proposals. To take this course, you do not need to be able to draw, but it is highly recommended to think about a problem, or a project to design during the course.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [],
+            "unknown": [
+                "UNKNOWN"
+            ]
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_5IG01_TP",
+        "name": "Human-Computer Interaction for Mixed Reality",
+        "description": "This UE presents an introduction to Augmented/Virtual and Mixed Reality challenges from an Human-Computer Interaction Perspective. The class covers an introduction to fundamental concepts of AR/VR/MR and presents methods and techniques allowing to design and implement interactive applications. The class is accompanied by a practical hands-on implementation and evaluation of a Virtual Reality application developed in Unity3D. The class covers the following topics: History of AR/VR, Current technology enabling AR/VR and Human Perception, Challenge of Input, Challenge of Haptics, Interaction Design for AR/VR, Application Scenarios for AR/VR, Current Research Problems and Challenges from CHI, UIST, IEEE VR, ISMAR, SIGGRAPH.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-11-12",
+                    "endDate": "2026-02-05",
+                    "day": "Tuesday",
                     "startTime": "09:00",
                     "endTime": "11:00"
                 }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_5ID06_PS",
+        "name": "Advanced Immersive Interactions",
+        "description": "",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2026-01-07",
+                    "endDate": "2026-02-25",
+                    "day": "Wednesday",
+                    "startTime": "14:30",
+                    "endTime": "18:00"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_4ID14_PS",
+        "name": "Mixed Reality and Tangible Interaction",
+        "description": "Covers the topic of mixed reality and augmented reality systems and of tangible interaction. Presents a combination of techniques and devices to help augment the environment",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-11-04",
+                    "endDate": "2025-12-16",
+                    "day": "Tuesday",
+                    "startTime": "10:00",
+                    "endTime": "13:30"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_5ID12_PS",
+        "name": "Virtual Humans and Social Interactions",
+        "description": "Main areas of research in modeling, animating, and rendering realistic and expressive autonomous virtual humans.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-11-07",
+                    "endDate": "2025-12-19",
+                    "day": "Friday",
+                    "startTime": "14:30",
+                    "endTime": "18:00"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_5IA05_TA",
+        "name": "Learning for Robotics",
+        "description": "This course will present some basic learning algorithms for robots : reinforcement learning and imitation learning. Students will have the chance to implement and try some of these algorithms on simple examples. Very wide application fields in cognitive robotics and social robotics will be presented.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2026-02-09",
+                    "endDate": "2026-04-13",
+                    "day": "Monday",
+                    "startTime": "08:30",
+                    "endTime": "11:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "CSC_51054_EP",
+        "name": "Machine and Deep Learning",
+        "description": "Introductory level class on Machine Learning on generic data: Supervised Learning, Unsupervised Learning, Kernels, Neural Networks, Basics of Deep learning and Graph neural network.",
+        "url": "https://web.archive.org/web/20260116042313/https://moodle.polytechnique.fr/enrol/index.php?id=17087",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-09-23",
+                    "endDate": "2025-12-16",
+                    "day": "Monday",
+                    "startTime": "14:00",
+                    "endTime": "18:15"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "X-INF581A",
+        "name": "Advanced Deep Learning",
+        "description": "This course introduces students to the advanced principles of Deep Learning, including mathematical foundations, architecture design and practical applications. This course is particularly relevant given the current state of the job market, where Deep Learning skills are in high demand in many sectors, including technology, finance, healthcare and entertainment. The class include the following topics: GAN, Attention and Trasnformers, Graph Neural Networks, Neural architect search, and various interdisciplinary applications: Large Pretrained Models, Vision & Language, Biological Applications, Time Series.",
+        "url": "https://web.archive.org/web/20260116042313/https://moodle.polytechnique.fr/course/view.php?id=17633",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2026-01-06",
+                    "endDate": "2026-03-16",
+                    "day": "Tuesday",
+                    "startTime": "13:30",
+                    "endTime": "17:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "CSC_52081_EP",
+        "name": "Reinforcement Learning and Autonomous Agents",
+        "description": "This course selects a number of advanced topics to explore in machine learning and autonomous agents, in particular: Probabilistic graphicsal models (Bayesian networks), Multi-output and structured-output prediction problems, deep-learning architectures, Methods of search and optimization, Sequential prediction and decision making, Reinforcement learning.",
+        "url": "https://web.archive.org/web/20260116042313/https://moodle.polytechnique.fr/enrol/index.php?id=17108",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2026-01-07",
+                    "endDate": "2026-03-18",
+                    "day": "Wednesday",
+                    "startTime": "14:00",
+                    "endTime": "18:15"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_0EL11_TP-P1",
+        "name": "Programming paradigms: theory and practice)",
+        "description": "Presents main concepts, mechanisms and difficulties of current programming languages, which are illustrated in C++11 and Java. Also provides an introduction to Java Swing and event programming. A large part is devoted to practical work. Topics: programming paradigms, object-oriented programming, polymorphism, generic programming, lambdas, memory management, pointers and references, constness, graphical user interfaces, event management, MVC.",
+        "url": "https://web.archive.org/web/20260116042313/https://perso.telecom-paristech.fr/elc/inf224/index.html",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-09-16",
+                    "endDate": "2025-11-04",
+                    "day": "Tuesday",
+                    "startTime": "08:30",
+                    "endTime": "11:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_0EL11_TP-P2",
+        "name": "Programming paradigms: theory and practice",
+        "description": "Same course as CSC_0EL11_TP-P1 but in Period 2.",
+        "url": "https://web.archive.org/web/20260116042313/https://perso.telecom-paristech.fr/elc/inf224/index.html",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-11-25",
+                    "endDate": "2026-02-03",
+                    "day": "Tuesday",
+                    "startTime": "13:30",
+                    "endTime": "16:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_0EL11_TP-EN",
+        "name": "Programming paradigms: theory and practice",
+        "description": "Same course as CSC_0EL11_TP-P1 and CSC_0EL11_TP-P2 but in English.",
+        "url": "https://web.archive.org/web/20260116042313/https://perso.telecom-paristech.fr/elc/inf224/index.html",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-11-25",
+                    "endDate": "2026-02-03",
+                    "day": "Tuesday",
+                    "startTime": "13:30",
+                    "endTime": "16:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_0EL10_TP-VF",
+        "name": "Développement Web",
+        "description": "This course presents methods and techniques for developing dynamic, modern, robust, safe websites. Topics: Internet and the Web, basic Web languages (HTML, CSS, JavaScript), rich dynamic content, server-side programming and frameworks, client-side and AJAX frameworks, website security.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2025-11-25",
+                    "endDate": "2026-02-03",
+                    "day": "Tuesday",
+                    "startTime": "13:30",
+                    "endTime": "16:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_0EL10_TP-EN",
+        "name": "Web Development",
+        "description": "This course presents methods and techniques for developing dynamic, modern, robust, safe websites. Topics: Internet and the Web, basic Web languages (HTML, CSS, JavaScript), rich dynamic content, server-side programming and frameworks, client-side and AJAX frameworks, website security.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2026-02-10",
+                    "endDate": "2026-04-14",
+                    "day": "Tuesday",
+                    "startTime": "13:30",
+                    "endTime": "16:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "TP-MN912",
+        "name": "Audio-Visual Transport",
+        "description": "Principles, Protocols and advanced techniques for Audio-Visual content delivery. Associated Web Technologies: HTML5 video, Media Source Extension, Encrypted Media Extension, XHR/Fetch",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2026-01-06",
+                    "endDate": "2026-03-24",
+                    "day": "Tuesday",
+                    "startTime": "14:00",
+                    "endTime": "17:15"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "CSC_4IG08_TP",
+        "name": "HCI/Graphics Project Seminar-M1",
+        "description": "Project in HCI or in Graphics",
+        "url": "https://web.archive.org/web/20260116042313/https://perso.telecom-paristech.fr/parakkat/IGR205.html",
+        "schedule": {
+            "recurring": [
+                {
+                    "startDate": "2026-04-23",
+                    "endDate": "2026-06-18",
+                    "day": "Monday",
+                    "startTime": "13:30",
+                    "endTime": "16:45"
+                }
+            ],
+            "oneOff": []
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "PRJ_4ID22_TP",
+        "name": "Guided/Research Project-M1/M2",
+        "description": "This module allows students to experience and be involved in ongoing research projects inside of teams of IP Paris. It is the students responsibility to contact a researcher in their field of interest beforehand and ask about the possibility and scope of such a project before enrolling in this module! If both agree on a project, the student can enroll in the module and will be provided a grade at the end of the second period. The goal of the project is to involve students that are interested in research in ongoing research projects of the individual team. This can be in the form of an individual research project of the student in collaboration with a supervisor, or involving the student as part of a contributor inside an already going research project. The ideal goal should be to create or contribute to a scientific publication. However, the type of deliverables at the end of the project (e.g., source code, documentation, data set) will be defined with the supervisor of the project beforehand and can vary from research project and team. The course ends with a presentation of the students contribution to the research project inside of the individual team (either as part of a research meeting or as a dedicated event). The supervisor of the project is in charge of evaluating the quality of the outcome and providing a grade and its justification to the student in form of a short paragraph, describing the quality of the work and potential fields of improvement for the future.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [],
+            "unknown": [
+                "UNKNOWN"
+            ]
+        }
+    },
+    {
+        "ects": 5.0,
+        "newCourseId": "PRJ_4ID23_TP",
+        "name": "Guided/Research Project-M1",
+        "description": "Same as PRJ_4ID23_TP but during Semester 2.",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [],
+            "unknown": [
+                "UNKNOWN"
+            ]
+        }
+    },
+    {
+        "ects": 10.0,
+        "newCourseId": "PRJ_4ID24_TP",
+        "name": "Guided/Research Project-M1",
+        "description": "Same as PRJ_4ID24_TP but for a total of 10 ECTS (only in M1).",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [],
+            "unknown": [
+                "UNKNOWN"
             ]
         }
     }
