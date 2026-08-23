@@ -329,14 +329,51 @@ function formatDate(dateString) {
 }
 
 function formatSchedule(course) {
-    const recurring = course.schedule.recurring.map(slot =>
-        `<span class="schedule-slot"><strong>${t("weekly")}:</strong> ${t("days")[slot.day.toLowerCase()] || slot.day}, ${slot.startTime}–${slot.endTime}<br>` +
-        `<small>${formatDate(slot.startDate)}–${formatDate(slot.endDate)}</small></span>`
-    );
-    const oneOff = course.schedule.oneOff.map(slot =>
-        `<span class="schedule-slot"><strong>${t("oneOff")}:</strong> ${formatDate(slot.date)}, ${slot.startTime}–${slot.endTime}</span>`
-    );
-    return [...recurring, ...oneOff].join("");
+    const fragment = document.createDocumentFragment();
+
+    course.schedule.recurring.forEach(slot => {
+        const scheduleSlot = document.createElement("span");
+        const label = document.createElement("strong");
+        const dates = document.createElement("small");
+        const localizedDay = t("days")[String(slot.day).toLowerCase()] || slot.day;
+
+        scheduleSlot.className = "schedule-slot";
+        label.textContent = `${t("weekly")}:`;
+        dates.textContent = `${formatDate(slot.startDate)}–${formatDate(slot.endDate)}`;
+        scheduleSlot.append(
+            label,
+            document.createTextNode(` ${localizedDay}, ${slot.startTime}–${slot.endTime}`),
+            document.createElement("br"),
+            dates
+        );
+        fragment.appendChild(scheduleSlot);
+    });
+
+    course.schedule.oneOff.forEach(slot => {
+        const scheduleSlot = document.createElement("span");
+        const label = document.createElement("strong");
+
+        scheduleSlot.className = "schedule-slot";
+        label.textContent = `${t("oneOff")}:`;
+        scheduleSlot.append(
+            label,
+            document.createTextNode(` ${formatDate(slot.date)}, ${slot.startTime}–${slot.endTime}`)
+        );
+        fragment.appendChild(scheduleSlot);
+    });
+
+    return fragment;
+}
+
+function getSafeCourseUrl(rawUrl) {
+    if (!rawUrl || rawUrl === "no url lol") return null;
+
+    try {
+        const url = new URL(rawUrl, document.baseURI);
+        return url.protocol === "http:" || url.protocol === "https:" ? url.href : null;
+    } catch {
+        return null;
+    }
 }
 
 function toggleCourseDetails(index) {
@@ -355,44 +392,97 @@ function createTable() {
     const storedSelections = new Set(getStoredCourseSelections());
 
     courses.forEach((course, index) => {
-        const courseName = getCourseName(course);
-        const courseDescription = getCourseDescription(course);
-        const courseWebsite = course.url === "no url lol"
-            ? `<span>${t("noCourseWebsite")}</span>`
-            : `<a href="${course.url}" target="_blank" rel="noopener noreferrer">${t("courseWebsite")}</a>`;
+        const courseName = String(getCourseName(course) || "");
+        const courseDescription = String(getCourseDescription(course) || "");
+        const safeCourseUrl = getSafeCourseUrl(course.url);
         const courseRow = document.createElement("tr");
+        const selectCell = document.createElement("td");
+        const selectLabel = document.createElement("label");
+        const checkbox = document.createElement("input");
+        const overlapCell = document.createElement("td");
+        const ectsCell = document.createElement("td");
+        const nameCell = document.createElement("td");
+        const scheduleCell = document.createElement("td");
+        const infoCell = document.createElement("td");
+        const detailsButton = document.createElement("button");
+
         courseRow.id = `course${index}`;
         courseRow.className = "course-row";
         courseRow.dataset.courseIndex = index;
         courseRow.dataset.ects = course.ects;
         courseRow.dataset.name = courseName.toLowerCase();
         courseRow.dataset.schedule = getCourseSortTimestamp(course);
-        courseRow.innerHTML = `
-            <td class="select-cell"><label for="checkbox${index}" title="${t("selectCourse", { name: courseName })}">
-                <input type="checkbox" id="checkbox${index}" onchange="handleCourseSelectionChange()"
-                    aria-label="${t("selectCourse", { name: courseName })}">
-            </label></td>
-            <td id="overlap${index}" class="overlap-cell">—</td>
-            <td>${course.ects}</td>
-            <td class="course-name">${courseName}</td>
-            <td class="schedule-cell">${formatSchedule(course)}</td>
-            <td class="info-cell"><button type="button" class="details-toggle" id="detailsButton${index}"
-                aria-expanded="false" aria-controls="details${index}"
-                onclick="toggleCourseDetails(${index})">${t("view")}</button></td>`;
+
+        selectCell.className = "select-cell";
+        selectLabel.htmlFor = `checkbox${index}`;
+        selectLabel.title = t("selectCourse", { name: courseName });
+        checkbox.type = "checkbox";
+        checkbox.id = `checkbox${index}`;
+        checkbox.checked = storedSelections.has(getCourseStorageId(course));
+        checkbox.setAttribute("aria-label", t("selectCourse", { name: courseName }));
+        checkbox.addEventListener("change", handleCourseSelectionChange);
+        selectLabel.appendChild(checkbox);
+        selectCell.appendChild(selectLabel);
+
+        overlapCell.id = `overlap${index}`;
+        overlapCell.className = "overlap-cell";
+        overlapCell.textContent = "—";
+        ectsCell.textContent = course.ects;
+        nameCell.className = "course-name";
+        nameCell.textContent = courseName;
+        scheduleCell.className = "schedule-cell";
+        scheduleCell.appendChild(formatSchedule(course));
+
+        infoCell.className = "info-cell";
+        detailsButton.type = "button";
+        detailsButton.className = "details-toggle";
+        detailsButton.id = `detailsButton${index}`;
+        detailsButton.textContent = t("view");
+        detailsButton.setAttribute("aria-expanded", "false");
+        detailsButton.setAttribute("aria-controls", `details${index}`);
+        detailsButton.addEventListener("click", () => toggleCourseDetails(index));
+        infoCell.appendChild(detailsButton);
+        courseRow.append(selectCell, overlapCell, ectsCell, nameCell, scheduleCell, infoCell);
 
         const detailsRow = document.createElement("tr");
+        const detailsCell = document.createElement("td");
+        const detailsPanel = document.createElement("div");
+        const idGroup = document.createElement("div");
+        const idLabel = document.createElement("strong");
+        const idValue = document.createElement("span");
+        const descriptionGroup = document.createElement("div");
+        const descriptionLabel = document.createElement("strong");
+        const descriptionValue = document.createElement("span");
+
         detailsRow.id = `details${index}`;
         detailsRow.className = "details-row";
         detailsRow.dataset.detailsFor = index;
         detailsRow.setAttribute("aria-hidden", "true");
-        detailsRow.innerHTML = `
-            <td colspan="6"><div class="details-panel">
-                <div><strong>${t("courseId")}</strong><span>${course.newCourseId}</span></div>
-                <div><strong>${t("description")}</strong><span>${courseDescription}</span></div>
-                ${courseWebsite}
-            </div></td>`;
+        detailsCell.colSpan = 6;
+        detailsPanel.className = "details-panel";
+        idLabel.textContent = t("courseId");
+        idValue.textContent = course.newCourseId || "";
+        descriptionLabel.textContent = t("description");
+        descriptionValue.textContent = courseDescription;
+        idGroup.append(idLabel, idValue);
+        descriptionGroup.append(descriptionLabel, descriptionValue);
+        detailsPanel.append(idGroup, descriptionGroup);
 
-        courseRow.querySelector("input").checked = storedSelections.has(getCourseStorageId(course));
+        if (safeCourseUrl) {
+            const courseWebsite = document.createElement("a");
+            courseWebsite.href = safeCourseUrl;
+            courseWebsite.target = "_blank";
+            courseWebsite.rel = "noopener noreferrer";
+            courseWebsite.textContent = t("courseWebsite");
+            detailsPanel.appendChild(courseWebsite);
+        } else {
+            const noWebsite = document.createElement("span");
+            noWebsite.textContent = t("noCourseWebsite");
+            detailsPanel.appendChild(noWebsite);
+        }
+
+        detailsCell.appendChild(detailsPanel);
+        detailsRow.appendChild(detailsCell);
         tableBody.append(courseRow, detailsRow);
     });
 }
@@ -458,9 +548,27 @@ function addDarkModeListener() {
     });
 }
 
+function addPageEventListeners() {
+    const translator = document.getElementById("translator");
+    translator.addEventListener("click", translateToFrench);
+    translator.addEventListener("keydown", event => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        translateToFrench();
+    });
+
+    document.getElementById("resetSortButton").addEventListener("click", resetTableSort);
+    document.getElementById("clearSelectionButton").addEventListener("click", clearCourseSelections);
+    document.getElementById("saveSelectionButton").addEventListener("click", saveNamedSelection);
+    document.querySelectorAll("[data-sort-column]").forEach(header => {
+        header.addEventListener("click", () => sortTable(Number(header.dataset.sortColumn)));
+    });
+}
+
 async function loadPage() {
     currentLanguage = readStoredValue(STORAGE_KEYS.language) === "fr" ? "fr" : "en";
     applyLanguage();
+    addPageEventListeners();
     addDarkModeListener();
     try {
         await loadCourses();
@@ -471,4 +579,8 @@ async function loadPage() {
         document.getElementById("ectCount").textContent = t("loadError");
         console.error(error);
     }
+}
+
+if (typeof window !== "undefined") {
+    window.addEventListener("DOMContentLoaded", loadPage);
 }

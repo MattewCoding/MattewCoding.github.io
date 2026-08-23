@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; form-action 'self'">
     <link rel="icon" type="image/x-icon" href="./media/favicon.png" />
     <title>Schedule Maker 2025</title>
     <script type="text/javascript" src="js/main.js"></script>
@@ -12,29 +14,17 @@
 
     <link id="lightStylesheet" rel="stylesheet" href="css/style.css" disabled />
     <link id="darkStylesheet" rel="stylesheet" href="css/styleNight.css" />
-    <script>
-        (() => {
-            let darkModeEnabled = true;
-            try {
-                darkModeEnabled = localStorage.getItem("scheduleMaker.theme") !== "light";
-            } catch (error) {
-                console.warn("Local storage is unavailable.", error);
-            }
-
-            document.getElementById("lightStylesheet").disabled = darkModeEnabled;
-            document.getElementById("darkStylesheet").disabled = !darkModeEnabled;
-        })();
-    </script>
+    <script type="text/javascript" src="js/theme_bootstrap.js"></script>
 </head>
 
-<body onload="loadPage()">
+<body>
     <header>
         <a href='./index.html'>
             <img id='nav-image' src='./media/logo.png' alt='Site logo' title='Reload page' />
         </a>
         <nav id='header-options'>
             <ul class='header-nav-ul'>
-                <li class='header-nav-li' id='translator' onclick="translateToFrench()">Voir la version française</li>
+                <li class='header-nav-li' id='translator' role="button" tabindex="0">Voir la version française</li>
                 <li class='header-nav-li' id='darkModeButton'>Dark Mode</li>
             </ul>
         </nav>
@@ -43,9 +33,9 @@
         <aside class="ects-summary side-panel" aria-label="Schedule controls" data-i18n-aria-label="scheduleControls">
             <h3 id="ectCount" aria-live="polite">ECTS: 0 / 60</h3>
             <div class="schedule-actions">
-                <button type="button" onclick="resetTableSort()" data-i18n="resetSort">Reset sort</button>
-                <button class="danger-action" type="button" onclick="clearCourseSelections()" data-i18n="clearSelection">Clear selection</button>
-                <button class="primary-action" type="button" onclick="saveNamedSelection()" data-i18n="saveSelection">Save selection</button>
+                <button id="resetSortButton" type="button" data-i18n="resetSort">Reset sort</button>
+                <button id="clearSelectionButton" class="danger-action" type="button" data-i18n="clearSelection">Clear selection</button>
+                <button id="saveSelectionButton" class="primary-action" type="button" data-i18n="saveSelection">Save selection</button>
             </div>
         </aside>
         <aside class="saved-selections side-panel" aria-labelledby="savedSelectionsHeading">
@@ -65,9 +55,9 @@
                     <tr>
                         <th class="deactivateSort" data-i18n="select">Select</th>
                         <th class="deactivateSort" data-i18n="overlapsWith">Overlaps With</th>
-                        <th onclick="sortTable(2)">ECTs</th>
-                        <th onclick="sortTable(3)" data-i18n="courseName">Name of Course</th>
-                        <th onclick="sortTable(4)" data-i18n="schedule">Schedule</th>
+                        <th data-sort-column="2">ECTs</th>
+                        <th data-sort-column="3" data-i18n="courseName">Name of Course</th>
+                        <th data-sort-column="4" data-i18n="schedule">Schedule</th>
                         <th class="deactivateSort" data-i18n="moreInformation">More Information</th>
                     </tr>
                 </thead>
