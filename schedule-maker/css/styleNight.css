@@ -258,7 +258,10 @@ tr.conflict {
 }
 
 .ects-summary {
-    top: 14em;
+    float: left;
+    margin-top: 8.3em;
+    position: sticky;
+    top: 1em;
 }
 
 .schedule-actions {
@@ -469,10 +472,32 @@ tr.conflict {
 }
 
 .details-toggle {
+    background: rgb(147 237 244 / 5%);
+    border: 0;
+    color: #93edf4;
     cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    inset: 0;
     margin: 0;
-    min-width: 4.5em;
-    padding: .4em .7em;
+    position: absolute;
+    width: 100%;
+}
+
+.details-toggle:hover {
+    background: rgb(147 237 244 / 14%);
+    box-shadow: inset 0 0 0 1px #93edf4;
+    text-decoration: underline;
+}
+
+.details-toggle:focus-visible {
+    box-shadow: inset 0 0 0 2px #93edf4;
+    outline: none;
+}
+
+.info-cell {
+    padding: 0;
+    position: relative;
 }
 
 .details-row > td {
@@ -530,8 +555,17 @@ tr.conflict {
     }
 
     .ects-summary {
-        left: .75em;
-        top: auto;
+        bottom: auto;
+        float: none;
+        left: auto;
+        margin: .75em;
+        max-width: none;
+        top: .75em;
+        width: calc(100% - 1.5em);
+    }
+
+    .ects-summary .schedule-actions {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .saved-selections {

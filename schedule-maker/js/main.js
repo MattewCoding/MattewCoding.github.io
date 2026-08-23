@@ -289,7 +289,7 @@ function createTable() {
             <td>${course.ects}</td>
             <td class="course-name">${course.name}</td>
             <td class="schedule-cell">${formatSchedule(course)}</td>
-            <td><button type="button" class="details-toggle" id="detailsButton${index}"
+            <td class="info-cell"><button type="button" class="details-toggle" id="detailsButton${index}"
                 aria-expanded="false" aria-controls="details${index}"
                 onclick="toggleCourseDetails(${index})">View</button></td>`;
 
