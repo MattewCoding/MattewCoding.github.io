@@ -195,6 +195,12 @@ p {
     margin: 0.5em 0;
 }
 
+#disclaimer-paragraph {
+    color: #ff6b6b;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
 table {
     border-collapse: collapse;
     margin: 1em 0 0 0;
