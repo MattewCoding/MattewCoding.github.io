@@ -1,5 +1,19 @@
 [
     {
+        "ects": 30.0,
+        "newCourseId": "N/A",
+        "name": "Internship",
+        "description": "Your internship. Break a leg!",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [],
+            "unknown": [
+                "UNKNOWN"
+            ]
+        }
+    },
+    {
         "ects": 2.5,
         "newCourseId": "CSC_4IG02_TP",
         "name": "Interactive Application Development: Desktop, Mobile, and Web",
