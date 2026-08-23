@@ -113,7 +113,7 @@ function updateTT() {
         const overlappingIndexes = overlaps[index] || [];
         document.getElementById(`course${index}`).classList.toggle("conflict", overlappingIndexes.length > 0);
         document.getElementById(`overlap${index}`).textContent = overlappingIndexes.length
-            ? overlappingIndexes.map(otherIndex => courses[otherIndex].name).join(", ")
+            ? overlappingIndexes.map(otherIndex => getCourseName(courses[otherIndex])).join(", ")
             : "—";
     });
 }

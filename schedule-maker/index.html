@@ -40,35 +40,35 @@
         </nav>
     </header>
     <main>
-        <aside class="ects-summary side-panel" aria-label="Schedule controls">
+        <aside class="ects-summary side-panel" aria-label="Schedule controls" data-i18n-aria-label="scheduleControls">
             <h3 id="ectCount" aria-live="polite">ECTS: 0 / 60</h3>
             <div class="schedule-actions">
-                <button type="button" onclick="resetTableSort()">Reset sort</button>
-                <button class="danger-action" type="button" onclick="clearCourseSelections()">Clear selection</button>
-                <button class="primary-action" type="button" onclick="saveNamedSelection()">Save selection</button>
+                <button type="button" onclick="resetTableSort()" data-i18n="resetSort">Reset sort</button>
+                <button class="danger-action" type="button" onclick="clearCourseSelections()" data-i18n="clearSelection">Clear selection</button>
+                <button class="primary-action" type="button" onclick="saveNamedSelection()" data-i18n="saveSelection">Save selection</button>
             </div>
         </aside>
         <aside class="saved-selections side-panel" aria-labelledby="savedSelectionsHeading">
-            <h3 id="savedSelectionsHeading">Saved selections</h3>
+            <h3 id="savedSelectionsHeading" data-i18n="savedSelections">Saved selections</h3>
             <ul id="savedSelectionsList"></ul>
         </aside>
         <div class="main-part">
             <h1>Schedule Maker 2025</h1>
-            <p id="disclaimer-paragraph">The dates haven't been updated yet!</p>
-            <p>Hello, welcome to the schedule maker! This is a tool to simplify your schedule creation. Click the checkboxes to add a course to your schedule. The page will tell you if there are any overlaps, by highlighting the conflicting coursees in red. As a reminder, you need at least 60 ECTs/credits to pass the school year. You must also pass all of the courses that you will take.</p>
-            <p>Note that this is just to check that no courses overlap. This is not a replacement for officially requesting your classes on whatever website they use.</p>
-            <p>For full transparency, this page's source code is publically available at <a href="https://github.com/MattewCoding/MattewCoding.github.io/scheduleMaker">this link</a>. Additionally, this page does not use cookies to store any data.</p>
+            <p id="disclaimer-paragraph" data-i18n="disclaimer">The dates haven't been updated yet!</p>
+            <p data-i18n="introduction">Hello, welcome to the schedule maker! This is a tool to simplify your schedule creation. Click the checkboxes to add a course to your schedule. The page will tell you if there are any overlaps by highlighting conflicting courses in red. As a reminder, you need at least 60 ECTS credits to pass the school year. You must also pass all of the courses that you take.</p>
+            <p data-i18n="officialNotice">Note that this only checks whether courses overlap. It is not a replacement for officially requesting your classes on the appropriate website.</p>
+            <p><span data-i18n="sourcePrefix">For full transparency, this page's source code is publicly available at </span><a href="https://github.com/MattewCoding/MattewCoding.github.io/scheduleMaker" data-i18n="sourceLink">this link</a><span data-i18n="sourceSuffix">. Additionally, this page does not use cookies to store any data.</span></p>
 
             <div class="table-scroll">
             <table id="scheduleTable">
                 <thead>
                     <tr>
-                        <th class="deactivateSort">Select</th>
-                        <th class="deactivateSort">Overlaps With</th>
+                        <th class="deactivateSort" data-i18n="select">Select</th>
+                        <th class="deactivateSort" data-i18n="overlapsWith">Overlaps With</th>
                         <th onclick="sortTable(2)">ECTs</th>
-                        <th onclick="sortTable(3)">Name of Course</th>
-                        <th onclick="sortTable(4)">Schedule</th>
-                        <th class="deactivateSort">More Information</th>
+                        <th onclick="sortTable(3)" data-i18n="courseName">Name of Course</th>
+                        <th onclick="sortTable(4)" data-i18n="schedule">Schedule</th>
+                        <th class="deactivateSort" data-i18n="moreInformation">More Information</th>
                     </tr>
                 </thead>
                 <tbody id="scheduleBody">
