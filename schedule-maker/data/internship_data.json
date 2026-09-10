@@ -1,0 +1,17 @@
+[
+    {
+        "ects": 30.0,
+        "newCourseId": "N/A",
+        "name": "Internship",
+        "description": "Your internship. Break a leg!",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [],
+            "unknown": [
+                "UNKNOWN"
+            ]
+        }
+    },
+    {}
+]

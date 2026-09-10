@@ -463,8 +463,40 @@ tr.conflict {
     padding-top: .45em;
 }
 
+.schedule-notice {
+    color: #b32424;
+    display: block;
+    font-style: italic;
+    font-weight: bold;
+}
+
 .overlap-cell {
     max-width: 16em;
+}
+
+.overlap-link {
+    background: none;
+    border: 0;
+    color: #0645ad;
+    cursor: pointer;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.overlap-link:hover {
+    color: #36c;
+    text-decoration-thickness: 2px;
+}
+
+.course-jump-highlight {
+    animation: course-jump-light 1.8s ease-out;
+}
+
+@keyframes course-jump-light {
+    0%, 35% { outline: 4px solid #36c; outline-offset: -4px; }
+    100% { outline: 4px solid transparent; outline-offset: -4px; }
 }
 
 .details-toggle {
@@ -507,7 +539,7 @@ tr.conflict {
     box-sizing: border-box;
     display: grid;
     gap: .75em 2em;
-    grid-template-columns: minmax(8em, auto) 1fr auto;
+    grid-template-columns: minmax(8em, auto) minmax(0, 1fr) auto;
     max-height: 0;
     opacity: 0;
     overflow: hidden;
@@ -522,7 +554,7 @@ tr.conflict {
 }
 
 .details-row.is-open .details-panel {
-    max-height: 12em;
+    max-height: 100rem;
     opacity: 1;
     padding: 1em;
     transform: translateY(0);
@@ -531,6 +563,35 @@ tr.conflict {
 .details-panel strong,
 .details-panel span {
     display: block;
+}
+
+.details-website {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+}
+
+.details-description {
+    grid-column: 1 / -1;
+}
+
+.no-course-website {
+    color: #54595d;
+    font-style: italic;
+}
+
+.course-notices {
+    color: #b32424;
+    font-weight: bold;
+    grid-column: 1 / -1;
+}
+
+.course-notices p {
+    margin: 0;
+}
+
+.course-notices p + p {
+    margin-top: .35em;
 }
 
 @media (max-width: 800px) {
@@ -572,6 +633,12 @@ tr.conflict {
 
     .details-panel {
         grid-template-columns: 1fr;
+    }
+
+    .details-website {
+        grid-column: 1;
+        grid-row: auto;
+        justify-self: start;
     }
 }
 

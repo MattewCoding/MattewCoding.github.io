@@ -100,6 +100,35 @@ function calculateTotalEcts(selectedIndexes) {
     return selectedIndexes.reduce((total, index) => total + Number(courses[index].ects), 0);
 }
 
+function goToCourse(courseIndex) {
+    const courseRow = document.getElementById(`course${courseIndex}`);
+    if (!courseRow) return;
+
+    courseRow.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+    courseRow.classList.remove("course-jump-highlight");
+    void courseRow.offsetWidth;
+    courseRow.classList.add("course-jump-highlight");
+    window.setTimeout(() => courseRow.classList.remove("course-jump-highlight"), 1800);
+}
+
+function renderOverlapLinks(overlapCell, overlappingIndexes) {
+    overlapCell.replaceChildren();
+    if (!overlappingIndexes.length) {
+        overlapCell.textContent = "—";
+        return;
+    }
+
+    overlappingIndexes.forEach((otherIndex, position) => {
+        if (position) overlapCell.appendChild(document.createTextNode(", "));
+        const linkButton = document.createElement("button");
+        linkButton.type = "button";
+        linkButton.className = "overlap-link";
+        linkButton.textContent = getCourseName(courses[otherIndex]);
+        linkButton.addEventListener("click", () => goToCourse(otherIndex));
+        overlapCell.appendChild(linkButton);
+    });
+}
+
 function updateTT() {
     const selectedIndexes = getSelectedCourseIndexes();
     const totalEcts = calculateTotalEcts(selectedIndexes);
@@ -112,8 +141,6 @@ function updateTT() {
     courses.forEach((course, index) => {
         const overlappingIndexes = overlaps[index] || [];
         document.getElementById(`course${index}`).classList.toggle("conflict", overlappingIndexes.length > 0);
-        document.getElementById(`overlap${index}`).textContent = overlappingIndexes.length
-            ? overlappingIndexes.map(otherIndex => getCourseName(courses[otherIndex])).join(", ")
-            : "—";
+        renderOverlapLinks(document.getElementById(`overlap${index}`), overlappingIndexes);
     });
 }

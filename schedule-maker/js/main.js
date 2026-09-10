@@ -8,6 +8,7 @@ const TRANSLATIONS = {
         translator: "Voir la version française", scheduleControls: "Schedule controls",
         darkMode: "Dark Mode", lightMode: "Light Mode", resetSort: "Reset sort",
         clearSelection: "Clear selection", saveSelection: "Save selection",
+        showAllDetails: "Show all", hideAllDetails: "Hide all",
         savedSelections: "Saved selections", disclaimer: "The dates haven't been updated yet!",
         introduction: "Hello, welcome to the schedule maker! This is a tool to simplify your schedule creation. Click the checkboxes to add a course to your schedule. The page will tell you if there are any overlaps by highlighting conflicting courses in red. As a reminder, you need at least 60 ECTS credits to pass the school year. You must also pass all of the courses that you take.",
         officialNotice: "Note that this only checks whether courses overlap. It is not a replacement for officially requesting your classes on the appropriate website.",
@@ -35,6 +36,7 @@ const TRANSLATIONS = {
         translator: "See the English version", scheduleControls: "Commandes de l'emploi du temps",
         darkMode: "Mode sombre", lightMode: "Mode clair", resetSort: "Réinitialiser le tri",
         clearSelection: "Effacer la sélection", saveSelection: "Enregistrer la sélection",
+        showAllDetails: "Tout afficher", hideAllDetails: "Tout masquer",
         savedSelections: "Sélections enregistrées", disclaimer: "Les dates n'ont pas encore été mises à jour !",
         introduction: "Bonjour et bienvenue dans ce créateur d'emploi du temps ! Cet outil simplifie la création de ton emploi du temps. Cochez les cases pour ajouter un cours. Les conflits sont signalés en rouge. Pour rappel, tu dois avoir au moins 60 crédits ECTS pour valider l'année, et tu dois aussi réussir tous les cours que tu ve suivre.",
         officialNotice: "Cet outil sert uniquement à vérifier que les cours ne se chevauchent pas. Il ne remplace pas l'inscription officielle aux cours sur le site prévu à cet effet.",
@@ -174,6 +176,7 @@ function showSiteDialog({
     document.getElementById("siteDialogInputLabel").textContent = inputLabel || "";
     inputGroup.hidden = !inputLabel;
     input.required = Boolean(inputLabel);
+    input.setCustomValidity("");
     cancelButton.hidden = !cancelLabel;
     cancelButton.textContent = cancelLabel || "";
     confirmButton.textContent = confirmLabel;
@@ -328,6 +331,13 @@ function formatDate(dateString) {
     return `${day}/${month}/${year}`;
 }
 
+function formatWeekday(dateString) {
+    const [year, month, day] = dateString.split("-").map(Number);
+    const dayKeys = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+    const weekday = dayKeys[new Date(Date.UTC(year, month - 1, day)).getUTCDay()];
+    return t("days")[weekday] || weekday;
+}
+
 function formatSchedule(course) {
     const fragment = document.createDocumentFragment();
 
@@ -357,10 +367,19 @@ function formatSchedule(course) {
         label.textContent = `${t("oneOff")}:`;
         scheduleSlot.append(
             label,
-            document.createTextNode(` ${formatDate(slot.date)}, ${slot.startTime}–${slot.endTime}`)
+            document.createTextNode(
+                ` ${formatWeekday(slot.date)}, ${formatDate(slot.date)}, ${slot.startTime}–${slot.endTime}`
+            )
         );
         fragment.appendChild(scheduleSlot);
     });
+
+    if (course.schedule.notice) {
+        const notice = document.createElement("span");
+        notice.className = "schedule-notice";
+        notice.textContent = course.schedule.notice;
+        fragment.appendChild(notice);
+    }
 
     return fragment;
 }
@@ -378,13 +397,23 @@ function getSafeCourseUrl(rawUrl) {
 
 function toggleCourseDetails(index) {
     const detailsRow = document.getElementById(`details${index}`);
-    const button = document.getElementById(`detailsButton${index}`);
     const willOpen = !detailsRow.classList.contains("is-open");
 
-    detailsRow.classList.toggle("is-open", willOpen);
-    detailsRow.setAttribute("aria-hidden", String(!willOpen));
-    button.setAttribute("aria-expanded", String(willOpen));
-    button.textContent = willOpen ? t("hide") : t("view");
+    setCourseDetailsState(index, willOpen);
+}
+
+function setCourseDetailsState(index, isOpen) {
+    const detailsRow = document.getElementById(`details${index}`);
+    const button = document.getElementById(`detailsButton${index}`);
+
+    detailsRow.classList.toggle("is-open", isOpen);
+    detailsRow.setAttribute("aria-hidden", String(!isOpen));
+    button.setAttribute("aria-expanded", String(isOpen));
+    button.textContent = isOpen ? t("hide") : t("view");
+}
+
+function setAllCourseDetails(isOpen) {
+    courses.forEach((_course, index) => setCourseDetailsState(index, isOpen));
 }
 
 function createTable() {
@@ -394,6 +423,7 @@ function createTable() {
     courses.forEach((course, index) => {
         const courseName = String(getCourseName(course) || "");
         const courseDescription = String(getCourseDescription(course) || "");
+        const courseNotices = Array.isArray(course.notices) ? course.notices : [];
         const safeCourseUrl = getSafeCourseUrl(course.url);
         const courseRow = document.createElement("tr");
         const selectCell = document.createElement("td");
@@ -460,23 +490,40 @@ function createTable() {
         detailsRow.setAttribute("aria-hidden", "true");
         detailsCell.colSpan = 6;
         detailsPanel.className = "details-panel";
+        idGroup.className = "details-course-id";
+        descriptionGroup.className = "details-description";
         idLabel.textContent = t("courseId");
         idValue.textContent = course.newCourseId || "";
         descriptionLabel.textContent = t("description");
         descriptionValue.textContent = courseDescription;
         idGroup.append(idLabel, idValue);
         descriptionGroup.append(descriptionLabel, descriptionValue);
-        detailsPanel.append(idGroup, descriptionGroup);
+        detailsPanel.appendChild(idGroup);
+
+        if (courseNotices.length) {
+            const noticesGroup = document.createElement("div");
+            noticesGroup.className = "course-notices";
+            courseNotices.forEach(noticeText => {
+                const notice = document.createElement("p");
+                notice.textContent = noticeText;
+                noticesGroup.appendChild(notice);
+            });
+            detailsPanel.appendChild(noticesGroup);
+        }
+
+        detailsPanel.appendChild(descriptionGroup);
 
         if (safeCourseUrl) {
             const courseWebsite = document.createElement("a");
             courseWebsite.href = safeCourseUrl;
             courseWebsite.target = "_blank";
             courseWebsite.rel = "noopener noreferrer";
+            courseWebsite.className = "details-website";
             courseWebsite.textContent = t("courseWebsite");
             detailsPanel.appendChild(courseWebsite);
         } else {
             const noWebsite = document.createElement("span");
+            noWebsite.className = "details-website no-course-website";
             noWebsite.textContent = t("noCourseWebsite");
             detailsPanel.appendChild(noWebsite);
         }
@@ -560,6 +607,27 @@ function addPageEventListeners() {
     document.getElementById("resetSortButton").addEventListener("click", resetTableSort);
     document.getElementById("clearSelectionButton").addEventListener("click", clearCourseSelections);
     document.getElementById("saveSelectionButton").addEventListener("click", saveNamedSelection);
+    document.getElementById("showAllDetailsButton").addEventListener("click", () => setAllCourseDetails(true));
+    document.getElementById("hideAllDetailsButton").addEventListener("click", () => setAllCourseDetails(false));
+    document.getElementById("siteDialogCancel").addEventListener("click", () => {
+        document.getElementById("siteDialog").close("cancel");
+    });
+    document.getElementById("siteDialogInput").addEventListener("input", event => {
+        event.target.setCustomValidity("");
+    });
+    document.getElementById("siteDialogForm").addEventListener("submit", event => {
+        event.preventDefault();
+        const dialog = document.getElementById("siteDialog");
+        const inputGroup = document.getElementById("siteDialogInputGroup");
+        const input = document.getElementById("siteDialogInput");
+
+        if (!inputGroup.hidden && !input.value.trim()) {
+            input.setCustomValidity("Please enter a selection name.");
+            input.reportValidity();
+            return;
+        }
+        dialog.close("confirm");
+    });
     document.querySelectorAll("[data-sort-column]").forEach(header => {
         header.addEventListener("click", () => sortTable(Number(header.dataset.sortColumn)));
     });

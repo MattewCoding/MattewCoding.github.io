@@ -36,6 +36,8 @@
                 <button id="resetSortButton" type="button" data-i18n="resetSort">Reset sort</button>
                 <button id="clearSelectionButton" class="danger-action" type="button" data-i18n="clearSelection">Clear selection</button>
                 <button id="saveSelectionButton" class="primary-action" type="button" data-i18n="saveSelection">Save selection</button>
+                <button id="showAllDetailsButton" type="button" data-i18n="showAllDetails">Show all</button>
+                <button id="hideAllDetailsButton" type="button" data-i18n="hideAllDetails">Hide all</button>
             </div>
         </aside>
         <aside class="saved-selections side-panel" aria-labelledby="savedSelectionsHeading">
@@ -43,8 +45,8 @@
             <ul id="savedSelectionsList"></ul>
         </aside>
         <div class="main-part">
-            <h1>Schedule Maker 2025</h1>
-            <p id="disclaimer-paragraph" data-i18n="disclaimer">The dates haven't been updated yet!</p>
+            <h1>Schedule Maker 2026</h1>
+            <!-- <p id="disclaimer-paragraph" data-i18n="disclaimer">The dates haven't been updated yet!</p> -->
             <p data-i18n="introduction">Hello, welcome to the schedule maker! This is a tool to simplify your schedule creation. Click the checkboxes to add a course to your schedule. The page will tell you if there are any overlaps by highlighting conflicting courses in red. As a reminder, you need at least 60 ECTS credits to pass the school year. You must also pass all of the courses that you take.</p>
             <p data-i18n="officialNotice">Note that this only checks whether courses overlap. It is not a replacement for officially requesting your classes on the appropriate website.</p>
             <p><span data-i18n="sourcePrefix">For full transparency, this page's source code is publicly available at </span><a href="https://github.com/MattewCoding/MattewCoding.github.io/scheduleMaker" data-i18n="sourceLink">this link</a><span data-i18n="sourceSuffix">. Additionally, this page does not use cookies to store any data.</span></p>
@@ -78,7 +80,7 @@
                 <input id="siteDialogInput" type="text" maxlength="80" autocomplete="off">
             </label>
             <div class="dialog-actions">
-                <button id="siteDialogCancel" type="submit" value="cancel" formnovalidate>Cancel</button>
+                <button id="siteDialogCancel" type="button">Cancel</button>
                 <button id="siteDialogConfirm" class="primary-action" type="submit" value="confirm">Confirm</button>
             </div>
         </form>
