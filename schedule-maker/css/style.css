@@ -485,6 +485,7 @@ tr.conflict {
 
 .schedule-conflict-dates {
     background: #b32424;
+    border: 1px solid #ff7979;
     border-radius: 2px;
     color: #fff;
     display: block;
