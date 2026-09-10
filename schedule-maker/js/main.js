@@ -13,7 +13,7 @@ const TRANSLATIONS = {
         introduction: "Hello, welcome to the schedule maker! This is a tool to simplify your schedule creation. Click the checkboxes to add a course to your schedule. The page will tell you if there are any overlaps by highlighting conflicting courses in red. As a reminder, you need at least 60 ECTS credits to pass the school year. You must also pass all of the courses that you take.",
         officialNotice: "Note that this only checks whether courses overlap. It is not a replacement for officially requesting your classes on the appropriate website.",
         sourcePrefix: "For full transparency, this page's source code is publicly available at ",
-        sourceLink: "this link", sourceSuffix: ". Additionally, this page does not use cookies to store any data.",
+        sourceLink: "this link", sourceSuffix: ". Additionally, this page does not use cookies to store any data. This page was made using the help of Codex.",
         select: "Select", overlapsWith: "Overlaps With", courseName: "Name of Course",
         schedule: "Schedule", moreInformation: "More Information", noSaves: "No saves yet",
         noMatchingCourses: "No matching courses remain", deleteSave: "Delete {name}",
@@ -41,7 +41,7 @@ const TRANSLATIONS = {
         introduction: "Bonjour et bienvenue dans ce créateur d'emploi du temps ! Cet outil simplifie la création de ton emploi du temps. Cochez les cases pour ajouter un cours. Les conflits sont signalés en rouge. Pour rappel, tu dois avoir au moins 60 crédits ECTS pour valider l'année, et tu dois aussi réussir tous les cours que tu ve suivre.",
         officialNotice: "Cet outil sert uniquement à vérifier que les cours ne se chevauchent pas. Il ne remplace pas l'inscription officielle aux cours sur le site prévu à cet effet.",
         sourcePrefix: "En toute transparence, le code source de cette page est disponible publiquement via ",
-        sourceLink: "ce lien", sourceSuffix: ". De plus, cette page n'utilise aucun cookie pour stocker des données.",
+        sourceLink: "ce lien", sourceSuffix: ". De plus, cette page n'utilise aucun cookie pour stocker des données. Cette page a été créée avec l'aide de Codex.",
         select: "Sélectionner", overlapsWith: "Chevauchement avec", courseName: "Nom du cours",
         schedule: "Horaire", moreInformation: "Plus d'informations", noSaves: "Aucune sélection enregistrée",
         noMatchingCourses: "Aucun cours correspondant", deleteSave: "Supprimer {name}",
@@ -526,7 +526,7 @@ function createTable() {
         } else {
             const noWebsite = document.createElement("span");
             noWebsite.className = "details-website no-course-website";
-            noWebsite.textContent = t("noCourseWebsite");
+            // noWebsite.textContent = t("noCourseWebsite");
             detailsPanel.appendChild(noWebsite);
         }
 

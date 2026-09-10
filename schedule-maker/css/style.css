@@ -6,7 +6,7 @@
 
 /* Adjustable table dimensions. Only these three columns stay fixed. */
 :root {
-    --column-select-width: 5.5em;
+    --column-select-width: 7.5em;
     --column-ects-width: 5em;
     --column-information-width: 11em;
     --schedule-table-min-width: 50em;
