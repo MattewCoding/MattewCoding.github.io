@@ -204,7 +204,7 @@ function updateTT() {
     const ectCount = document.getElementById("ectCount");
     const { overlaps, slotConflicts } = findOverlaps(selectedIndexes);
 
-    ectCount.textContent = `ECTS: ${totalEcts} / 60`;
+    ectCount.textContent = `ECTs: ${totalEcts} / 60`;
     ectCount.classList.toggle("requirement-met", totalEcts >= 60);
 
     courses.forEach((course, index) => {
