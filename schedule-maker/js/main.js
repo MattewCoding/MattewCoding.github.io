@@ -26,7 +26,7 @@ const TRANSLATIONS = {
         replaceMessage: "A selection named \"{name}\" already exists. Its courses will be replaced.",
         replace: "Replace", deleteTitle: "Delete saved selection?",
         deleteMessage: "\"{name}\" will be permanently removed from this browser.", delete: "Delete",
-        weekly: "Weekly", oneOff: "One-off", view: "View", hide: "Hide",
+        weekly: "Weekly", oneOff: "One-off", conflictsOn: "Conflicts on", view: "View", hide: "Hide",
         courseWebsite: "Course website", noCourseWebsite: "No course website",
         courseId: "Course ID", description: "Description", selectCourse: "Select {name}",
         loadError: "Unable to load course data.",
@@ -54,7 +54,7 @@ const TRANSLATIONS = {
         replaceMessage: "Une sélection nommée \"{name}\" existe déjà. Ses cours seront remplacés.",
         replace: "Remplacer", deleteTitle: "Supprimer la sélection enregistrée ?",
         deleteMessage: "\"{name}\" sera définitivement supprimée de ce navigateur.", delete: "Supprimer",
-        weekly: "Chaque semaine", oneOff: "Séance unique", view: "Voir", hide: "Masquer",
+        weekly: "Chaque semaine", oneOff: "Séance unique", conflictsOn: "Conflit le", view: "Voir", hide: "Masquer",
         courseWebsite: "Site du cours", noCourseWebsite: "Aucun site pour ce cours",
         courseId: "Identifiant du cours", description: "Description (probablement en anglais)", selectCourse: "Sélectionner {name}",
         loadError: "Impossible de charger les données des cours.",
@@ -341,13 +341,14 @@ function formatWeekday(dateString) {
 function formatSchedule(course) {
     const fragment = document.createDocumentFragment();
 
-    course.schedule.recurring.forEach(slot => {
+    course.schedule.recurring.forEach((slot, slotIndex) => {
         const scheduleSlot = document.createElement("span");
         const label = document.createElement("strong");
         const dates = document.createElement("small");
         const localizedDay = t("days")[String(slot.day).toLowerCase()] || slot.day;
 
         scheduleSlot.className = "schedule-slot";
+        scheduleSlot.dataset.slotKey = `recurring-${slotIndex}`;
         label.textContent = `${t("weekly")}:`;
         dates.textContent = `${formatDate(slot.startDate)}–${formatDate(slot.endDate)}`;
         scheduleSlot.append(
@@ -359,11 +360,12 @@ function formatSchedule(course) {
         fragment.appendChild(scheduleSlot);
     });
 
-    course.schedule.oneOff.forEach(slot => {
+    course.schedule.oneOff.forEach((slot, slotIndex) => {
         const scheduleSlot = document.createElement("span");
         const label = document.createElement("strong");
 
         scheduleSlot.className = "schedule-slot";
+        scheduleSlot.dataset.slotKey = `oneOff-${slotIndex}`;
         label.textContent = `${t("oneOff")}:`;
         scheduleSlot.append(
             label,

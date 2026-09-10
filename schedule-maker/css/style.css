@@ -4,6 +4,14 @@
  * In this CSS, slight modifications have been made, in order to add a personal touch.
  */
 
+/* Adjustable table dimensions. Only these three columns stay fixed. */
+:root {
+    --column-select-width: 5.5em;
+    --column-ects-width: 5em;
+    --column-information-width: 11em;
+    --schedule-table-min-width: 50em;
+}
+
 /* TL Tags */
 html {
     background: linear-gradient(90deg, #fbfbfb 0%, #ffffff 17%);
@@ -196,8 +204,20 @@ p {
 table {
     border-collapse: collapse;
     margin: 1em 0 0 0;
+    min-width: var(--schedule-table-min-width);
+    table-layout: fixed;
     width: 100%;
-    min-width: 760px;
+}
+
+.column-select { width: var(--column-select-width); }
+.column-ects { width: var(--column-ects-width); }
+.column-information { width: var(--column-information-width); }
+
+/* These columns divide all width left over by the fixed columns above. */
+.column-overlaps,
+.column-course-name,
+.column-schedule {
+    width: auto;
 }
 
 .table-scroll {
@@ -463,6 +483,18 @@ tr.conflict {
     padding-top: .45em;
 }
 
+.schedule-conflict-dates {
+    background: #b32424;
+    border-radius: 2px;
+    color: #fff;
+    display: block;
+    font-size: .85em;
+    font-weight: bold;
+    margin-top: .35em;
+    padding: .2em .4em;
+    width: fit-content;
+}
+
 .schedule-notice {
     color: #b32424;
     display: block;
@@ -479,10 +511,12 @@ tr.conflict {
     border: 0;
     color: #0645ad;
     cursor: pointer;
+    display: block;
     font: inherit;
     margin: 0;
     padding: 0;
     text-decoration: underline;
+    width: 100%;
 }
 
 .overlap-link:hover {

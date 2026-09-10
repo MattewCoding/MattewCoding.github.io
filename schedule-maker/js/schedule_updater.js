@@ -29,9 +29,13 @@ function dateIsWithin(date, startDate, endDate) {
         && timestamp <= parseDate(endDate).getTime();
 }
 
-function recurringSlotsOverlap(slotA, slotB) {
+function formatIsoDate(date) {
+    return date.toISOString().slice(0, 10);
+}
+
+function getRecurringOverlapDates(slotA, slotB) {
     if (slotA.day.toLowerCase() !== slotB.day.toLowerCase() || !timesOverlap(slotA, slotB)) {
-        return false;
+        return [];
     }
 
     const overlapStart = new Date(Math.max(
@@ -43,51 +47,98 @@ function recurringSlotsOverlap(slotA, slotB) {
         parseDate(slotB.endDate).getTime()
     ));
 
-    if (overlapStart > overlapEnd) return false;
+    if (overlapStart > overlapEnd) return [];
 
     const targetDay = DAY_TO_NUMBER[slotA.day.toLowerCase()];
     const daysUntilOccurrence = (targetDay - overlapStart.getUTCDay() + 7) % 7;
     const firstOccurrence = new Date(overlapStart);
     firstOccurrence.setUTCDate(firstOccurrence.getUTCDate() + daysUntilOccurrence);
-    return firstOccurrence <= overlapEnd;
+    const dates = [];
+    for (const occurrence = new Date(firstOccurrence); occurrence <= overlapEnd; occurrence.setUTCDate(occurrence.getUTCDate() + 7)) {
+        dates.push(formatIsoDate(occurrence));
+    }
+    return dates;
 }
 
-function recurringAndOneOffOverlap(recurring, oneOff) {
-    return dateIsWithin(oneOff.date, recurring.startDate, recurring.endDate)
+function getRecurringAndOneOffOverlapDates(recurring, oneOff) {
+    const overlaps = dateIsWithin(oneOff.date, recurring.startDate, recurring.endDate)
         && parseDate(oneOff.date).getUTCDay() === DAY_TO_NUMBER[recurring.day.toLowerCase()]
         && timesOverlap(recurring, oneOff);
+    return overlaps ? [oneOff.date] : [];
 }
 
-function oneOffSlotsOverlap(slotA, slotB) {
-    return slotA.date === slotB.date && timesOverlap(slotA, slotB);
+function getOneOffOverlapDates(slotA, slotB) {
+    return slotA.date === slotB.date && timesOverlap(slotA, slotB) ? [slotA.date] : [];
 }
 
-function coursesOverlap(courseA, courseB) {
-    const recurringA = courseA.schedule.recurring;
-    const recurringB = courseB.schedule.recurring;
-    const oneOffA = courseA.schedule.oneOff;
-    const oneOffB = courseB.schedule.oneOff;
-
-    return recurringA.some(slotA => recurringB.some(slotB => recurringSlotsOverlap(slotA, slotB)))
-        || recurringA.some(slotA => oneOffB.some(slotB => recurringAndOneOffOverlap(slotA, slotB)))
-        || recurringB.some(slotB => oneOffA.some(slotA => recurringAndOneOffOverlap(slotB, slotA)))
-        || oneOffA.some(slotA => oneOffB.some(slotB => oneOffSlotsOverlap(slotA, slotB)));
+function addSlotConflict(slotConflicts, courseIndex, slotKey, dates) {
+    if (!dates.length) return;
+    if (!slotConflicts[courseIndex].has(slotKey)) {
+        slotConflicts[courseIndex].set(slotKey, new Set());
+    }
+    dates.forEach(date => slotConflicts[courseIndex].get(slotKey).add(date));
 }
 
 function findOverlaps(selectedIndexes) {
-    const overlaps = Object.fromEntries(selectedIndexes.map(index => [index, []]));
+    const overlaps = Object.fromEntries(selectedIndexes.map(index => [index, new Set()]));
+    const slotConflicts = Object.fromEntries(selectedIndexes.map(index => [index, new Map()]));
 
     for (let i = 0; i < selectedIndexes.length; i++) {
         for (let j = i + 1; j < selectedIndexes.length; j++) {
             const indexA = selectedIndexes[i];
             const indexB = selectedIndexes[j];
-            if (coursesOverlap(courses[indexA], courses[indexB])) {
-                overlaps[indexA].push(indexB);
-                overlaps[indexB].push(indexA);
+            const courseA = courses[indexA];
+            const courseB = courses[indexB];
+            let pairOverlaps = false;
+
+            const recordConflict = (slotKeyA, slotKeyB, dates) => {
+                if (!dates.length) return;
+                pairOverlaps = true;
+                addSlotConflict(slotConflicts, indexA, slotKeyA, dates);
+                addSlotConflict(slotConflicts, indexB, slotKeyB, dates);
+            };
+
+            courseA.schedule.recurring.forEach((slotA, recurringIndexA) => {
+                courseB.schedule.recurring.forEach((slotB, recurringIndexB) => {
+                    recordConflict(
+                        `recurring-${recurringIndexA}`,
+                        `recurring-${recurringIndexB}`,
+                        getRecurringOverlapDates(slotA, slotB)
+                    );
+                });
+                courseB.schedule.oneOff.forEach((slotB, oneOffIndexB) => {
+                    recordConflict(
+                        `recurring-${recurringIndexA}`,
+                        `oneOff-${oneOffIndexB}`,
+                        getRecurringAndOneOffOverlapDates(slotA, slotB)
+                    );
+                });
+            });
+
+            courseA.schedule.oneOff.forEach((slotA, oneOffIndexA) => {
+                courseB.schedule.recurring.forEach((slotB, recurringIndexB) => {
+                    recordConflict(
+                        `oneOff-${oneOffIndexA}`,
+                        `recurring-${recurringIndexB}`,
+                        getRecurringAndOneOffOverlapDates(slotB, slotA)
+                    );
+                });
+                courseB.schedule.oneOff.forEach((slotB, oneOffIndexB) => {
+                    recordConflict(
+                        `oneOff-${oneOffIndexA}`,
+                        `oneOff-${oneOffIndexB}`,
+                        getOneOffOverlapDates(slotA, slotB)
+                    );
+                });
+            });
+
+            if (pairOverlaps) {
+                overlaps[indexA].add(indexB);
+                overlaps[indexB].add(indexA);
             }
         }
     }
-    return overlaps;
+    return { overlaps, slotConflicts };
 }
 
 function getSelectedCourseIndexes() {
@@ -119,13 +170,31 @@ function renderOverlapLinks(overlapCell, overlappingIndexes) {
     }
 
     overlappingIndexes.forEach((otherIndex, position) => {
-        if (position) overlapCell.appendChild(document.createTextNode(", "));
         const linkButton = document.createElement("button");
         linkButton.type = "button";
         linkButton.className = "overlap-link";
-        linkButton.textContent = getCourseName(courses[otherIndex]);
+        const comma = position < overlappingIndexes.length - 1 ? "," : "";
+        linkButton.textContent = `${getCourseName(courses[otherIndex])}${comma}`;
         linkButton.addEventListener("click", () => goToCourse(otherIndex));
         overlapCell.appendChild(linkButton);
+    });
+}
+
+function renderScheduleConflicts(courseIndex, slotConflictMap) {
+    const scheduleCell = document.querySelector(`#course${courseIndex} .schedule-cell`);
+    scheduleCell.querySelectorAll(".schedule-conflict-dates").forEach(element => element.remove());
+
+    if (!slotConflictMap) return;
+    slotConflictMap.forEach((dateSet, slotKey) => {
+        const scheduleSlot = [...scheduleCell.querySelectorAll(".schedule-slot")]
+            .find(slot => slot.dataset.slotKey === slotKey);
+        if (!scheduleSlot) return;
+
+        const conflictDates = document.createElement("span");
+        const dates = [...dateSet].sort().map(formatDate);
+        conflictDates.className = "schedule-conflict-dates";
+        conflictDates.textContent = `${t("conflictsOn")}: ${dates.join(", ")}`;
+        scheduleSlot.appendChild(conflictDates);
     });
 }
 
@@ -133,14 +202,15 @@ function updateTT() {
     const selectedIndexes = getSelectedCourseIndexes();
     const totalEcts = calculateTotalEcts(selectedIndexes);
     const ectCount = document.getElementById("ectCount");
-    const overlaps = findOverlaps(selectedIndexes);
+    const { overlaps, slotConflicts } = findOverlaps(selectedIndexes);
 
     ectCount.textContent = `ECTS: ${totalEcts} / 60`;
     ectCount.classList.toggle("requirement-met", totalEcts >= 60);
 
     courses.forEach((course, index) => {
-        const overlappingIndexes = overlaps[index] || [];
-        document.getElementById(`course${index}`).classList.toggle("conflict", overlappingIndexes.length > 0);
+        const overlappingIndexes = [...(overlaps[index] || [])];
+        document.getElementById(`course${index}`).classList.remove("conflict");
         renderOverlapLinks(document.getElementById(`overlap${index}`), overlappingIndexes);
+        renderScheduleConflicts(index, slotConflicts[index]);
     });
 }
