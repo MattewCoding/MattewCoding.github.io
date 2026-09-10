@@ -163,6 +163,13 @@ SLOT_RE = re.compile(
     rf"(?P<start_time>{TIME_PATTERN})\s*-\s*(?P<end_time>{TIME_PATTERN})",
     re.IGNORECASE,
 )
+WEEK_RE = re.compile(
+    rf"\bWeek\b\s+"
+    rf"(?P<start_date>{DATE_PATTERN})"
+    rf"\s*(?:-|\bto\b)\s*(?P<end_date>{DATE_PATTERN})\s+"
+    rf"(?P<start_time>{TIME_PATTERN})\s*-\s*(?P<end_time>{TIME_PATTERN})",
+    re.IGNORECASE,
+)
 
 ICAL_WEEKDAYS = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 CALENDAR_URL_RE = re.compile(r"https?://\S+", re.IGNORECASE)
@@ -288,6 +295,33 @@ def parse_schedule(descriptor: str, academic_start_year: int) -> dict:
                     "endTime": end_time,
                 }
             )
+
+    # A descriptor such as "Week 16nov-20nov 8h30-17h00" represents a
+    # concentrated block course, not a once-per-week recurring course.
+    for match in WEEK_RE.finditer(descriptor.replace("–", "-").replace("—", "-")):
+        start_date = parse_date(match.group("start_date"), academic_start_year)
+        end_date = parse_date(match.group("end_date"), academic_start_year)
+        if start_date is None or end_date is None:
+            unknown_count += 1
+            continue
+
+        current_date = date.fromisoformat(start_date)
+        final_date = date.fromisoformat(end_date)
+        if final_date < current_date:
+            unknown_count += 1
+            continue
+
+        start_time = normalize_time(match.group("start_time"))
+        end_time = normalize_time(match.group("end_time"))
+        while current_date <= final_date:
+            schedule["oneOff"].append(
+                {
+                    "date": current_date.isoformat(),
+                    "startTime": start_time,
+                    "endTime": end_time,
+                }
+            )
+            current_date += timedelta(days=1)
 
     schedule["oneOff"] = combine_one_off_slots(schedule["oneOff"])
     if not schedule["recurring"] and not schedule["oneOff"]:

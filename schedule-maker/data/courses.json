@@ -567,6 +567,44 @@
     },
     {
         "ects": 2.5,
+        "newCourseId": "MOB_0T41_TP",
+        "name": "UX Design Sprint",
+        "notices": [],
+        "description": "UNKNOWN",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [
+                {
+                    "date": "2026-11-16",
+                    "startTime": "08:30",
+                    "endTime": "17:00"
+                },
+                {
+                    "date": "2026-11-17",
+                    "startTime": "08:30",
+                    "endTime": "17:00"
+                },
+                {
+                    "date": "2026-11-18",
+                    "startTime": "08:30",
+                    "endTime": "17:00"
+                },
+                {
+                    "date": "2026-11-19",
+                    "startTime": "08:30",
+                    "endTime": "17:00"
+                },
+                {
+                    "date": "2026-11-20",
+                    "startTime": "08:30",
+                    "endTime": "17:00"
+                }
+            ]
+        }
+    },
+    {
+        "ects": 2.5,
         "newCourseId": "CSC_5IG01_TP",
         "name": "Human-Computer Interaction for Mixed Reality",
         "notices": [],
