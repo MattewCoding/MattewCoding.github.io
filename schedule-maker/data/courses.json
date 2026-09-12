@@ -614,7 +614,7 @@
             "recurring": [
                 {
                     "startDate": "2026-11-18",
-                    "endDate": "2026-11-25",
+                    "endDate": "2027-01-13",
                     "day": "Wednesday",
                     "startTime": "08:30",
                     "endTime": "11:45"
@@ -625,6 +625,11 @@
                     "date": "2026-11-10",
                     "startTime": "08:30",
                     "endTime": "11:45"
+                },
+                {
+                    "date": "2027-01-27",
+                    "startTime": "08:30",
+                    "endTime": "11:30"
                 }
             ]
         }
