@@ -716,12 +716,16 @@
         "description": "This course will present some basic learning algorithms for robots : reinforcement learning and imitation learning. Students will have the chance to implement and try some of these algorithms on simple examples. Very wide application fields in cognitive robotics and social robotics will be presented.",
         "url": "no url lol",
         "schedule": {
-            "recurring": [],
-            "oneOff": [],
-            "unknown": [
-                "UNKNOWN"
+            "recurring": [
+                {
+                    "startDate": "2026-12-16",
+                    "endDate": "2027-02-10",
+                    "day": "Wednesday",
+                    "startTime": "08:30",
+                    "endTime": "12:15"
+                }
             ],
-            "notice": "The posted schedule could not be parsed."
+            "oneOff": []
         }
     },
     {
