@@ -567,7 +567,47 @@
     },
     {
         "ects": 2.5,
-        "newCourseId": "MOB_0T41_TP",
+        "newCourseId": "HSS_5DE14_TP",
+        "name": "Workshop Visualization of the Futures ( Workshop Research Design + Informatics)",
+        "notices": [
+            "Note: strict capacity constraints apply"
+        ],
+        "description": "Contemporary projections on possible futures are paradoxical, on one side transhumanism, on the other side collapsology, between the two climate changes. On the one hand, there is an injunction to the energy transition, on the other hand, an injunction to the ecological transition, and between the two, a questioning of their compatibility. How can we study and graphically represent all the scenarios that make up our future projections?",
+        "url": "no url lol",
+        "schedule": {
+            "recurring": [],
+            "oneOff": [
+                {
+                    "date": "2027-01-04",
+                    "startTime": "09:00",
+                    "endTime": "18:00"
+                },
+                {
+                    "date": "2027-01-05",
+                    "startTime": "09:00",
+                    "endTime": "18:00"
+                },
+                {
+                    "date": "2027-01-06",
+                    "startTime": "09:00",
+                    "endTime": "18:00"
+                },
+                {
+                    "date": "2027-01-07",
+                    "startTime": "09:00",
+                    "endTime": "18:00"
+                },
+                {
+                    "date": "2027-01-08",
+                    "startTime": "09:00",
+                    "endTime": "18:00"
+                }
+            ]
+        }
+    },
+    {
+        "ects": 2.5,
+        "newCourseId": "IME_6IE02_TP",
         "name": "UX Design Sprint",
         "notices": [],
         "description": "UNKNOWN",
