@@ -544,7 +544,7 @@
         }
     },
     {
-        "ects": 2.5,
+        "ects": 3.0,
         "newCourseId": "HSS_5ID30_TP",
         "name": "Critical UX",
         "notices": [
@@ -606,7 +606,7 @@
         }
     },
     {
-        "ects": 2.5,
+        "ects": 4.0,
         "newCourseId": "IME_6IE02_TP",
         "name": "UX Design Sprint",
         "notices": [],
